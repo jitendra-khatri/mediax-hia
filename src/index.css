@@ -1,13 +1,351 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Base Section Start ------------------------------ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --primary: #f5d765;
+    --secondary: #01b4bc;
+    --black: #000000;
+    --white: #ffffff;
+    --whitesmoke: #F9F9F9;
+    --font-family: "Poppins", sans-serif;
+    --font-family-inter: "Inter", sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a {
+    text-decoration: none;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-family);
+    letter-spacing: -1px;
+    line-height: 1.2;
+}
+
+h1 {
+    color: var(--black);
+    font-size: 40px;
+    font-weight: 600;
+}
+
+h2 {
+    color: var(--secondary);
+    font-size: 32px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+p {
+    color: #262626;
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 176%;
+    /* 28.16px */
+    letter-spacing: 0.16px;
+}
+
+.th-btn {
+    font-family: var(--font-family);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-align: center;
+    padding: 20px 18px;
+    border-radius: 16px;
+    text-transform: capitalize;
+    display: inline-block;
+    min-width: 350px;
+    border: 1px solid var(--secondary);
+    cursor: pointer;
+    user-select: none;
+    transition: all .5s;
+}
+
+.th-btn.fill {
+    color: var(--white);
+    background: var(--secondary);
+}
+
+.th-btn.fill:hover {
+    background: transparent;
+    color: var(--secondary);
+}
+
+.th-btn.outline {
+    background: transparent;
+    color: var(--secondary);
+}
+
+.th-btn.outline:hover {
+    color: var(--white);
+    background: var(--secondary);
+}
+
+/* ------------- Base Section End ------------- */
+
+/* Header Section Start ------------------------------ */
+.header {
+    height: 107px;
+    background: var(--whitesmoke);
+}
+
+/* ------------- Header Section End ------------- */
+
+
+/* Hero Section Start ------------------------------ */
+.hero h1 {
+    padding: 30px;
+    text-align: center;
+}
+
+/* ------------- Hero Section End ------------- */
+
+/* How it works Section Start ------------------------------ */
+.hoitwo-box {
+    padding: 50px 0px;
+    background-color: var(--whitesmoke);
+}
+
+.hoitwo-con {
+    position: relative;
+    z-index: 1;
+}
+
+.hoitwo-con::before {
+    content: ' ';
+    width: 2px;
+    height: 78%;
+    background-color: var(--secondary);
+    position: absolute;
+    top: 50%;
+    left: 23px;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.hoitwo-img {
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.hoitwo-pera {
+    background-color: var(--primary);
+    border-radius: 16px;
+    padding: 30px;
+    margin: 30px auto;
+}
+
+.hoitwo-pera p {
+    margin: 0;
+    text-align: center;
+    max-width: 900px;
+}
+
+/* ------------- How it works Section End ------------- */
+
+/* Book Obituary Section Start ------------------------------ */
+.boobit-container {
+    margin: 50px 0px;
+    padding: 50px;
+    background-color: var(--whitesmoke);
+}
+
+.boobit-box {
+    padding: 50px;
+    background-color: var(--white);
+    border-radius: 16px;
+}
+
+#boobit-img {
+    width: 464px;
+    padding: 40px 0px;
+    margin: auto;
+    background-color: var(--white);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: all .5s;
+}
+
+#boobit-img .boobit-head {
+    color: var(--secondary);
+    font-family: var(--font-family-inter);
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 144%;
+    /* 23.04px */
+    text-transform: capitalize;
+    text-align: center;
+    /* margin-bottom: 10px; */
+}
+
+#boobit-img .boobit-img {
+    width: 170px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+    position: relative;
+    top: 20px;
+}
+
+#boobit-img .boobit-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#boobit-img .boobit-text {
+    width: 315px;
+    padding: 20px;
+    padding-top: 30px;
+    background-color: var(--secondary);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#boobit-img .boobit-text .boobit-name {
+    color: var(--white);
+    font-family: var(--font-family-inter);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 144%;
+    /* 25.92px */
+    display: flex;
+    gap: 3px;
+    border-bottom: 1px solid var(--primary);
+}
+
+#boobit-img .boobit-text .boobit-details,
+#boobit-img .boobit-text .boobit-service,
+#boobit-img .boobit-text .boobit-life-spam {
+    color: var(--white);
+    font-family: var(--font-family-inter);
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 144%;
+    display: flex;
+    gap: 4px;
+    margin-top: 10px;
+}
+
+#boobit-img .boobit-h-grif,
+#boobit-img .boobit-greif {
+    font-family: var(--font-family-inter);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 144%;
+    /* 20.16px */
+    text-align: center;
+}
+
+#boobit-img .boobit-h-grif {
+    color: var(--black);
+    margin-top: 20px;
+    margin-bottom: 15px;
+
+}
+
+#boobit-img .boobit-greif {
+    color: #686868;
+    margin-bottom: 20px;
+}
+
+#apply-change {
+    padding: 8px;
+    border-radius: 16px;
+    text-transform: capitalize;
+    display: inline-block;
+    min-width: 250px;
+    border: 1px solid var(--secondary);
+    margin: auto;
+    margin-top: 15px;
+}
+
+.up-img {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #9E9E9E;
+    background: #EEE;
+    text-align: center;
+    cursor: pointer;
+}
+
+.up-img img {
+    width: 100%;
+    max-width: 100px;
+}
+
+form .mb-3 {
+    position: relative;
+}
+
+.form-control,
+.form-select {
+    padding: 22px;
+    color: #2E2E2E;
+    font-family: var(--font-family);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 144%;
+}
+
+.ob-icon {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: #2E2E2E;
+}
+
+/* ------------- Book Obituary Section End ------------- */
+
+/* Footer Section Start ------------------------------ */
+.footer {
+    background-color: var(--secondary);
+    padding: 80px 0px;
+}
+
+.fo-box {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.fo-img {
+    max-width: 300px;
+}
+
+.fo-line {
+    width: 2px;
+    background-color: var(--white);
+    height: 200px;
+}
+
+.fo-link {
+    max-width: 400px;
+}
+
+.fo-box a {
+    color: var(--white);
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.16px;
+}
+
+/* ------------- Footer Section End ------------- */
