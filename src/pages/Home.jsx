@@ -2,12 +2,24 @@ import React from 'react'
 import html2canvas from 'html2canvas';
 import $ from 'jquery'
 import profileImage from '../images/hia-profile-image.jpg'
+import uploadImage from '../images/up-img.png'
+import happeningAgraImage from '../images/happen-img.png'
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css"
+import { useState } from 'react';
+
+
 
 
 
 
 const Home = () => {
-
+    const Example = () => {
+        const [startDate, setStartDate] = useState(new Date());
+        return (
+          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+        );
+      };
 
     function handleClick() {
         html2canvas(document.querySelector('.boobit-img'), {
@@ -81,8 +93,8 @@ function enterAddress(){
             alert('You can only add up to 3 input fields.');
             return;
         }
-
-        var newInput = `
+        else{
+            var newInput = `
             <div class="d-flex gap-3 mb-3">
                 <input type="text" class="form-control greif-input" placeholder="Person in greif">
             </div>`;
@@ -103,12 +115,14 @@ function enterAddress(){
                 }
             })
 
+        }
+        
 
     }
 
 
-function fileUpload(e){
-    var file = e.target.files[0];
+function fileUpload(event){
+    var file = event.target.files[0];
             if (file) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
@@ -121,7 +135,6 @@ function fileUpload(e){
 
   return (
     <>
-
 
     <section className="book-obituary" id="book-obituary">
             <div className="container-xxl">
@@ -167,7 +180,7 @@ function fileUpload(e){
                                             Natasha Singh | Prem Singh
                                         </div>
                                         <div className="boobit-happening">
-                                            <img src="image/happen-img.png" alt="" className="w-100" id="happening-img"/>
+                                            <img src={ happeningAgraImage } alt="" className="w-100" id="happening-img"/>
                                         </div>
                                     </div>
                                     <div id="apply-change" className="th-btn outline" onClick={ handleClick }>
@@ -241,7 +254,7 @@ function fileUpload(e){
                                         </div>
                                         <div className="mb-3">
                                             <label for="up-img" className="up-img">
-                                                <img src="image/up-img.png" alt="" />
+                                                <img src={ uploadImage } alt="" />
                                             </label>
                                             <input className="form-control position-fixed opacity-0" type="file"
                                                 id="up-img"  onInput={fileUpload} />
