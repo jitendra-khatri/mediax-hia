@@ -34,7 +34,7 @@ function SignIn() {
                             navigate('/')
                      }
               } catch (error) {
-                     toast.error(`Bad User Credential ${error.message}`);
+                     toast.error('Bad User Credential');
               }
        }
        return (
@@ -72,11 +72,12 @@ function SignIn() {
                                                                <p className="m-0">Don't have an account? <Link to="/sign-up">Sign up</Link></p>
                                                                <div className="terms">
                                                                       By signing in you accept the.
-                                                                      <Link to='/terms-of-services' target="_blank">
+                                                                      <Link to='/terms-of-services'>
                                                                              Terms of Services
-                                                                      </Link> and
-                                                                      <Link to='/privacy-policy' target="_blank">
-                                                                             Privacy Policy
+                                                                      </Link> 
+                                                                      <span> and </span>
+                                                                      <Link to='/privacy-policy'>
+                                                                              Privacy Policy
                                                                       </Link>.
                                                                </div>
                                                         </div>

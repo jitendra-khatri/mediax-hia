@@ -79,9 +79,9 @@ function SignUp() {
                     <input type={passToggle ? 'text' : 'password'} className="form-control" id="password" value={password} placeholder="Password" onChange={onChangeHandler} />
                     <i className={passToggle ? 'far fa-eye-slash' : 'far fa-eye'} onClick={passToggleHandler}></i>
                   </div>
-                  <div className="forgot-pass">
+                  {/* <div className="forgot-pass">
                     <Link to="/forgot-password">Forgot password?</Link>
-                  </div>
+                  </div> */}
                   <button type="submit" className="th-btn fill w-100">Sign Up</button>
                 </form>
 
@@ -89,10 +89,11 @@ function SignUp() {
                   <p className="m-0">Already have an account? <Link to="/sign-in">Sign In</Link></p>
                   <div className="terms">
                     By signing in you accept the.
-                    <Link to='/terms-of-services' target="_blank">
+                    <Link to='/terms-of-services'>
                       Terms of Services
-                    </Link> and
-                    <Link to='/privacy-policy' target="_blank">
+                    </Link> 
+                    <span> and </span>
+                    <Link to='/privacy-policy'>
                       Privacy Policy
                     </Link>.
                   </div>

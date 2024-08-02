@@ -19,7 +19,7 @@ import { toast } from 'react-toastify'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase.config'; // Adjust the import according to your file structure
 import { collection, addDoc } from 'firebase/firestore';
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 function Home() {
     const [user, setUser] = useState(null)
     const auth = getAuth()
@@ -109,18 +109,36 @@ function Home() {
         }
     }
     function handleClick() {
-        html2canvas(document.querySelector('.boobit-img'), {
-            scale: 2 // Double the scale for capturing
-        }).then(function (canvas) {
-            // Download the scaled canvas content as an image
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
-            link.download = 'boobit-img.jpg'; // Set the filename for download
-            link.click();
+        /*  html2canvas(document.querySelector('.boobit-img'), {
+             scale: 2 // Double the scale for capturing
+         }).then(function (canvas) {
+             // Download the scaled canvas content as an image
+             const link = document.createElement('a');
+             link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
+             link.download = 'boobit-img.jpg'; // Set the filename for download
+             link.click();
+         }).catch(function (error) {
+             toast.error('Error capturing the section:', error);
+         }); */
+        html2canvas(document.querySelector('.boobit-img')).then(function (canvas) {
+            canvas.toBlob(function (blob) {
+                const file = new File([blob], 'post.jpg', { type: 'image/jpg' });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                $('#formFileLg')[0].files = dataTransfer.files;
+            }, 'image/jpg');
         }).catch(function (error) {
-            toast.error('Error capturing the section:', error);
+            console.error('Error capturing the section:', error);
         });
     };
+    const [image, setImage] = useState(null);
+    const [url, setUrl] = useState('');
+
+   /*  const handleImageChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    }; */
     // async function handleClick() {
     //     try {
     //         const canvas = await html2canvas(document.querySelector('.boobit-img'), { scale: 2 });
@@ -407,6 +425,7 @@ function Home() {
                                                             </div>)}
                                                     </div>
                                                 </div>
+
                                                 <div class="mb-3">
                                                     <label htmlFor="up-img" class="up-img">
                                                         <img src={upImg} alt="" />
@@ -415,6 +434,7 @@ function Home() {
                                                         id="up-img" onInput={fileUpload} />
                                                 </div>
 
+                                                <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" />
                                             </form>
                                         </div>
                                     </div>
