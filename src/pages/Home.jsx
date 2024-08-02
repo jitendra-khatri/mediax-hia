@@ -19,6 +19,7 @@ import { toast } from 'react-toastify'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase.config'; // Adjust the import according to your file structure
 import { collection, addDoc } from 'firebase/firestore';
+import {v4 as uuidv4} from 'uuid'
 function Home() {
     const [user, setUser] = useState(null)
     const auth = getAuth()
@@ -107,7 +108,7 @@ function Home() {
             reader.readAsDataURL(file);
         }
     }
-    /* function handleClick() {
+    function handleClick() {
         html2canvas(document.querySelector('.boobit-img'), {
             scale: 2 // Double the scale for capturing
         }).then(function (canvas) {
@@ -119,40 +120,38 @@ function Home() {
         }).catch(function (error) {
             toast.error('Error capturing the section:', error);
         });
-    }; */
+    };
+    // async function handleClick() {
+    //     try {
+    //         const canvas = await html2canvas(document.querySelector('.boobit-img'), { scale: 2 });
+    //         const dataURL = canvas.toDataURL('image/jpg'); // Get the image data as a base64 URL
+    //         const storage = getStorage()
+    //         const storageRef = ref(storage, 'boobit-img.jpg'); // Create a reference to the image file in Firebase Storage
+    //         const auth = getAuth()
+    //         // Upload the base64 URL to Firebase Storage
+    //         await uploadString(storageRef, dataURL, 'data_url');
+    //         const downloadURL = await getDownloadURL(storageRef);
+
+    //         console.log('Uploaded a base64 string!');
+    //         toast.success('Image uploaded successfully!');
+
+    //         // Save the download URL and other data to Firestore
+    //         await addDoc(collection(db, 'listings'), {
+    //             email: auth.currentUser.email, // Save the provided email
+    //             name: auth.currentUser.displayName, // Save the provided number
+    //             imageUrl: downloadURL,
+    //         });
+
+    //         toast.success('Data saved successfully!');
+    //     } catch (error) {
+    //         toast.error('Error:', error);
+    //     }
+    // }
     const navigate = useNavigate()
     const logoutHandler = () => {
         auth.signOut()
         navigate('/sign-in')
     }
-    async function handleClick() {
-        try {
-            const canvas = await html2canvas(document.querySelector('.boobit-img'), { scale: 2 });
-            const dataURL = canvas.toDataURL('image/jpg'); // Get the image data as a base64 URL
-            const storage = getStorage()
-            const storageRef = ref(storage, 'boobit-img.jpg'); // Create a reference to the image file in Firebase Storage
-            const auth = getAuth()
-            // Upload the base64 URL to Firebase Storage
-            await uploadString(storageRef, dataURL, 'data_url');
-            const downloadURL = await getDownloadURL(storageRef);
-
-            console.log('Uploaded a base64 string!');
-            toast.success('Image uploaded successfully!');
-
-            // Save the download URL and other data to Firestore
-            await addDoc(collection(db, 'listings'), {
-                name: auth.currentUser.displayName, // Save the provided number
-                email: auth.currentUser.email, // Save the provided email
-                imageUrl: downloadURL,
-            });
-
-            toast.success('Data saved successfully!');
-        } catch (error) {
-            toast.error('Error:', error);
-        }
-        navigate('listings')
-    }
-    
     const [prefix, setPrefix] = useState(null)
     const [nameOfDeceased, setNameOfDeceased] = useState(null)
     const [memoService, setMemoService] = useState(null)
