@@ -28,9 +28,6 @@ function OAuth({ img }) {
                     admin: false
                 })
             }
-            else{
-                toast.error('User already exists')
-            }
             navigate('/')
         } catch (error) {
             toast.error('Somthing went wrong')

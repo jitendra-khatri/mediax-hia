@@ -34,7 +34,7 @@ function SignIn() {
                             navigate('/')
                      }
               } catch (error) {
-                     toast.error('Bad User Credential');
+                     toast.error(`Bad User Credential ${error.message}`);
               }
        }
        return (

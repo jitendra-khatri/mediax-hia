@@ -14,23 +14,30 @@ import { Link, useNavigate } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
+import html2canvas from 'html2canvas';
+import { toast } from 'react-toastify'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { db } from '../firebase.config'; // Adjust the import according to your file structure
+import { collection, addDoc } from 'firebase/firestore';
 function Home() {
     const [user, setUser] = useState(null)
     const auth = getAuth()
     useEffect(() => {
+        console.log(auth.currentUser)
         setUser(auth.currentUser)
     }, [])
 
+    /*
     function griefInput() {
         const griefPerson1 = document.querySelector('.greif-input')
         let griefPerson1Value = griefPerson1.value
         document.querySelector('.boobit-greif').textContent = griefPerson1Value
     }
-  /*   function SetPrefix() {
+    function SetPrefix() {
         const prefixSelect = document.querySelector('#prefix-select')
         let prefixSelectValue = prefixSelect.value
         document.querySelector('.boobit-prefix').textContent = prefixSelectValue
-    } */
+    } 
     function SetService() {
         const prefixSelect = document.querySelector('#service-select')
         let prefixSelectValue = prefixSelect.value
@@ -46,6 +53,9 @@ function Home() {
         const nameOfDeceasedValue = nameOfDeceased.value
         document.querySelector('.boobit-n-t').textContent = nameOfDeceasedValue
     }
+   
+
+    
     function enterAddress() {
         const address = document.querySelector('#address')
         const addressValue = address.value
@@ -86,6 +96,7 @@ function Home() {
 
 
     }
+    */
     function fileUpload(event) {
         var file = event.target.files[0];
         if (file) {
@@ -96,16 +107,65 @@ function Home() {
             reader.readAsDataURL(file);
         }
     }
+    /* function handleClick() {
+        html2canvas(document.querySelector('.boobit-img'), {
+            scale: 2 // Double the scale for capturing
+        }).then(function (canvas) {
+            // Download the scaled canvas content as an image
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
+            link.download = 'boobit-img.jpg'; // Set the filename for download
+            link.click();
+        }).catch(function (error) {
+            toast.error('Error capturing the section:', error);
+        });
+    }; */
     const navigate = useNavigate()
     const logoutHandler = () => {
         auth.signOut()
         navigate('/sign-in')
     }
+    async function handleClick() {
+        try {
+            const canvas = await html2canvas(document.querySelector('.boobit-img'), { scale: 2 });
+            const dataURL = canvas.toDataURL('image/jpg'); // Get the image data as a base64 URL
+            const storage = getStorage()
+            const storageRef = ref(storage, 'boobit-img.jpg'); // Create a reference to the image file in Firebase Storage
+            const auth = getAuth()
+            // Upload the base64 URL to Firebase Storage
+            await uploadString(storageRef, dataURL, 'data_url');
+            const downloadURL = await getDownloadURL(storageRef);
+
+            console.log('Uploaded a base64 string!');
+            toast.success('Image uploaded successfully!');
+
+            // Save the download URL and other data to Firestore
+            await addDoc(collection(db, 'listings'), {
+                name: auth.currentUser.displayName, // Save the provided number
+                email: auth.currentUser.email, // Save the provided email
+                imageUrl: downloadURL,
+            });
+
+            toast.success('Data saved successfully!');
+        } catch (error) {
+            toast.error('Error:', error);
+        }
+        navigate('listings')
+    }
+    
     const [prefix, setPrefix] = useState(null)
     const [nameOfDeceased, setNameOfDeceased] = useState(null)
+    const [memoService, setMemoService] = useState(null)
+    const [serviceTime, setServiceTime] = useState(null)
+    const [serviceAddress, setServiceAddress] = useState(null)
     const [dateOfBirth, setDateOfBirth] = useState(null)
     const [dateOfDeath, setDateOfDeath] = useState(null)
     const [dateOfService, setDateOfService] = useState(null)
+    const [griefPerson1, setGriefPerson1] = useState(false)
+    const [griefPerson2, setGriefPerson2] = useState(false)
+    const [griefPersonText1, setGriefPersonText1] = useState(null)
+    const [griefPersonText2, setGriefPersonText2] = useState(null)
+    const [griefPersonText3, setGriefPersonText3] = useState(null)
     return (
         <>
             {/* <!-- Header Section Start --> */}
@@ -195,8 +255,8 @@ function Home() {
                                                     id="boobit-up-img" alt="" /></div>
                                                 <div class="boobit-text">
                                                     <div class="boobit-name">
-                                                        <div class="boobit-prefix">{prefix? prefix : 'Mr.'}</div>
-                                                        <div class="boobit-n-t">{nameOfDeceased? nameOfDeceased : 'Kalash Singh'}</div>
+                                                        <div class="boobit-prefix">{prefix ? prefix : 'Mr.'}</div>
+                                                        <div class="boobit-n-t">{nameOfDeceased ? nameOfDeceased : 'Kalash Singh'}</div>
                                                     </div>
                                                     <div class="boobit-life-spam">
                                                         <div class="boobit-date-of-birth">
@@ -208,37 +268,40 @@ function Home() {
                                                             {dateOfDeath ? format(dateOfDeath, 'do MMMM, yyyy') : '19th April, 1945'}
                                                         </div>
                                                     </div>
-                                                    <div class="boobit-service">Memorial Service</div>
+                                                    <div class="boobit-service">{memoService ? memoService : 'Memorial Service'}</div>
                                                     <div class="boobit-details">
-                                                        <div class="boobit-time">10 am - 12:30 pm</div>
+                                                        <div class="boobit-time"> {serviceTime ? serviceTime : '10am - 12:30pm'}</div>
                                                         <div class="">|</div>
                                                         <div class="boobit-date">
                                                             {dateOfService ? format(dateOfService, 'do MMMM, yyyy') : '20th April, 1883'}
                                                         </div>
                                                         <div class="">|</div>
-                                                        <div class="boobit-address">Surya Nagar Mandir, Agra</div>
+                                                        <div class="boobit-address">{serviceAddress ? serviceAddress : 'Surya Nagar Mandir, Agra'}</div>
                                                     </div>
                                                 </div>
                                                 <div class="boobit-h-grif">
                                                     In Grief
                                                 </div>
                                                 <div class="boobit-greif">
-                                                    Natasha Singh | Prem Singh
+
+                                                    {griefPersonText1 ? `${griefPersonText1} | ` : 'Natasha Singh | '}
+                                                    {griefPersonText2 ? ` ${griefPersonText2}` : ' Prem Singh'}
+                                                    {griefPersonText3 ? ` | ${griefPersonText3}` : ''}
                                                 </div>
                                                 <div class="boobit-happening">
                                                     <img src={happenImg} alt="" class="w-100" id="happening-img" />
                                                 </div>
                                             </div>
-                                            <div id="apply-change" class="th-btn outline">
+                                            {/* <div id="apply-change" onClick={handleClick} class="th-btn outline">
                                                 Apply Changes
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                     <div class="col-md-5 order-md-0">
                                         <div class="boobit-right">
                                             <form action="" method="post">
                                                 <div class="mb-3">
-                                                    <select class="form-select" name="prefix" id="prefix-select" value={prefix}  onChange={(pfix)=>setPrefix(pfix.target.value)}>
+                                                    <select class="form-select" name="prefix" id="prefix-select" value={prefix} onChange={(pfix) => setPrefix(pfix.target.value)}>
                                                         <option selected>Select Prefix</option>
                                                         <option value="Mr.">Mr.</option>
                                                         <option value="Mrs.">Mrs.</option>
@@ -249,8 +312,8 @@ function Home() {
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <input type="text" class="form-control" id="name-of-deceased" value={nameOfDeceased}
-                                                        placeholder="Name of deceased" onChange={(prev)=> setNameOfDeceased(prev.target.value) } />
+                                                    <input type="text" class="form-control" maxLength='21' id="name-of-deceased" value={nameOfDeceased}
+                                                        placeholder="Name of deceased" onChange={(prev) => setNameOfDeceased(prev.target.value)} />
                                                 </div>
                                                 <div class="mb-3">
                                                     <DatePicker
@@ -287,7 +350,7 @@ function Home() {
                                                     <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
                                                 </div>
                                                 <div class="mb-3">
-                                                    <select class="form-select" id="service-select" onChange={SetService}>
+                                                    <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
                                                         <option selected>Service</option>
                                                         <option value="Memorial1">Memorial1</option>
                                                         <option value="Memorial2">Memorial2</option>
@@ -296,7 +359,7 @@ function Home() {
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <select class="form-select" id="service-time-select" onChange={SetServiceTimeSelect}>
+                                                    <select class="form-select" id="service-time-select" value={serviceTime} onChange={(time) => setServiceTime(time.target.value)}>
                                                         <option selected>Time of service</option>
                                                         <option value="10 am - 12:30 pm">10 am - 12:30 pm</option>
                                                         <option value="11 am - 12:30 pm">11 am - 12:30 pm</option>
@@ -321,17 +384,28 @@ function Home() {
                                                     <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
                                                 </div>
                                                 <div class="mb-3">
-                                                    <input type="text" class="form-control" id="address" placeholder="Address"
-                                                        maxLength="24" onInput={enterAddress} />
+                                                    <input type="text" class="form-control" id="address" placeholder="Address" value={serviceAddress}
+                                                        maxLength="24" onChange={(addr) => setServiceAddress(addr.target.value)} />
                                                 </div>
                                                 <div class="">
                                                     <div class="greif">
                                                         <div class="d-flex gap-3 mb-3">
-                                                            <input type="text" class="form-control greif-input" id="address"
-                                                                placeholder="Person in greif" onInput={griefInput} />
-                                                            <div class="form-control w-auto" onClick={addGriefPerson}><i
+                                                            <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText1} onChange={(prev) => setGriefPersonText1(prev.target.value)} placeholder="Person in greif" />
+                                                            <div class="form-control w-auto" onClick={() => { setGriefPerson1(true) }}><i
                                                                 class="fal fa-plus fa-plus-icon"></i></div>
                                                         </div>
+                                                        {griefPerson1 && (
+                                                            <div class="d-flex gap-3 mb-3">
+                                                                <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText2} onChange={(prev) => setGriefPersonText2(prev.target.value)} placeholder="Person in greif" />
+                                                                <div class="form-control w-auto" onClick={() => { setGriefPerson2(true) }}><i
+                                                                    class="fal fa-plus fa-plus-icon"></i></div>
+                                                            </div>)}
+                                                        {griefPerson2 && (
+                                                            <div class="d-flex gap-3 mb-3">
+                                                                <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText3} onChange={(prev) => setGriefPersonText3(prev.target.value)} placeholder="Person in greif" />
+                                                                <div class="form-control w-auto" onClick={() => { alert("You can not add more then 3") }}><i
+                                                                    class="fal fa-plus fa-plus-icon"></i></div>
+                                                            </div>)}
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
@@ -346,7 +420,7 @@ function Home() {
                                         </div>
                                     </div>
 
-                                    <div class="col-12 d-flex justify-content-center my-4 order-md-2">
+                                    <div class="col-12 d-flex justify-content-center my-4 order-md-2" onClick={handleClick}>
                                         <div class="th-btn fill">Proceed</div>
                                     </div>
                                 </div>
