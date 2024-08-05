@@ -16,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
 import html2canvas from 'html2canvas';
 import { toast } from 'react-toastify'
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase.config'; // Adjust the import according to your file structure
 import { collection, addDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid'
@@ -108,31 +108,7 @@ function Home() {
             reader.readAsDataURL(file);
         }
     }
-    function handleClick() {
-        /*  html2canvas(document.querySelector('.boobit-img'), {
-             scale: 2 // Double the scale for capturing
-         }).then(function (canvas) {
-             // Download the scaled canvas content as an image
-             const link = document.createElement('a');
-             link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
-             link.download = 'boobit-img.jpg'; // Set the filename for download
-             link.click();
-         }).catch(function (error) {
-             toast.error('Error capturing the section:', error);
-         }); */
-        html2canvas(document.querySelector('.boobit-img')).then(function (canvas) {
-            canvas.toBlob(function (blob) {
-                const file = new File([blob], 'post.jpg', { type: 'image/jpg' });
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
-                $('#formFileLg')[0].files = dataTransfer.files;
-            }, 'image/jpg');
-        }).catch(function (error) {
-            console.error('Error capturing the section:', error);
-        });
-    };
-    const [image, setImage] = useState(null);
-    const [url, setUrl] = useState('');
+   
 
    /*  const handleImageChange = (e) => {
         if (e.target.files[0]) {
@@ -183,6 +159,60 @@ function Home() {
     const [griefPersonText1, setGriefPersonText1] = useState(null)
     const [griefPersonText2, setGriefPersonText2] = useState(null)
     const [griefPersonText3, setGriefPersonText3] = useState(null)
+    const [imageUpload, setImageUpload] = useState(null)
+    const [imageUploadUrl, setImageUploadUrl] = useState(null)
+
+
+    function handleClick() {
+        /*  html2canvas(document.querySelector('.boobit-img'), {
+             scale: 2 // Double the scale for capturing
+         }).then(function (canvas) {
+             // Download the scaled canvas content as an image
+             const link = document.createElement('a');
+             link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
+             link.download = 'boobit-img.jpg'; // Set the filename for download
+             link.click();
+         }).catch(function (error) {
+             toast.error('Error capturing the section:', error);
+         }); */
+        html2canvas(document.querySelector('.boobit-img')).then(function (canvas) {
+            canvas.toBlob(function (blob) {
+                const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                $('#formFileLg')[0].files = dataTransfer.files;
+                // const image = $('#formFileLg')[0].files
+                const image = dataTransfer.files
+                // console.log(image[0])
+                setImageUpload(image[0]) 
+                // console.log(dataTransfer.files)
+                if(imageUpload == null){
+                    return false
+                }
+                const storage = getStorage()
+                const imageRef = ref(storage, `images/${uuidv4()}`)
+                uploadBytes(imageRef, imageUpload).then(()=>{
+                  /*   getDownloadURL(imageRef).then((url)=>{
+                        setImageUploadUrl(url)
+                        console.log(imageUploadUrl)
+                    }) */
+                        getDownloadURL(imageRef).then((url) => {
+                            setImageUploadUrl(url);
+                            // console.log('Uploaded Image URL:', url);
+                            // alert('File Uploaded');
+                        }).catch((error) => {
+                            console.error('Error getting download URL:', error);
+                            toast.error('Error getting download URL:', error);
+                        });
+                    alert('File Uplod')
+                })
+                // console.log(dataTransfer.files)
+            }, 'image/jpeg');
+        }).catch(function (error) {
+            console.error('Error capturing the section:', error);
+        });
+    };
+
     return (
         <>
             {/* <!-- Header Section Start --> */}
@@ -434,7 +464,8 @@ function Home() {
                                                         id="up-img" onInput={fileUpload} />
                                                 </div>
 
-                                                <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" />
+                                                {/* <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" /> */}
+                                                <input class="form-control form-control-lg"  id="formFileLg" type="file" />
                                             </form>
                                         </div>
                                     </div>
