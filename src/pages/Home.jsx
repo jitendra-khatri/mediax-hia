@@ -18,7 +18,7 @@ import html2canvas from 'html2canvas';
 import { toast } from 'react-toastify'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase.config'; // Adjust the import according to your file structure
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid'
 function Home() {
     const [user, setUser] = useState(null)
@@ -108,13 +108,13 @@ function Home() {
             reader.readAsDataURL(file);
         }
     }
-   
 
-   /*  const handleImageChange = (e) => {
-        if (e.target.files[0]) {
-            setImage(e.target.files[0]);
-        }
-    }; */
+
+    /*  const handleImageChange = (e) => {
+         if (e.target.files[0]) {
+             setImage(e.target.files[0]);
+         }
+     }; */
     // async function handleClick() {
     //     try {
     //         const canvas = await html2canvas(document.querySelector('.boobit-img'), { scale: 2 });
@@ -160,7 +160,6 @@ function Home() {
     const [griefPersonText2, setGriefPersonText2] = useState(null)
     const [griefPersonText3, setGriefPersonText3] = useState(null)
     const [imageUpload, setImageUpload] = useState(null)
-    const [imageUploadUrl, setImageUploadUrl] = useState(null)
 
 
     function handleClick() {
@@ -184,32 +183,110 @@ function Home() {
                 // const image = $('#formFileLg')[0].files
                 const image = dataTransfer.files
                 // console.log(image[0])
-                setImageUpload(image[0]) 
+                setImageUpload(image[0])
                 // console.log(dataTransfer.files)
-                if(imageUpload == null){
+                if (imageUpload == null) {
                     return false
                 }
                 const storage = getStorage()
                 const imageRef = ref(storage, `images/${uuidv4()}`)
-                uploadBytes(imageRef, imageUpload).then(()=>{
-                  /*   getDownloadURL(imageRef).then((url)=>{
-                        setImageUploadUrl(url)
-                        console.log(imageUploadUrl)
-                    }) */
-                        getDownloadURL(imageRef).then((url) => {
-                            setImageUploadUrl(url);
-                            // console.log('Uploaded Image URL:', url);
-                            // alert('File Uploaded');
-                        }).catch((error) => {
-                            console.error('Error getting download URL:', error);
-                            toast.error('Error getting download URL:', error);
-                        });
-                    alert('File Uplod')
-                })
+                /*  uploadBytes(imageRef, imageUpload).then(() => {
+                     // alert('File Uplod')
+                     const auth = getAuth()
+                     getDownloadURL(imageRef).then(async (url) => {
+                         const listingData = {
+                             name: auth.currentUser.displayName,  // Replace with actual data
+                             gmail: auth.currentUser.email,  // Replace with actual data
+                             dateOfPosting: "",
+                             postStatus: true,
+                             payment: false,
+                             imageUrl: url
+                         };
+ 
+                         try {
+                             const docRef = await setDoc(doc(db, "listings", auth.currentUser.uid), listingData);
+                             console.log("Document written with ID: ", docRef.id);
+                             alert('File Uploaded and Listing Created');
+                         } catch (e) {
+                             console.error("Error adding document: ", e);
+                             toast.error('Error adding document:', e);
+                         }
+                     }).catch((error) => {
+                         console.error('Error getting download URL:', error);
+                         toast.error('Error getting download URL:', error);
+                     });
+                 }) */
+                uploadBytes(imageRef, imageUpload).then(() => {
+                    // File uploaded successfully, now get the download URL
+                   /*  getDownloadURL(imageRef).then(async (url) => {
+                        const auth = getAuth();
+                        const listingData = {
+                            userId: auth.currentUser.uid,  // Replace with actual data
+                            name: auth.currentUser.displayName,  // Replace with actual data
+                            gmail: auth.currentUser.email,  // Replace with actual data
+                            dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }), // Format the date
+                            postStatus: true,
+                            payment: false,
+                            imageUrl: url
+                        };
+                        console.log(listingData)
+                        const docRef = doc(db, "listings", auth.currentUser.uid);
+                        setDoc(docRef, listingData)
+                            .then(() => {
+                                console.log("Document written with ID: ");
+                                alert('File Uploaded and Listing Created'); // Consider using toast instead
+                            })
+                            .catch((error) => {
+                                console.log("Error adding document");
+                                toast.error('Error creating listing');
+                            });
+                    }).catch((error) => {
+                        console.log('Error getting download URL:', error);
+                        toast.error('Error getting download URL:', error.message); // Corrected error display
+                    }); */
+                    getDownloadURL(imageRef).then(async (url) => {
+                        try {
+                            const auth = getAuth();
+                            if (!auth.currentUser) {
+                                throw new Error("User not authenticated");
+                            }
+                    
+                            const listingData = {
+                                userId: auth.currentUser.uid,
+                                name: auth.currentUser.displayName,
+                                gmail: auth.currentUser.email,
+                                dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+                                postStatus: true,
+                                payment: false,
+                                imageUrl: url
+                            };
+                    
+                            console.log(listingData);
+                    
+                            const docRef = doc(db, "listings", auth.currentUser.uid);
+                            await setDoc(docRef, listingData);
+                    
+                            console.log("Document written with ID: ", auth.currentUser.uid);
+                            alert('File Uploaded and Listing Created'); // Consider using toast instead
+                    
+                        } catch (error) {
+                            console.error("Error adding document: ", error);
+                            toast.error('Error creating listing: ' + error.message);
+                        }
+                    }).catch((error) => {
+                        console.error('Error getting download URL:', error);
+                        toast.error('Error getting download URL: ' + error.message);
+                    });
+                    
+                }).catch((error) => {
+                    console.log('Error uploading file:', error);
+                    toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
+                });
+
                 // console.log(dataTransfer.files)
             }, 'image/jpeg');
         }).catch(function (error) {
-            console.error('Error capturing the section:', error);
+            console.log('Error capturing the section:', error);
         });
     };
 
@@ -465,7 +542,7 @@ function Home() {
                                                 </div>
 
                                                 {/* <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" /> */}
-                                                <input class="form-control form-control-lg"  id="formFileLg" type="file" />
+                                                <input class="form-control form-control-lg" id="formFileLg" type="file" />
                                             </form>
                                         </div>
                                     </div>
