@@ -9,6 +9,7 @@ import Header from "../component/Header"
 function MyDatePicker() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [newSlot, setNewSlot] = useState(null);
+  const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false); // New state for disabling the DatePicker
 
   const handleDateChange = async (date) => {
     if (!(date instanceof Date) || isNaN(date)) {
@@ -44,6 +45,8 @@ function MyDatePicker() {
         availableSlot: [1]
       });
     }
+     // Disable the DatePicker after the change is done
+     setIsDatePickerDisabled(true);
   };
 
   return (
@@ -76,7 +79,7 @@ function MyDatePicker() {
                           showMonthDropdown
                           scrollableMonthYearDropdown
                           minDate={new Date()}
-                          
+                          disabled={isDatePickerDisabled} // Disable the DatePicker if the change is done
                         />
                         <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
                       </div>
