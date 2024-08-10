@@ -20,6 +20,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase.config'; // Adjust the import according to your file structure
 import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid'
+import Header from '../component/Header'
 function Home() {
     const [user, setUser] = useState(null)
     const auth = getAuth()
@@ -28,76 +29,7 @@ function Home() {
         setUser(auth.currentUser)
     }, [])
 
-    /*
-    function griefInput() {
-        const griefPerson1 = document.querySelector('.greif-input')
-        let griefPerson1Value = griefPerson1.value
-        document.querySelector('.boobit-greif').textContent = griefPerson1Value
-    }
-    function SetPrefix() {
-        const prefixSelect = document.querySelector('#prefix-select')
-        let prefixSelectValue = prefixSelect.value
-        document.querySelector('.boobit-prefix').textContent = prefixSelectValue
-    } 
-    function SetService() {
-        const prefixSelect = document.querySelector('#service-select')
-        let prefixSelectValue = prefixSelect.value
-        document.querySelector('.boobit-service').textContent = prefixSelectValue
-    }
-    function SetServiceTimeSelect() {
-        const prefixSelect = document.querySelector('#service-time-select')
-        let prefixSelectValue = prefixSelect.value
-        document.querySelector('.boobit-time').textContent = prefixSelectValue
-    }
-    function enterNameOfDeceased() {
-        const nameOfDeceased = document.querySelector('#name-of-deceased')
-        const nameOfDeceasedValue = nameOfDeceased.value
-        document.querySelector('.boobit-n-t').textContent = nameOfDeceasedValue
-    }
-   
-
-    
-    function enterAddress() {
-        const address = document.querySelector('#address')
-        const addressValue = address.value
-        console.log("entering")
-        document.querySelector('.boobit-address').textContent = addressValue;
-    }
-    function addGriefPerson() {
-        // Check the number of input fields
-        if ($('.greif-input').length >= 3) {
-            alert('You can only add up to 3 input fields.');
-            return;
-        }
-        else {
-            var newInput = `
-               <div class="d-flex gap-3 mb-3">
-                    <input type="text" class="form-control greif-input" id="address" placeholder="Person in greif"  onInput={ griefInput}/>
-                        <div class="form-control w-auto" onClick={ addGriefPerson }>
-                        <i class="fal fa-plus fa-plus-icon"></i></div></div>
-            `;
-            $('.greif').append(newInput);
-
-
-
-            $('.greif').on('focusout', '.greif-input', function () {
-                var value = $(this).val().trim();
-                if (value) {
-                    var currentText = $('.boobit-greif').text();
-                    if (currentText) {
-                        currentText += ' | ' + value;
-                    } else {
-                        currentText = value;
-                    }
-                    $('.boobit-greif').text(currentText);
-                }
-            })
-
-        }
-
-
-    }
-    */
+  
     function fileUpload(event) {
         var file = event.target.files[0];
         if (file) {
@@ -109,43 +41,7 @@ function Home() {
         }
     }
 
-
-    /*  const handleImageChange = (e) => {
-         if (e.target.files[0]) {
-             setImage(e.target.files[0]);
-         }
-     }; */
-    // async function handleClick() {
-    //     try {
-    //         const canvas = await html2canvas(document.querySelector('.boobit-img'), { scale: 2 });
-    //         const dataURL = canvas.toDataURL('image/jpg'); // Get the image data as a base64 URL
-    //         const storage = getStorage()
-    //         const storageRef = ref(storage, 'boobit-img.jpg'); // Create a reference to the image file in Firebase Storage
-    //         const auth = getAuth()
-    //         // Upload the base64 URL to Firebase Storage
-    //         await uploadString(storageRef, dataURL, 'data_url');
-    //         const downloadURL = await getDownloadURL(storageRef);
-
-    //         console.log('Uploaded a base64 string!');
-    //         toast.success('Image uploaded successfully!');
-
-    //         // Save the download URL and other data to Firestore
-    //         await addDoc(collection(db, 'listings'), {
-    //             email: auth.currentUser.email, // Save the provided email
-    //             name: auth.currentUser.displayName, // Save the provided number
-    //             imageUrl: downloadURL,
-    //         });
-
-    //         toast.success('Data saved successfully!');
-    //     } catch (error) {
-    //         toast.error('Error:', error);
-    //     }
-    // }
     const navigate = useNavigate()
-    const logoutHandler = () => {
-        auth.signOut()
-        navigate('/sign-in')
-    }
     const [prefix, setPrefix] = useState(null)
     const [nameOfDeceased, setNameOfDeceased] = useState(null)
     const [memoService, setMemoService] = useState(null)
@@ -191,67 +87,13 @@ function Home() {
                 }
                 const storage = getStorage()
                 const imageRef = ref(storage, `images/${uuidv4()}.jpg`)
-                /*  uploadBytes(imageRef, imageUpload).then(() => {
-                     // alert('File Uplod')
-                     const auth = getAuth()
-                     getDownloadURL(imageRef).then(async (url) => {
-                         const listingData = {
-                             name: auth.currentUser.displayName,  // Replace with actual data
-                             gmail: auth.currentUser.email,  // Replace with actual data
-                             dateOfPosting: "",
-                             postStatus: true,
-                             payment: false,
-                             imageUrl: url
-                         };
- 
-                         try {
-                             const docRef = await setDoc(doc(db, "listings", auth.currentUser.uid), listingData);
-                             console.log("Document written with ID: ", docRef.id);
-                             alert('File Uploaded and Listing Created');
-                         } catch (e) {
-                             console.error("Error adding document: ", e);
-                             toast.error('Error adding document:', e);
-                         }
-                     }).catch((error) => {
-                         console.error('Error getting download URL:', error);
-                         toast.error('Error getting download URL:', error);
-                     });
-                 }) */
                 uploadBytes(imageRef, imageUpload).then(() => {
-                    // File uploaded successfully, now get the download URL
-                   /*  getDownloadURL(imageRef).then(async (url) => {
-                        const auth = getAuth();
-                        const listingData = {
-                            userId: auth.currentUser.uid,  // Replace with actual data
-                            name: auth.currentUser.displayName,  // Replace with actual data
-                            gmail: auth.currentUser.email,  // Replace with actual data
-                            dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }), // Format the date
-                            postStatus: true,
-                            payment: false,
-                            imageUrl: url
-                        };
-                        console.log(listingData)
-                        const docRef = doc(db, "listings", auth.currentUser.uid);
-                        setDoc(docRef, listingData)
-                            .then(() => {
-                                console.log("Document written with ID: ");
-                                alert('File Uploaded and Listing Created'); // Consider using toast instead
-                            })
-                            .catch((error) => {
-                                console.log("Error adding document");
-                                toast.error('Error creating listing');
-                            });
-                    }).catch((error) => {
-                        console.log('Error getting download URL:', error);
-                        toast.error('Error getting download URL:', error.message); // Corrected error display
-                    }); */
                     getDownloadURL(imageRef).then(async (url) => {
                         try {
                             const auth = getAuth();
                             if (!auth.currentUser) {
                                 throw new Error("User not authenticated");
                             }
-                    
                             const listingData = {
                                 userId: auth.currentUser.uid,
                                 name: auth.currentUser.displayName,
@@ -294,21 +136,7 @@ function Home() {
     return (
         <>
             {/* <!-- Header Section Start --> */}
-            <header id="header" className='p-4'>
-                {/* <div className="d-flex w-100 gap-3 justify-content-between align-items-center">
-                        <h3 className='m-0'>{user.displayName}</h3> 
-                        <div className="btn btn-danger" onClick={logoutHandler}>Sign Out</div>
-                    </div> */}
-                <div className="">
-                    <div className=""> {user ? (<>
-
-                        <div className="d-flex w-100 gap-3 justify-content-between align-items-center">
-                            <h3 className='m-0'>{user.displayName}</h3>
-                            <div className="btn btn-danger" onClick={logoutHandler}>Sign Out</div>
-                        </div>
-                    </>) : (<Link to='/sign-in' className='btn btn-primary'>Sign In</Link>)}</div>
-                </div>
-            </header>
+            <Header/>
             {/* <!-- Header Section End --> */}
             <main>
                 {/* <!-- Hero Section Start --> */}
