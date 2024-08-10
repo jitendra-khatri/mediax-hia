@@ -48,7 +48,8 @@ function SignUp() {
       await setDoc(doc(db, 'users', user.uid), formDataCopy)
       navigate('/sign-in')
     } catch (error) {
-      toast.error('Something went wrong');
+      console.log(error)
+      toast.error(error.message);
     }
   }
   return (

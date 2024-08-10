@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Privateroute from "./component/Privateroute";
 import Listings from "./pages/Listings";
+import MyDatePicker from './pages/MyDatePicker'
 function App() {
   return (
     <Router>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/listings" element={<Listings/>} />
+        <Route path="/pick-date" element={<MyDatePicker/>} />
       </Routes>
       <ToastContainer/>
     </Router>

@@ -174,14 +174,15 @@ function Home() {
          }).catch(function (error) {
              toast.error('Error capturing the section:', error);
          }); */
-        html2canvas(document.querySelector('.boobit-img')).then(function (canvas) {
+        html2canvas(document.querySelector('.boobit-img'),{  scale: 2 }).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
-                $('#formFileLg')[0].files = dataTransfer.files;
+                // $('#formFileLg')[0].files = dataTransfer.files;
                 // const image = $('#formFileLg')[0].files
                 const image = dataTransfer.files
+                console.log(image[0])
                 // console.log(image[0])
                 setImageUpload(image[0])
                 // console.log(dataTransfer.files)
@@ -189,7 +190,7 @@ function Home() {
                     return false
                 }
                 const storage = getStorage()
-                const imageRef = ref(storage, `images/${uuidv4()}`)
+                const imageRef = ref(storage, `images/${uuidv4()}.jpg`)
                 /*  uploadBytes(imageRef, imageUpload).then(() => {
                      // alert('File Uplod')
                      const auth = getAuth()
@@ -268,7 +269,7 @@ function Home() {
                     
                             console.log("Document written with ID: ", auth.currentUser.uid);
                             alert('File Uploaded and Listing Created'); // Consider using toast instead
-                    
+                            navigate('/pick-date')
                         } catch (error) {
                             console.error("Error adding document: ", error);
                             toast.error('Error creating listing: ' + error.message);
