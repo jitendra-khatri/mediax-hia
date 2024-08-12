@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Privateroute from "./component/Privateroute";
 import Listings from "./pages/Listings";
 import MyDatePicker from './pages/MyDatePicker'
+import Payment from "./pages/Payment";
 function App() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/listings" element={<Listings/>} />
         <Route path="/pick-date" element={<MyDatePicker/>} />
+        <Route path="/payment" element={<Payment/>} />
       </Routes>
       <ToastContainer/>
     </Router>

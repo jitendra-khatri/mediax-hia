@@ -5,22 +5,31 @@ import { toast } from "react-toastify"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import Header from "../component/Header"
+import { getAuth } from "firebase/auth"
+import { useNavigate } from "react-router-dom"
 
 function MyDatePicker() {
+  const navigate = useNavigate()
   const [selectedDate, setSelectedDate] = useState(null);
   const [newSlot, setNewSlot] = useState(null);
-  const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false); // New state for disabling the DatePicker
+  // const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false); // New state for disabling the DatePicker
 
-  const handleDateChange = async (date) => {
+  const onSubmitDate = async (e) => {
+    e.preventDefault()
+    const date = selectedDate
     if (!(date instanceof Date) || isNaN(date)) {
       console.error("Invalid date selected");
       return;
     }
-    setSelectedDate(date);
+    // setSelectedDate(date);
 
-    const formattedDate = date.toISOString().split('T')[0]; // Formatting date for the document ID
+    // const formattedDate = date.toISOString().split('T')[0]; // Formatting date for the document ID
+    const formattedDate = date.toLocaleDateString('en-CA'); // 'en-CA' format: 'YYYY-MM-DD'
+
+    // alert(formattedDate)
     const docRef = doc(db, 'bookedSlot', formattedDate);
     const docSnap = await getDoc(docRef);
+    let newSlot;
 
     if (docSnap.exists()) {
       const availableSlots = docSnap.data().availableSlot || [];
@@ -29,24 +38,34 @@ function MyDatePicker() {
         toast.error('All slots booked for this date');
       } else {
         const lastSlot = availableSlots.length > 0 ? Math.max(...availableSlots) : 0;
-        const nextSlot = lastSlot + 1;
+        newSlot  = lastSlot + 1;
 
-        if (nextSlot <= 8) {
-          setNewSlot(nextSlot);
+        if (newSlot  <= 8) {
+          // setNewSlot(nextSlot);
           await updateDoc(docRef, {
-            availableSlot: [...availableSlots, nextSlot]
+            availableSlot: [...availableSlots, newSlot]
           });
         }
       }
     } else {
-      setNewSlot(1);
+      // setNewSlot(1);
+      newSlot = 1
       await setDoc(docRef, {
         date: date,
-        availableSlot: [1]
+        availableSlot: [newSlot]
       });
     }
-     // Disable the DatePicker after the change is done
-     setIsDatePickerDisabled(true);
+    // Disable the DatePicker after the change is done
+    // setIsDatePickerDisabled(true);
+    // Update the listings collection with the new date and slot
+    const auth = getAuth()
+    const listingRef = doc(db, 'listings', auth.currentUser.uid); // Replace 'yourListingId' with the correct listing ID
+    await updateDoc(listingRef, {
+      dateOfPosting: date,
+      slotNumber: newSlot,
+    });
+
+    navigate('/payment')
   };
 
   return (
@@ -67,10 +86,10 @@ function MyDatePicker() {
               <div class="row">
                 <div class="col-md-12 order-md-0">
                   <div class="boobit-right">
-                    <form action="" method="post">
+                    <form onSubmit={onSubmitDate}>
                       <div class="mb-3">
                         <DatePicker
-                          onChange={handleDateChange}
+                          onChange={(date) => setSelectedDate(date)}
                           selected={selectedDate}
                           dateFormat="dd/MM/yyyy"
                           className='date form-control'
@@ -79,10 +98,13 @@ function MyDatePicker() {
                           showMonthDropdown
                           scrollableMonthYearDropdown
                           minDate={new Date()}
-                          disabled={isDatePickerDisabled} // Disable the DatePicker if the change is done
+                        // disabled={isDatePickerDisabled} // Disable the DatePicker if the change is done
                         />
                         <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
                       </div>
+                      {selectedDate && (<div className="d-flex justify-content-center mt-3">
+                        <button class="th-btn fill">Proceed</button>
+                      </div>)}
                     </form>
                   </div>
                 </div>

@@ -100,6 +100,7 @@ function Home() {
                                 gmail: auth.currentUser.email,
                                 dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
                                 postStatus: true,
+                                slotNumber:0,
                                 payment: false,
                                 imageUrl: url
                             };
