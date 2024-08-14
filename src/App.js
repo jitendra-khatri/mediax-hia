@@ -10,6 +10,7 @@ import Privateroute from "./component/Privateroute";
 import Listings from "./pages/Listings";
 import MyDatePicker from './pages/MyDatePicker'
 import Payment from "./pages/Payment";
+import Dashboard from "./pages/Dashboard";
 function App() {
   return (
     <Router>
@@ -24,6 +25,8 @@ function App() {
         <Route path="/listings" element={<Listings/>} />
         <Route path="/pick-date" element={<MyDatePicker/>} />
         <Route path="/payment" element={<Payment/>} />
+        <Route path="/admin/dashboard" element={<Dashboard/>} />
+        <Route path="/admin/sign-in" element={<SignIn/>} />
       </Routes>
       <ToastContainer/>
     </Router>
