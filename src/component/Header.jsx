@@ -7,7 +7,7 @@ function Header() {
     const auth = getAuth()
     const navigate = useNavigate()
     useEffect(() => {
-        console.log(auth.currentUser)
+        // console.log(auth.currentUser)
         setUser(auth.currentUser)
     }, [])
     const logoutHandler = () => {
@@ -25,7 +25,7 @@ function Header() {
                 <div className=""> {user ? (<>
 
                     <div className="d-flex w-100 gap-3 justify-content-between align-items-center">
-                        <h3 className='m-0'>{user.displayName}</h3>
+                        <h3 className='m-0'><Link to='/admin/dashboard'>{user.displayName}</Link></h3>
                         <div className="btn btn-danger" onClick={logoutHandler}>Sign Out</div>
                     </div>
                 </>) : (<Link to='/sign-in' className='btn btn-primary'>Sign In</Link>)}</div>

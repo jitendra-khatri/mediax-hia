@@ -14,7 +14,7 @@
 }
 
 body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 a {
@@ -187,7 +187,11 @@ p {
     background-color: var(--white);
     border-radius: 16px;
 }
-
+.imageUrl{
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
 #boobit-img {
     width: 464px;
     padding: 40px 0px;
@@ -524,6 +528,16 @@ form .mb-3 {
     background-color: var(--white);
 }
 
+.admin-sidebar .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0;
+}
+
+
 .admin-main {
     background-color: #FAFAFA;
     width: 100%;
@@ -551,8 +565,8 @@ form .mb-3 {
     background-color: #01B4BC45;
 }
 
-header {
-    padding: 20px;
+.admin-main header {
+    padding: 20px 30px;
     background-color: var(--white);
     border-bottom: 1px solid #CFCFCF
 }
@@ -566,27 +580,31 @@ header {
     width: 100%;
     max-width: 60px;
 }
-.napr-name .name{
+
+.napr-name .name {
     font-family: var(--font-family-nunito);
-font-size: 20px;
-font-weight: 700;
-line-height: 140%;
-text-align: left;
-color: #404040;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 140%;
+    text-align: left;
+    color: #404040;
 }
-.napr-name .admin{
+
+.napr-name .admin {
     font-family: var(--font-family-nunito);
-font-size: 16px;
-font-weight: 500;
-line-height: 140%;
-text-align: left;
-color: #565656;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+    text-align: left;
+    color: #565656;
 }
-.nav-search .form-control{
-    padding: 15px 15px 15px 50px ;
+
+.nav-search .form-control {
+    padding: 15px 15px 15px 50px;
 
 }
-.nav-search form .fal{
+
+.nav-search form .fal {
     position: absolute;
     top: 50%;
     left: 15px;
@@ -594,29 +612,182 @@ color: #565656;
     font-size: 20px;
     color: #7B7B7D;
 }
-.nav-search form{
+
+.nav-search form {
     display: flex;
     justify-content: space-between;
     position: relative;
     font-size: 20px;
     color: #7B7B7D;
 }
-.nav-search form input{
+
+.nav-search form input {
     background-color: #F5F6FA;
     border-radius: 50px;
     border: 1px solid #7B7B7D;
 }
-.nav-search form input::placeholder{
+
+.nav-search form input::placeholder {
     color: #7B7B7D;
 
 }
-.post-listing{
+
+.post-listing {
     padding: 50px;
 }
-.post-listing h1{
-font-family: var(--font-family-nunito);
-font-weight: 700;
-font-size: 32px;
-margin-bottom: 20px;
+
+.post-listing h1 {
+    font-family: var(--font-family-nunito);
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 20px;
 }
+
+.sorting-feature {
+    display: flex;
+    justify-content: space-evenly;
+    /* padding: 20px; */
+    background-color: var(--white);
+    border: 2px solid #f1f1f1;
+    border-radius: 5px;
+}
+
+.sor-heading {
+    font-family: var(--font-family-nunito);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 140%;
+    text-align: left;
+}
+
+.sor-date {
+    position: relative;
+}
+
+.sor-date .sor-icon {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    transform: translateY(50%);
+    font-size: 14px;
+}
+
+.sor-date .form-select,
+.sor-date .form-control {
+    width: 100%;
+    padding: 10px 15px;
+    max-width: 185px;
+    min-width: 100px;
+    font-size: 14px;
+}
+
+.sort-by-date {
+    padding: 20px 0px;
+}
+
+.sor-border {
+    border-left: 1px solid #f1f1f1;
+    margin: 0px 20px;
+}
+
+/* .sort-by-date.mid {
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+} */
+.sort-by-date .th-btn {
+    min-width: auto;
+    padding: 7px 30px;
+    border-radius: 0px;
+}
+
+/* User Data Box Start  */
+.user-data-head{
+    background-color: #F1F4F9;
+    padding: 20px 0px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border: 0.6px solid #D5D5D5;
+}
+.usdahe-text {
+    /* text-transform: uppercase; */
+    text-align: center;
+    font-family: var(--font-family-nunito);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 140%;
+}
+.user-data-list-item{
+    padding: 20px 0px;
+    background-color: var(--white);
+    border-bottom:0.6px solid rgba(213, 213, 213, 0.5) ;
+}
+.user-data-list-item .user-slot{
+    font-family: var(--font-family-nunito);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 140%;
+    text-align: center;
+    color: #8B8B8B;
+}
+.user-data-list-item .user-name,
+.user-data-list-item .user-date{
+    font-family: var(--font-family-nunito);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 140%;
+    text-align: center;
+    color: #202224;
+
+}
+.user-data-list-item .user-status, .user-data-list-item .user-payment{
+    font-family: var(--font-family-nunito);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 140%;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 22px;
+    max-width: 100px;
+    margin: auto;
+}
+.user-data-list-item .user-status.posted{
+    background-color: #00B69B24;
+    color: #00B69B;
+}
+.user-data-list-item .user-status.pending{
+    background-color: #F9F6D7;
+    color: #E2BC2A;
+}
+.user-data-list-item .user-payment.paid{
+background-color: #C7FFD9;
+color: #28643B;
+}
+.user-data-list-item .user-payment.un-paid{
+background-color: #FFE4E4;
+color: #A6373E;
+}
+.user-action .fal{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    color: #989898;
+    border: 0.5px solid #E9E9E9;
+    cursor: pointer;
+    transition: all .5s;
+}
+.user-action .fal:hover{
+    background-color: rgba(152, 152, 152, 0.2);
+    color: #000000;
+}
+.user-action .delete-action .fal{
+    border: 0.5px solid #D30000;
+    color: #D30000;
+}
+.user-action .delete-action .fal:hover{
+    background-color: rgba(211, 0, 0, 0.25);
+    color: #ff0000;
+}
+/* User Data Box End  */
 /* ------------- Admin Dashboard Section End ------------- */

@@ -25,7 +25,7 @@ function Home() {
     const [user, setUser] = useState(null)
     const auth = getAuth()
     useEffect(() => {
-        console.log(auth.currentUser)
+        // console.log(auth.currentUser)
         setUser(auth.currentUser)
     }, [])
 
@@ -59,17 +59,7 @@ function Home() {
 
 
     function handleClick() {
-        /*  html2canvas(document.querySelector('.boobit-img'), {
-             scale: 2 // Double the scale for capturing
-         }).then(function (canvas) {
-             // Download the scaled canvas content as an image
-             const link = document.createElement('a');
-             link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
-             link.download = 'boobit-img.jpg'; // Set the filename for download
-             link.click();
-         }).catch(function (error) {
-             toast.error('Error capturing the section:', error);
-         }); */
+        
         html2canvas(document.querySelector('.boobit-img'),{  scale: 2 }).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
@@ -95,11 +85,12 @@ function Home() {
                                 throw new Error("User not authenticated");
                             }
                             const listingData = {
+                                listingCreated:true,
                                 userId: auth.currentUser.uid,
                                 name: auth.currentUser.displayName,
                                 gmail: auth.currentUser.email,
                                 dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-                                postStatus: true,
+                                postStatus: false,
                                 slotNumber:0,
                                 payment: false,
                                 imageUrl: url
@@ -132,6 +123,17 @@ function Home() {
         }).catch(function (error) {
             console.log('Error capturing the section:', error);
         });
+        /*  html2canvas(document.querySelector('.boobit-img'), {
+             scale: 2 // Double the scale for capturing
+         }).then(function (canvas) {
+             // Download the scaled canvas content as an image
+             const link = document.createElement('a');
+             link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
+             link.download = 'boobit-img.jpg'; // Set the filename for download
+             link.click();
+         }).catch(function (error) {
+             toast.error('Error capturing the section:', error);
+         }); */
     };
 
     return (
