@@ -18,29 +18,10 @@ import html2canvas from 'html2canvas';
 import { toast } from 'react-toastify'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db } from '../firebase.config'; // Adjust the import according to your file structure
-import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, setDoc, doc, getDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid'
 import Header from '../component/Header'
 function Home() {
-    const [user, setUser] = useState(null)
-    const auth = getAuth()
-    useEffect(() => {
-        // console.log(auth.currentUser)
-        setUser(auth.currentUser)
-    }, [])
-
-  
-    function fileUpload(event) {
-        var file = event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#boobit-up-img').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(file);
-        }
-    }
-
     const navigate = useNavigate()
     const [prefix, setPrefix] = useState(null)
     const [nameOfDeceased, setNameOfDeceased] = useState(null)
@@ -56,11 +37,104 @@ function Home() {
     const [griefPersonText2, setGriefPersonText2] = useState(null)
     const [griefPersonText3, setGriefPersonText3] = useState(null)
     const [imageUpload, setImageUpload] = useState(null)
+    const [user, setUser] = useState(null)
+    const [listingDataCheck, setListingDataCheck] = useState()
+    const [listingExists, setListingExists] = useState(false)
+    const auth = getAuth()
+    useEffect(() => {
+        setUser(auth.currentUser)
+        // const fetchData = async()=>{
+        //     const docRef =  doc(db, 'listings', auth.currentUser.uid)
+        //     const docSnap = await getDoc(docRef)
 
+        //     if(docSnap.exists()){
+        //         console.log(docSnap.data())
+        //         setListingExists(true)
+        //         setListingDataCheck(docSnap.data())
+        //     }
+        // }
+        // fetchData()
+    }, [])
+
+
+    function fileUpload(event) {
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#boobit-up-img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    
 
     function handleClick() {
-        
-        html2canvas(document.querySelector('.boobit-img'),{  scale: 2 }).then(function (canvas) {
+        html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
+            canvas.toBlob(function (blob) {
+                const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                const image = dataTransfer.files;
+    
+                // Use image[0] directly instead of waiting for state update
+                if (image[0] == null) {
+                    return false;
+                }
+    
+                const storage = getStorage();
+                const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
+                uploadBytes(imageRef, image[0]).then(() => {
+                    getDownloadURL(imageRef).then(async (url) => {
+                        try {
+                            const auth = getAuth();
+                            if (!auth.currentUser) {
+                                throw new Error("User not authenticated");
+                            }
+                            const listingData = {
+                                listingCreated: true,
+                                userId: auth.currentUser.uid,
+                                name: auth.currentUser.displayName,
+                                gmail: auth.currentUser.email,
+                                dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+                                postStatus: false,
+                                slotNumber: 0,
+                                payment: false,
+                                imageUrl: url
+                            };
+    
+                            console.log(listingData);
+    
+                            const docRef = doc(db, "listings", auth.currentUser.uid);
+                            await setDoc(docRef, listingData);
+    
+                            console.log("Document written with ID: ", auth.currentUser.uid);
+                            alert('File Uploaded and Listing Created'); // Consider using toast instead
+                            navigate('/pick-date');
+                        } catch (error) {
+                            console.error("Error adding document: ", error);
+                            toast.error('Error creating listing: ' + error.message);
+                        }
+                    }).catch((error) => {
+                        console.error('Error getting download URL:', error);
+                        toast.error('Error getting download URL: ' + error.message);
+                    });
+    
+                }).catch((error) => {
+                    console.log('Error uploading file:', error);
+                    toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
+                });
+    
+            }, 'image/jpeg');
+        }).catch(function (error) {
+            console.log('Error capturing the section:', error);
+        });
+    }
+    
+   /*  function handleClick() {
+
+        html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
                 const dataTransfer = new DataTransfer();
@@ -85,22 +159,22 @@ function Home() {
                                 throw new Error("User not authenticated");
                             }
                             const listingData = {
-                                listingCreated:true,
+                                listingCreated: true,
                                 userId: auth.currentUser.uid,
                                 name: auth.currentUser.displayName,
                                 gmail: auth.currentUser.email,
                                 dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
                                 postStatus: false,
-                                slotNumber:0,
+                                slotNumber: 0,
                                 payment: false,
                                 imageUrl: url
                             };
-                    
+
                             console.log(listingData);
-                    
+
                             const docRef = doc(db, "listings", auth.currentUser.uid);
                             await setDoc(docRef, listingData);
-                    
+
                             console.log("Document written with ID: ", auth.currentUser.uid);
                             alert('File Uploaded and Listing Created'); // Consider using toast instead
                             navigate('/pick-date')
@@ -112,7 +186,7 @@ function Home() {
                         console.error('Error getting download URL:', error);
                         toast.error('Error getting download URL: ' + error.message);
                     });
-                    
+
                 }).catch((error) => {
                     console.log('Error uploading file:', error);
                     toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
@@ -123,30 +197,30 @@ function Home() {
         }).catch(function (error) {
             console.log('Error capturing the section:', error);
         });
-        /*  html2canvas(document.querySelector('.boobit-img'), {
-             scale: 2 // Double the scale for capturing
-         }).then(function (canvas) {
-             // Download the scaled canvas content as an image
-             const link = document.createElement('a');
-             link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
-             link.download = 'boobit-img.jpg'; // Set the filename for download
-             link.click();
-         }).catch(function (error) {
-             toast.error('Error capturing the section:', error);
-         }); */
-    };
+        //  html2canvas(document.querySelector('.boobit-img'), {
+        //      scale: 2 // Double the scale for capturing
+        //  }).then(function (canvas) {
+        //      // Download the scaled canvas content as an image
+        //      const link = document.createElement('a');
+        //      link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
+        //      link.download = 'boobit-img.jpg'; // Set the filename for download
+        //      link.click();
+        //  }).catch(function (error) {
+        //      toast.error('Error capturing the section:', error);
+        //  }); 
+    }; */
 
     return (
         <>
             {/* <!-- Header Section Start --> */}
-            <Header/>
+            <Header />
             {/* <!-- Header Section End --> */}
             <main>
                 {/* <!-- Hero Section Start --> */}
-                <section class="hero">
+                <section className={`hero ${listingExists?'d-none':' '}`}>
                     <div class="container-xxl">
                         <div class="row justify-content-center">
-                            <div class="col-lg-7 col-md-8 col-sm-10">
+                            <div class="col-md-8 col-sm-10">
                                 <h1>Register Obituary on Agra's Most Happening Community Page</h1>
                             </div>
                             <div class="col-12"><img src={hero} class="w-100" alt="" /></div>
@@ -156,7 +230,7 @@ function Home() {
                 {/* <!-- Hero Section End --> */}
 
                 {/* <!-- How It Works Section Start --> */}
-                <section class="how-it-works">
+                <section className={`how-it-works ${listingExists?'d-none':' '}`}>
                     <div class="container-xxl">
                         <div class="hoitwo-box">
                             <div class="mb-3 mb-sm-5 text-center">
@@ -197,12 +271,13 @@ function Home() {
                             <div class="boobit-box">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6 col-md-8 col-sm-10">
-                                        <h2 class="text-center mb-4">Book an Obituary</h2>
-                                        <p class="text-center mb-4">Provide details and upload an image to create a personalised
-                                            obituary. Fill the form below.</p>
+                                        <h2 class="text-center mb-4">{listingExists? 'You have created Obituary':'Book an Obituary'}</h2>
+                                        <p class="text-center mb-4">Provide details and upload an image to create a personalised obituary. Fill the form below.</p>
+                                       {/* {listingExists &&(<div className="text-center"><img src={listingDataCheck?.imageUrl} alt="" className="w-50" /></div>)} */}
                                     </div>
                                 </div>
-                                <div class="row">
+
+                                <div className={`row ${listingExists?'d-none':' '}`}>
                                     <div class="col-md-7 order-md-1">
                                         <div class="boobit-left d-flex flex-column mb-5">
                                             <div id="boobit-img" class="boobit-img">
@@ -374,7 +449,7 @@ function Home() {
                                                 </div>
 
                                                 {/* <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" /> */}
-                                                <input class="form-control form-control-lg" id="formFileLg" type="file" />
+                                                {/* <input class="form-control form-control-lg" id="formFileLg" type="file" /> */}
                                             </form>
                                         </div>
                                     </div>

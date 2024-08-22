@@ -30,7 +30,7 @@ function OAuth({ img }) {
             }
             navigate('/')
         } catch (error) {
-            toast.error('Somthing went wrong')
+            toast.error(error.message)
         }
     }
     return (
