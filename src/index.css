@@ -321,7 +321,14 @@ p {
 form .mb-3 {
     position: relative;
 }
-
+.form-label{
+    color: #2E2E2E;
+    font-family: var(--font-family);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 144%;
+}
 .form-control,
 .form-select {
     padding: 22px;
@@ -645,7 +652,7 @@ form .mb-3 {
 
 .sorting-feature {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     /* padding: 20px; */
     background-color: var(--white);
     border: 2px solid #f1f1f1;

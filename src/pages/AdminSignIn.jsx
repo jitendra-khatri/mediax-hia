@@ -5,6 +5,8 @@ import { useState } from "react"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { toast } from "react-toastify"
 import OAuth from "../component/OAuth"
+import { db } from "../firebase.config"
+import { getDoc, doc } from "firebase/firestore"
 
 function AdminSignIn() {
        const [passToggle, setPassToggle] = useState(false)
@@ -31,7 +33,19 @@ function AdminSignIn() {
                      const auth = getAuth()
                      const userCredential = await signInWithEmailAndPassword(auth, email, password)
                      if (userCredential.user) {
-                            navigate('/')
+                            const checkAdmin = async()=>{
+                                   const userRef = doc(db, 'users', userCredential.user.uid)
+                                   const userSnap = await getDoc(userRef)
+                                   if(userSnap.exists()){
+                                          if(userSnap.data().admin){
+                                                 navigate('/admin/dashboard')
+                                          }
+                                          else{
+                                                 toast.error('You are not admin')
+                                          }
+                                   }
+                            }
+                            checkAdmin()
                      }
               } catch (error) {
                      toast.error('Bad User Credential');
@@ -68,19 +82,19 @@ function AdminSignIn() {
                                                                <button type="submit" className="th-btn fill w-100">Sign in</button>
                                                         </form>
 
-                                                        <div className="dont-have">
+                                                        {/* <div className="dont-have">
                                                                <p className="m-0">Don't have an account? <Link to="/sign-up">Sign up</Link></p>
                                                                <div className="terms">
                                                                       By signing in you accept the.
                                                                       <Link to='/terms-of-services'>
                                                                              Terms of Services
-                                                                      </Link> 
+                                                                      </Link>
                                                                       <span> and </span>
                                                                       <Link to='/privacy-policy'>
-                                                                              Privacy Policy
+                                                                             Privacy Policy
                                                                       </Link>.
                                                                </div>
-                                                        </div>
+                                                        </div> */}
                                                  </div>
                                           </div>
                                    </div>

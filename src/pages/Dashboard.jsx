@@ -2,13 +2,21 @@ import hiaLogo from '../assets/logo.png'
 import adminImg from '../assets/admin.png'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth';
 import { collection, getDocs, query, where, orderBy, limit, startAfter } from 'firebase/firestore';
 import { db } from '../firebase.config'
-function Dashboard() {
+import { useAuthAdmin } from "../hooks/useAuthAdmin";
+import { toast } from 'react-toastify';
 
+function Dashboard() {
+    const navigate = useNavigate()
+    const { chechAdmin } = useAuthAdmin()
+    if (!chechAdmin) {
+        /* toast.error('You are not Admin') */
+        navigate('/')
+    }
     const [allListingData, setAllListingData] = useState()
     const [navToggle, setNavToggle] = useState(false)
     const [monthSort, setMonthSort] = useState()
@@ -17,6 +25,8 @@ function Dashboard() {
     const [dateOfDeath, setDateOfDeath] = useState()
     const [status, setStatus] = useState()
     const auth = getAuth()
+    const [sortField, setSortField] = useState('name'); // Default sort by name
+    const [searchTerm, setSearchTerm] = useState(''); // Search term
 
     useEffect(() => {
         const fetchListings = async () => {
@@ -29,11 +39,35 @@ function Dashboard() {
             });
 
             setAllListingData(listings); // Update state with the fetched data
-            console.log(allListingData)
+            // console.log(allListingData)
         };
 
         fetchListings();
     }, []); // Add empty dependency array to run effect only once
+
+    useEffect(() => {
+        const fetchListings = async () => {
+            const docRef = collection(db, 'listings')
+            let q = query(
+                docRef,
+                orderBy(sortField, 'asc')
+            );
+            if (dateOfDeath) {
+                const startOfMonth = new Date(dateOfDeath.getFullYear(), dateOfDeath.getMonth(), 1);
+                const endOfMonth = new Date(dateOfDeath.getFullYear(), dateOfDeath.getMonth() + 1, 0);
+
+                q = query(docRef, where('dateOfPosting', '>=', startOfMonth), where('dateOfPosting', '<=', endOfMonth));
+            }
+            const querySnapshot = await getDocs(q);
+            const listings = [];
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() }); // Collect each document's data
+            });
+            setAllListingData(listings);
+        };
+
+        fetchListings();
+    }, [sortField, dateOfDeath]);
 
     const formatDate = (timestamp) => {
         const date = timestamp.toDate(); // Convert Firestore timestamp to JavaScript Date
@@ -48,6 +82,10 @@ function Dashboard() {
     // Usage
     /*  const formattedDate = formatDate(listingData.dateOfPosting);
      console.log(formattedDate); // e.g., "21-Aug-2024" */
+    const logOutHandler = () => {
+        auth.signOut()
+        navigate('/admin/sign-in')
+    }
 
     return (
         <>
@@ -60,7 +98,7 @@ function Dashboard() {
                                 <div className="admin-logo"><img src={hiaLogo} alt="" /></div>
                                 <div className="ad-tab-box mt-3 p-3">
                                     <div className="ad-tab-btn active"><i class="fal me-3 fa-tachometer-alt-fast"></i><span>Dashboard</span></div>
-                                    <div className="ad-tab-btn"><i class="fal me-3 fa-power-off"></i><span>Logout</span></div>
+                                    <div className="ad-tab-btn" onClick={logOutHandler}><i class="fal me-3 fa-power-off"></i><span>Logout</span></div>
                                 </div>
                             </div>
                         </div>
@@ -73,13 +111,26 @@ function Dashboard() {
                                     <div className="nav-search">
                                         <form>
                                             <i class="fal fa-search"></i>
-                                            <input type="text" placeholder='Search' className='form-control inp-search' />
+                                            <input
+                                                type="text"
+                                                placeholder='Search'
+                                                className='form-control inp-search'
+                                                value={searchTerm}
+                                                onChange={(e) => setSearchTerm(e.target.value)}
+                                            />
+                                            {/* <select onChange={(e) => setSearchField(e.target.value)} value={searchField}>
+                                                <option value="name">Name</option>
+                                                <option value="email">Email</option>
+                                                <option value="dateOfPosting">Date of Posting</option>
+                                                <option value="payment">Payment</option>
+                                                <option value="postStatus">Post Status</option>
+                                            </select> */}
                                         </form>
                                     </div>
                                     <div className="nav-profile d-flex align-items-center gap-3">
-                                        <div className="napr-img"><img src={adminImg} alt="" /></div>
+                                        {/* <div className="napr-img"><img src={adminImg} alt="" /></div> */}
                                         <div className="napr-name">
-                                            <div className="name">Moni Roy</div><div className="admin">Admin</div>
+                                            <div className="name">{auth.currentUser.displayName}</div><div className="admin">Admin</div>
                                         </div>
                                     </div>
                                 </div>
@@ -98,10 +149,7 @@ function Dashboard() {
                                                 className='date form-control'
                                                 placeholderText='Select Month'
                                                 showMonthYearPicker
-                                                // showYearDropdown
-                                                // showMonthDropdown
-                                                // scrollableMonthYearDropdown
-                                                maxDate={new Date()}
+                                            // maxDate={new Date()}
                                             />
                                             <div class="sor-icon"><i class="far fa-chevron-down"></i></div>
                                         </div>
@@ -149,21 +197,27 @@ function Dashboard() {
                                     <div className="sor-border"></div>
                                     <form className="sort-by-date d-flex align-items-center gap-3 pe-3">
                                         <div className="d-flex align-items-center flex-wrap gap-3">
-                                            <div className="sor-heading">Status</div>
+                                            <div className="sor-heading">Sort:</div>
                                             <div className="sor-date">
-                                                <select class="form-select" id="status-select" value={status} onChange={(sta) => setStatus(sta.target.value)}>
+                                                <select class="form-select" id="status-select" onChange={(e) => setSortField(e.target.value)} value={sortField}>
+                                                    <option value="name">Name</option>
+                                                    <option value="dateOfPosting">Date of Posting</option>
+                                                    <option value="payment">Payment</option>
+                                                    <option value="postStatus">Post Status</option>
+                                                </select>
+                                                {/* <select class="form-select" id="status-select" value={sortField} onChange={(sta) => setSortField(sta.target.value)}>
                                                     <option selected>Status</option>
                                                     <option value="Paid">Paid</option>
                                                     <option value="Unpaid">Unpaid</option>
                                                     <option value="Posted">Posted</option>
                                                     <option value="Not-Posted">Not Posted</option>
-                                                </select>
+                                                </select> */}
                                             </div>
                                         </div>
 
-                                        <div className="">
+                                        {/* <div className="">
                                             <button type='submit' className='th-btn fill'>Filter</button>
-                                        </div>
+                                        </div> */}
                                     </form>
                                 </div>
                                 <div className="user-data-box mt-5">

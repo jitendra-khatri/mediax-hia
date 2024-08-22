@@ -1,426 +1,130 @@
-import hero from '../assets/hero.jpg'
-import work1 from '../assets/work-1.png'
-import work2 from '../assets/work-2.png'
-import work3 from '../assets/work-3.png'
-import work4 from '../assets/work-4.png'
-import workRight from '../assets/work-right.png'
-import profile from '../assets/profile.jpg'
-import happenImg from '../assets/happen-img.png'
-import upImg from '../assets/up-img.png'
-import React, { useEffect, useState } from 'react'
-import $ from 'jquery'
-import { getAuth } from 'firebase/auth'
-import { Link, useNavigate } from 'react-router-dom'
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { format } from 'date-fns'
-import html2canvas from 'html2canvas';
-import { toast } from 'react-toastify'
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db } from '../firebase.config'; // Adjust the import according to your file structure
-import { collection, addDoc, setDoc, doc, getDoc } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid'
-import Header from '../component/Header'
-function Home() {
-    const [user, setUser] = useState(null)
-    const [listingCreated,setListingCreated] = useState(false)
-    const [listingData,setListingData] = useState(null)
-    const auth = getAuth()
+import { getDoc, doc } from "firebase/firestore";
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { db } from "../firebase.config";
+import { useAuthAdmin } from "../hooks/useAuthAdmin";
+import { toast } from "react-toastify";
+import Spinner from "../component/Spinner";
+function EditListing() {
+    const { listingId } = useParams();
+    const [editData, setEditData] = useState(null);
+    const navigate = useNavigate();
+    const { checkAdmin } = useAuthAdmin(); // Fixed the typo here
+
     useEffect(() => {
-        // console.log(auth.currentUser)
-        setUser(auth.currentUser)
-
-       const fetchData = async() =>{
-        const docRef = doc(db, 'listings', auth.currentUser.uid)
-        const docSnap = await getDoc(docRef)
-        if(docSnap.exists()){
-            setListingData(docSnap.data())
-            setListingCreated(true)
+        if (!checkAdmin) {
+            toast.error('You are not Admin');
+            navigate('/');
+            return; // Early return if not admin
         }
-       }
-       fetchData()
-    }, [])
+    }, [checkAdmin]);
 
-  
-    function fileUpload(event) {
-        var file = event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#boobit-up-img').attr('src', e.target.result);
+    useEffect(() => {
+        const fetchEditData = async () => {
+            try {
+                const docRef = doc(db, 'listings', listingId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setEditData(docSnap.data());
+                } else {
+                    toast.error("Listing not found");
+                    navigate('/'); // Navigate away if the listing doesn't exist
+                }
+            } catch (error) {
+                toast.error(error.message);
             }
-            reader.readAsDataURL(file);
-        }
+        };
+
+        fetchEditData();
+    }, [listingId]);
+
+    const formatDate = (timestamp) => {
+        if (!timestamp) return ''; // Handle undefined or null timestamps
+        const date = timestamp.toDate();
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        }).replace(/\./g, ''); // Remove dots after the abbreviated month
+    };
+
+    if (!editData) {
+        return Spinner; // Show a loading state until data is fetched
     }
 
-    const navigate = useNavigate()
-    const [prefix, setPrefix] = useState(null)
-    const [nameOfDeceased, setNameOfDeceased] = useState(null)
-    const [memoService, setMemoService] = useState(null)
-    const [serviceTime, setServiceTime] = useState(null)
-    const [serviceAddress, setServiceAddress] = useState(null)
-    const [dateOfBirth, setDateOfBirth] = useState(null)
-    const [dateOfDeath, setDateOfDeath] = useState(null)
-    const [dateOfService, setDateOfService] = useState(null)
-    const [griefPerson1, setGriefPerson1] = useState(false)
-    const [griefPerson2, setGriefPerson2] = useState(false)
-    const [griefPersonText1, setGriefPersonText1] = useState(null)
-    const [griefPersonText2, setGriefPersonText2] = useState(null)
-    const [griefPersonText3, setGriefPersonText3] = useState(null)
-    const [imageUpload, setImageUpload] = useState(null)
-
-
-    function handleClick() {
-        const confirm = window.confirm("Please check all the details which you have filled. You cannot request to edit post")
-        if(!confirm){
-            return false
-        }
-        /*  html2canvas(document.querySelector('.boobit-img'), {
-             scale: 2 // Double the scale for capturing
-         }).then(function (canvas) {
-             // Download the scaled canvas content as an image
-             const link = document.createElement('a');
-             link.href = canvas.toDataURL('image/jpg'); // Set the image format (e.g., 'image/jpeg')
-             link.download = 'boobit-img.jpg'; // Set the filename for download
-             link.click();
-         }).catch(function (error) {
-             toast.error('Error capturing the section:', error);
-         }); */
-        html2canvas(document.querySelector('.boobit-img'),{  scale: 2 }).then(function (canvas) {
-            canvas.toBlob(function (blob) {
-                const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
-                // $('#formFileLg')[0].files = dataTransfer.files;
-                // const image = $('#formFileLg')[0].files
-                const image = dataTransfer.files
-                console.log(image[0])
-                // console.log(image[0])
-                setImageUpload(image[0])
-                // console.log(dataTransfer.files)
-                if (imageUpload == null) {
-                    return false
-                }
-                const storage = getStorage()
-                const imageRef = ref(storage, `images/${uuidv4()}.jpg`)
-                uploadBytes(imageRef, imageUpload).then(() => {
-                    getDownloadURL(imageRef).then(async (url) => {
-                        try {
-                            const auth = getAuth();
-                            if (!auth.currentUser) {
-                                throw new Error("User not authenticated");
-                            }
-                            const listingData = {
-                                userId: auth.currentUser.uid,
-                                name: auth.currentUser.displayName,
-                                gmail: auth.currentUser.email,
-                                dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-                                postStatus: true,
-                                slotNumber:0,
-                                payment: false,
-                                imageUrl: url
-                            };
-                    
-                            console.log(listingData);
-                    
-                            const docRef = doc(db, "listings", auth.currentUser.uid);
-                            await setDoc(docRef, listingData);
-                    
-                            console.log("Document written with ID: ", auth.currentUser.uid);
-                            alert('File Uploaded and Listing Created'); // Consider using toast instead
-                            navigate('/pick-date')
-                        } catch (error) {
-                            console.error("Error adding document: ", error);
-                            toast.error('Error creating listing: ' + error.message);
-                        }
-                    }).catch((error) => {
-                        console.error('Error getting download URL:', error);
-                        toast.error('Error getting download URL: ' + error.message);
-                    });
-                    
-                }).catch((error) => {
-                    console.log('Error uploading file:', error);
-                    toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
-                });
-
-                // console.log(dataTransfer.files)
-            }, 'image/jpeg');
-        }).catch(function (error) {
-            console.log('Error capturing the section:', error);
-        });
-    };
-    const formatDate = (timestamp) => {
-        const date = timestamp.toDate(); // Convert Firestore timestamp to JavaScript Date
-        const formattedDate = date.toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'short', // This gives abbreviated month (e.g., "Aug")
-            year: 'numeric',
-        });
-        return formattedDate.replace(/\./g, ''); // To remove dots after month abbreviation
-    };
-
     return (
-        <>
-            {/* <!-- Header Section Start --> */}
-            <Header/>
-            {/* <!-- Header Section End --> */}
-            <main>
-                {/* <!-- Hero Section Start --> */}
-                <section class="hero">
-                    <div class="container-xxl">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-7 col-md-8 col-sm-10">
-                                <h1>Register Obituary on Agra's Most Happening Community Page</h1>
-                            </div>
-                            <div class="col-12"><img src={hero} class="w-100" alt="" /></div>
+        <div className="row justify-content-center mt-5">
+            <h1 className="text-center mb-5">Edit {editData && editData.name}'s Listing </h1>
+            <div class="col-md-5 order-md-0">
+                <div class="boobit-right">
+                    <form>
+                        <div class="mb-3">
+                            <label htmlFor="" className="form-label">Slot No:</label>
+                            <input type="text" class="form-control" disabled={true} value={editData && editData.slotNumber} />
                         </div>
-                    </div>
-                </section>
-                {/* <!-- Hero Section End --> */}
-
-                {/* <!-- How It Works Section Start --> */}
-                <section class="how-it-works">
-                    <div class="container-xxl">
-                        <div class="hoitwo-box">
-                            <div class="mb-3 mb-sm-5 text-center">
-                                <h2>How it works</h2>
-                            </div>
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <div class="row justify-content-around">
-                                        <div class="col-sm-5 p-0">
-                                            <div class="hoitwo-con">
-                                                <div class="hoitwo-img p-2"><img src={work1} alt="" class="w-100" /></div>
-                                                <div class="hoitwo-img p-2"><img src={work2} alt="" class="w-100" /></div>
-                                                <div class="hoitwo-img p-2"><img src={work3} alt="" class="w-100" /></div>
-                                                <div class="hoitwo-img p-2"><img src={work4} alt="" class="w-100" /></div>
-                                            </div>
-                                            <div class="mt-2 text-center d-flex">
-                                                <a href="#book-obituary" class="th-btn fill">Register Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 mt-4 mt-sm-0 p-0"><img src={workRight} alt="" class="w-100" /></div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label htmlFor="" className="form-label">Name:</label>
+                            <input type="text" class="form-control" disabled={true} value={editData && editData.name} />
                         </div>
-                        <div class="hoitwo-pera">
-                            <p>We understand the importance of honoring the lives of those who have passed away, and our
-                                platform offers a compassionate space for you to share their stories. </p>
+                        <div class="mb-3">
+                            <label htmlFor="" className="form-label">Email:</label>
+                            <input type="text" class="form-control" disabled={true} value={editData && editData.gmail} />
                         </div>
-                    </div>
-                </section>
-                {/* <!-- How It Works Section End --> */}
-
-
-                {/* <!-- Book an Obituary Section Start --> */}
-                <section class="book-obituary" id="book-obituary">
-                    <div class="container-xxl">
-                        <div class="boobit-container">
-                            <div class="boobit-box">
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-6 col-md-8 col-sm-10">
-                                        <h2 class="text-center mb-4">{listingCreated? "Your listing have already been created": 'Book an Obituary'} </h2>
-                                        <p class="text-center mb-4">
-                                            {listingCreated?`Your obituary posting date is - ${formatDate(listingData.dateOfPosting)}`:'Provide details and upload an image to create a personalised obituary. Fill the form below.'}
-                                        </p>
-                                    </div>
-                                    {listingCreated && (<div className="col-12 text-center"><img src={listingData.imageUrl} alt="" className="imageUrl" /></div>)}
-                                </div>
-                                <div className={`row ${listingCreated? 'd-none': ''}`}>
-                                    <div class="col-md-7 order-md-1">
-                                        <div class="boobit-left d-flex flex-column mb-5">
-                                            <div id="boobit-img" class="boobit-img">
-                                                <div class="boobit-head">in loving memory of </div>
-                                                <div class="boobit-img"><img src={profile} class="w-100"
-                                                    id="boobit-up-img" alt="" /></div>
-                                                <div class="boobit-text">
-                                                    <div class="boobit-name">
-                                                        <div class="boobit-prefix">{prefix ? prefix : 'Mr.'}</div>
-                                                        <div class="boobit-n-t">{nameOfDeceased ? nameOfDeceased : 'Kalash Singh'}</div>
-                                                    </div>
-                                                    <div class="boobit-life-spam">
-                                                        <div class="boobit-date-of-birth">
-                                                            {dateOfBirth ? format(dateOfBirth, 'do MMMM, yyyy') : '20th April, 1883'}
-                                                            {/* {dateOfBirth? dateOfBirth.toLocaleDateString('en-GB') : '20th April, 1883'} */}
-                                                        </div>
-                                                        <div class="">-</div>
-                                                        <div class="boobit-date-of-death">
-                                                            {dateOfDeath ? format(dateOfDeath, 'do MMMM, yyyy') : '19th April, 1945'}
-                                                        </div>
-                                                    </div>
-                                                    <div class="boobit-service">{memoService ? memoService : 'Memorial Service'}</div>
-                                                    <div class="boobit-details">
-                                                        <div class="boobit-time"> {serviceTime ? serviceTime : '10am - 12:30pm'}</div>
-                                                        <div class="">|</div>
-                                                        <div class="boobit-date">
-                                                            {dateOfService ? format(dateOfService, 'do MMMM, yyyy') : '20th April, 1883'}
-                                                        </div>
-                                                        <div class="">|</div>
-                                                        <div class="boobit-address">{serviceAddress ? serviceAddress : 'Surya Nagar Mandir, Agra'}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="boobit-h-grif">
-                                                    In Grief
-                                                </div>
-                                                <div class="boobit-greif">
-
-                                                    {griefPersonText1 ? `${griefPersonText1} | ` : 'Natasha Singh | '}
-                                                    {griefPersonText2 ? ` ${griefPersonText2}` : ' Prem Singh'}
-                                                    {griefPersonText3 ? ` | ${griefPersonText3}` : ''}
-                                                </div>
-                                                <div class="boobit-happening">
-                                                    <img src={happenImg} alt="" class="w-100" id="happening-img" />
-                                                </div>
-                                            </div>
-                                            {/* <div id="apply-change" onClick={handleClick} class="th-btn outline">
-                                                Apply Changes
-                                            </div> */}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5 order-md-0">
-                                        <div class="boobit-right">
-                                            <form action="" method="post">
-                                                <div class="mb-3">
-                                                    <select class="form-select" name="prefix" id="prefix-select" value={prefix} onChange={(pfix) => setPrefix(pfix.target.value)}>
-                                                        <option selected>Select Prefix</option>
-                                                        <option value="Mr.">Mr.</option>
-                                                        <option value="Mrs.">Mrs.</option>
-                                                        <option value="Miss">Miss</option>
-                                                        <option value="Ms.">Ms.</option>
-                                                        <option value="Shri">Shri</option>
-                                                        <option value="Sri">Sri</option>
-                                                    </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" maxLength='21' id="name-of-deceased" value={nameOfDeceased}
-                                                        placeholder="Name of deceased" onChange={(prev) => setNameOfDeceased(prev.target.value)} />
-                                                </div>
-                                                <div class="mb-3">
-                                                    <DatePicker
-                                                        selected={dateOfBirth}
-                                                        onChange={(date) => setDateOfBirth(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        className='date form-control'
-                                                        placeholderText='Date of Birth'
-                                                        showYearDropdown
-                                                        showMonthDropdown
-                                                        scrollableMonthYearDropdown
-                                                        maxDate={new Date()}
-                                                    />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    {/* <input type="text" class="date form-control" id="dateOfBirth"
-                                                        placeholder="Date of Birth" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
-                                                </div>
-                                                <div class="mb-3">
-                                                    <DatePicker
-                                                        selected={dateOfDeath}
-                                                        onChange={(date) => setDateOfDeath(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        className='date form-control'
-                                                        placeholderText='Date of Death'
-                                                        showYearDropdown
-                                                        showMonthDropdown
-                                                        scrollableMonthYearDropdown
-                                                        maxDate={new Date()}
-                                                    />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    {/* <input type="text" class="date form-control" id="date-of-death"
-                                                        placeholder="Date of Death" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
-                                                </div>
-                                                <div class="mb-3">
-                                                    <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
-                                                        <option selected>Service</option>
-                                                        <option value="Memorial1">Memorial1</option>
-                                                        <option value="Memorial2">Memorial2</option>
-                                                        <option value="Memorial3">Memorial3</option>
-                                                        <option value="Memorial4">Memorial4</option>
-                                                    </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <select class="form-select" id="service-time-select" value={serviceTime} onChange={(time) => setServiceTime(time.target.value)}>
-                                                        <option selected>Time of service</option>
-                                                        <option value="10 am - 12:30 pm">10 am - 12:30 pm</option>
-                                                        <option value="11 am - 12:30 pm">11 am - 12:30 pm</option>
-                                                        <option value="12 am - 12:30 pm">12 am - 12:30 pm</option>
-                                                    </select>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <DatePicker
-                                                        selected={dateOfService}
-                                                        onChange={(date) => setDateOfService(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        className='date form-control'
-                                                        placeholderText='Date of Service'
-                                                        showYearDropdown
-                                                        showMonthDropdown
-                                                        scrollableMonthYearDropdown
-                                                        minDate={new Date()}
-                                                    />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    {/* <input type="text" class="date form-control" id="date-of-service"
-                                                        placeholder="Date of Service" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
-                                                </div>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" id="address" placeholder="Address" value={serviceAddress}
-                                                        maxLength="24" onChange={(addr) => setServiceAddress(addr.target.value)} />
-                                                </div>
-                                                <div class="">
-                                                    <div class="greif">
-                                                        <div class="d-flex gap-3 mb-3">
-                                                            <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText1} onChange={(prev) => setGriefPersonText1(prev.target.value)} placeholder="Person in greif" />
-                                                            <div class="form-control w-auto" onClick={() => { setGriefPerson1(true) }}><i
-                                                                class="fal fa-plus fa-plus-icon"></i></div>
-                                                        </div>
-                                                        {griefPerson1 && (
-                                                            <div class="d-flex gap-3 mb-3">
-                                                                <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText2} onChange={(prev) => setGriefPersonText2(prev.target.value)} placeholder="Person in greif" />
-                                                                <div class="form-control w-auto" onClick={() => { setGriefPerson2(true) }}><i
-                                                                    class="fal fa-plus fa-plus-icon"></i></div>
-                                                            </div>)}
-                                                        {griefPerson2 && (
-                                                            <div class="d-flex gap-3 mb-3">
-                                                                <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText3} onChange={(prev) => setGriefPersonText3(prev.target.value)} placeholder="Person in greif" />
-                                                                <div class="form-control w-auto" onClick={() => { alert("You can not add more then 3") }}><i
-                                                                    class="fal fa-plus fa-plus-icon"></i></div>
-                                                            </div>)}
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label htmlFor="up-img" class="up-img">
-                                                        <img src={upImg} alt="" />
-                                                    </label>
-                                                    <input class="form-control position-fixed opacity-0" type="file"
-                                                        id="up-img" onInput={fileUpload} />
-                                                </div>
-
-                                                {/* <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" /> */}
-                                                <input class="form-control form-control-lg" id="formFileLg" type="file" />
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 d-flex justify-content-center my-4 order-md-2" onClick={handleClick}>
-                                        <div class="th-btn fill">Proceed</div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label htmlFor="" className="form-label">Date of Posting:</label>
+                            <input type="text" class="form-control" disabled={true} value={formatDate(editData && editData.dateOfPosting)} />
                         </div>
-                    </div>
-                </section>
-                {/* <!-- Book an Obituary Section End --> */}
+                        <div class="mb-3">
+                            <select class="form-select" name="postStatus" id="postStatus" >
+                                <option selected>Select Payment</option>
+                                <option value="true">Paid</option>
+                                <option value="false">Unpaid</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" name="payment" id="payment" >
+                                <option selected>Select Payment</option>
+                                <option value="true">Paid</option>
+                                <option value="false">Unpaid</option>
+                            </select>
+                        </div>
 
-
-
-
-
-            </main>
-        </>
+                        {/* <div class="mb-3">
+                            <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
+                                <option selected>Service</option>
+                                <option value="Memorial1">Memorial1</option>
+                                <option value="Memorial2">Memorial2</option>
+                                <option value="Memorial3">Memorial3</option>
+                                <option value="Memorial4">Memorial4</option>
+                            </select>
+                        </div> */}
+                        {/* <div class="mb-3">
+                            <select class="form-select" id="service-time-select" value={serviceTime} onChange={(time) => setServiceTime(time.target.value)}>
+                                <option selected>Time of service</option>
+                                <option value="10 am - 12:30 pm">10 am - 12:30 pm</option>
+                                <option value="11 am - 12:30 pm">11 am - 12:30 pm</option>
+                                <option value="12 am - 12:30 pm">12 am - 12:30 pm</option>
+                            </select>
+                        </div> */}
+                    </form>
+                </div>
+            </div>
+        </div>
     )
 }
 
-export default Home
+export default EditListing
+
+
+const listing = {
+    dateOfPosting:23 August 2024 at 00:00:00 UTC+5:30,
+    gmail:"hello@mediax.co.in",
+    imageUrl:"https://firebasestorage.googleapis.com/v0/b/happening-in-agra.appspot.com/o/images%2F58a1f0d7-ecf1-4e14-8924-b4e96c1dd404.jpg?alt=media&token=72dd9df3-4482-4b0e-9971-529e5bfd6256",
+    listingCreated:true,
+    name:"Yash",
+    payment:false,
+    postStatus:false,
+    slotNumber:2,
+    userId:"GrBuHzOdRtc8egfdkwXr4dEKmL93"
+}
