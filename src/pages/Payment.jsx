@@ -105,7 +105,7 @@ function Payment() {
   return (
     <div>
       Payment
-      <button onClick={()=> createRazorpayOrder(100)} > Payment of 100 Rs.</button>
+      <button onClick={()=> createRazorpayOrder(50)} > Payment of 100 Rs.</button>
       {responseId && <p>{responseId}</p>}
       <h1> This is payment verification form </h1>
       <form onSubmit={paymentFetch}>
