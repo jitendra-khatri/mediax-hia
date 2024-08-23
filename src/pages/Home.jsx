@@ -43,17 +43,17 @@ function Home() {
     const auth = getAuth()
     useEffect(() => {
         setUser(auth.currentUser)
-        // const fetchData = async()=>{
-        //     const docRef =  doc(db, 'listings', auth.currentUser.uid)
-        //     const docSnap = await getDoc(docRef)
+        const fetchData = async()=>{
+            const docRef =  doc(db, 'listings', auth.currentUser.uid)
+            const docSnap = await getDoc(docRef)
 
-        //     if(docSnap.exists()){
-        //         console.log(docSnap.data())
-        //         setListingExists(true)
-        //         setListingDataCheck(docSnap.data())
-        //     }
-        // }
-        // fetchData()
+            if(docSnap.exists()){
+                console.log(docSnap.data())
+                setListingExists(true)
+                setListingDataCheck(docSnap.data())
+            }
+        }
+        fetchData()
     }, [])
 
 

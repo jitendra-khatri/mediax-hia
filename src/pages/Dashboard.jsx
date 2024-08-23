@@ -281,12 +281,12 @@ function Dashboard() {
                                                                     </a>
                                                                 </div>
                                                                 <div className="edit-action">
-                                                                    <Link to={`/admin/edit/${auth.currentUser.uid}`}>
+                                                                    <Link to={`/admin/edit/${data.userId}`}>
                                                                         <i className="fal fa-edit"></i>
                                                                     </Link>
                                                                 </div>
                                                                 <div className="delete-action">
-                                                                    <Link to={`/admin/delete/${auth.currentUser.uid}`}>
+                                                                    <Link to={`/admin/delete/${data.userId}`}>
                                                                         <i className="fal fa-trash-alt"></i>
                                                                     </Link>
                                                                 </div>
