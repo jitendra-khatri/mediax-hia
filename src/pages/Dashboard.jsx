@@ -69,6 +69,27 @@ function Dashboard() {
         fetchListings();
     }, [sortField, dateOfDeath]);
 
+    useEffect(() => {
+        const fetchListings = async () => {
+          const querySnapshot = await getDocs(collection(db, 'listings'));
+          const listings = [];
+            querySnapshot.forEach((doc) => {
+                listings.push({ id: doc.id, ...doc.data() }); // Collect each document's data
+            });
+         // Apply search filter here
+         const filteredListings = listings.filter(listing => 
+            listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            listing.gmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            listing.dateOfPosting.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        setAllListingData(filteredListings);
+            // setAllListingData(listings);
+
+        };
+    
+        fetchListings();
+      }, [searchTerm]);
     const formatDate = (timestamp) => {
         const date = timestamp.toDate(); // Convert Firestore timestamp to JavaScript Date
         const formattedDate = date.toLocaleDateString('en-GB', {

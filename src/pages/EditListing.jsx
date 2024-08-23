@@ -61,8 +61,8 @@ function EditListing() {
             toast.error('Error updating document: ', error);
         }
     };
-    // Send the post email using FormSubmit
-    /* const sendPostEmail = async (email, link) => {
+    /* // Send the post email using FormSubmit
+    const sendPostEmail = async (email, link) => {
         try {
             const response = await fetch('https://formsubmit.co/ajax/jitender.work.mediax@gmail.com', {
                 method: 'POST',
@@ -86,6 +86,24 @@ function EditListing() {
             toast.error('Error sending email: ', error);
         }
     }; */
+    // Send the post email when the status is updated to "Posted"
+//   const sendPostEmail = async (email, link) => {
+//     try {
+//       await emailjs.send(
+//         'service_x7mez2i', // Replace with your EmailJS service ID
+//         'template_ycse5id', // Replace with your EmailJS template ID
+//         {
+//           to_email: email,
+//           post_link: link,
+//           message: `Your image has been posted and here is the link: ${link}`,
+//         },
+//         'YOUR_USER_ID' // Replace with your EmailJS user ID
+//       );
+//       alert('Email sent successfully!');
+//     } catch (error) {
+//       console.error('Error sending email: ', error);
+//     }
+//   };
     return (
         <div>
             <div className="row justify-content-center mt-5">
@@ -118,7 +136,7 @@ function EditListing() {
                                 </select>
 
                             </div>
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label htmlFor="" className="form-label">Post Link:</label>
                                 <input
                                     type="text"
@@ -127,7 +145,7 @@ function EditListing() {
                                     onChange={(e)=>setPostLink(e.target.value)}
                                     placeholder="Enter post link"
                                 />
-                            </div>
+                            </div> */}
                             <div className="mb-3">
                                 <label htmlFor="" className="form-label">Payment:</label>
                                 <select className="form-select" name="payment" value={payment} onChange={handlePaymentChange}>
