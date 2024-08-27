@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
-
+import Header from '../component/Header'
 function EditListing() {
     const [editData, setEditData] = useState(null)
     const [payment, setPayment] = useState(editData ? editData.payment : '');
@@ -106,7 +106,8 @@ function EditListing() {
 //   };
     return (
         <div>
-            <div className="row justify-content-center mt-5">
+            <Header/>
+            <div className="row justify-content-center my-5">
                 <h1 className="text-center my-5">Edit {editData && editData.name}'s Listing </h1>
                 <div class="col-md-5 order-md-0">
                     <div class="boobit-right">

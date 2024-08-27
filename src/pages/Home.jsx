@@ -1,4 +1,5 @@
-import hero from '../assets/hero.jpg'
+import hero from '../assets/hero-banner.jpg'
+import heroMobile from '../assets/hero-banner-mobile.jpg'
 import work1 from '../assets/work-1.png'
 import work2 from '../assets/work-2.png'
 import work3 from '../assets/work-3.png'
@@ -101,7 +102,8 @@ function Home() {
                                 postStatus: false,
                                 slotNumber: 0,
                                 payment: false,
-                                imageUrl: url
+                                imageUrl: url,
+                                paymentResponseId:'No Id Yet',
                             };
     
                             console.log(listingData);
@@ -223,7 +225,10 @@ function Home() {
                             <div class="col-md-8 col-sm-10">
                                 <h1>Register Obituary on Agra's Most Happening Community Page</h1>
                             </div>
-                            <div class="col-12"><img src={hero} class="w-100" alt="" /></div>
+                            <div class="col-12">
+                                <img src={hero} class="d-none d-sm-block w-100" alt="" />
+                                <img src={heroMobile} class="d-block d-sm-none w-100" alt="" />
+                            </div>
                         </div>
                     </div>
                 </section>

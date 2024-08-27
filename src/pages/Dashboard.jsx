@@ -9,7 +9,7 @@ import { collection, getDocs, query, where, orderBy, limit, startAfter } from 'f
 import { db } from '../firebase.config'
 import { useAuthAdmin } from "../hooks/useAuthAdmin";
 import { toast } from 'react-toastify';
-
+import axios from 'axios';
 function Dashboard() {
     const navigate = useNavigate()
     const { chechAdmin } = useAuthAdmin()
@@ -27,6 +27,7 @@ function Dashboard() {
     const auth = getAuth()
     const [sortField, setSortField] = useState('name'); // Default sort by name
     const [searchTerm, setSearchTerm] = useState(''); // Search term
+    const [responseState, setResponseState] = useState({});
 
     useEffect(() => {
         const fetchListings = async () => {
@@ -39,7 +40,7 @@ function Dashboard() {
             });
 
             setAllListingData(listings); // Update state with the fetched data
-            // console.log(allListingData)
+            console.log(allListingData)
         };
 
         fetchListings();
@@ -71,25 +72,25 @@ function Dashboard() {
 
     useEffect(() => {
         const fetchListings = async () => {
-          const querySnapshot = await getDocs(collection(db, 'listings'));
-          const listings = [];
+            const querySnapshot = await getDocs(collection(db, 'listings'));
+            const listings = [];
             querySnapshot.forEach((doc) => {
                 listings.push({ id: doc.id, ...doc.data() }); // Collect each document's data
             });
-         // Apply search filter here
-         const filteredListings = listings.filter(listing => 
-            listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            listing.gmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            listing.dateOfPosting.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+            // Apply search filter here
+            const filteredListings = listings.filter(listing =>
+                listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                listing.gmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                listing.dateOfPosting.toLowerCase().includes(searchTerm.toLowerCase())
+            );
 
-        setAllListingData(filteredListings);
+            setAllListingData(filteredListings);
             // setAllListingData(listings);
 
         };
-    
+
         fetchListings();
-      }, [searchTerm]);
+    }, [searchTerm]);
     const formatDate = (timestamp) => {
         const date = timestamp.toDate(); // Convert Firestore timestamp to JavaScript Date
         const formattedDate = date.toLocaleDateString('en-GB', {
@@ -100,6 +101,20 @@ function Dashboard() {
         return formattedDate.replace(/\./g, ''); // To remove dots after month abbreviation
     };
 
+    const paymentFetch = (e) => {
+        e.preventDefault();
+        const paymentId = e.target.paymentId.value;
+
+        axios.get(`http://localhost:5000/payment/${paymentId}`)
+            .then((response) => {
+                console.log(response.data);
+                setResponseState(response.data);
+            })
+            .catch((error) => {
+                console.log('Error occurred', error);
+                toast.error('Failed to fetch payment details.');
+            });
+    };
     // Usage
     /*  const formattedDate = formatDate(listingData.dateOfPosting);
      console.log(formattedDate); // e.g., "21-Aug-2024" */
@@ -130,7 +145,7 @@ function Dashboard() {
                                 <div className="nav-btn" onClick={() => setNavToggle((pre) => !pre)}><i class="fas fa-bars"></i></div>
                                 <div className="nav-main d-flex align-items-center gap-4 gap-lg-5">
                                     <div className="nav-search">
-                                        <form>
+                                        {/* <form>
                                             <i class="fal fa-search"></i>
                                             <input
                                                 type="text"
@@ -139,14 +154,14 @@ function Dashboard() {
                                                 value={searchTerm}
                                                 onChange={(e) => setSearchTerm(e.target.value)}
                                             />
-                                            {/* <select onChange={(e) => setSearchField(e.target.value)} value={searchField}>
+                                            <select onChange={(e) => setSearchField(e.target.value)} value={searchField}>
                                                 <option value="name">Name</option>
                                                 <option value="email">Email</option>
                                                 <option value="dateOfPosting">Date of Posting</option>
                                                 <option value="payment">Payment</option>
                                                 <option value="postStatus">Post Status</option>
-                                            </select> */}
-                                        </form>
+                                            </select>
+                                        </form> */}
                                     </div>
                                     <div className="nav-profile d-flex align-items-center gap-3">
                                         {/* <div className="napr-img"><img src={adminImg} alt="" /></div> */}
@@ -175,7 +190,7 @@ function Dashboard() {
                                             <div class="sor-icon"><i class="far fa-chevron-down"></i></div>
                                         </div>
                                     </div>
-                                    <div className="sor-border"></div>
+                                    {/* <div className="sor-border"></div>
                                     <div className="sort-by-date mid d-flex align-items-center gap-3">
                                         <div className="d-flex align-items-center flex-wrap gap-3">
                                             <div className="sor-heading">From</div>
@@ -214,7 +229,7 @@ function Dashboard() {
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> */}
                                     <div className="sor-border"></div>
                                     <form className="sort-by-date d-flex align-items-center gap-3 pe-3">
                                         <div className="d-flex align-items-center flex-wrap gap-3">
@@ -244,13 +259,13 @@ function Dashboard() {
                                 <div className="user-data-box mt-5">
                                     <div className="user-data-head">
                                         <div className="row">
-                                            <div className="col-2">
+                                            <div className="col-1">
                                                 <div className="usdahe-text">Slot no.</div>
                                             </div>
                                             <div className="col-2">
                                                 <div className="usdahe-text">Name</div>
                                             </div>
-                                            <div className="col-2">
+                                            <div className="col-1">
                                                 <div className="usdahe-text">Date to post </div>
                                             </div>
                                             <div className="col-2">
@@ -258,6 +273,9 @@ function Dashboard() {
                                             </div>
                                             <div className="col-2">
                                                 <div className="usdahe-text">Payment</div>
+                                            </div>
+                                            <div className="col-2">
+                                                <div className="usdahe-text">Payment Id</div>
                                             </div>
                                             <div className="col-2">
                                                 <div className="usdahe-text">Action</div>
@@ -269,7 +287,7 @@ function Dashboard() {
                                             allListingData.map((data, index) => (
                                                 <div className="user-data-list-item" key={index}>
                                                     <div className="row align-items-center">
-                                                        <div className="col-2">
+                                                        <div className="col-1">
                                                             <div className="user-slot">
                                                                 {data.slotNumber}
                                                             </div>
@@ -279,7 +297,7 @@ function Dashboard() {
                                                                 {data.name}
                                                             </div>
                                                         </div>
-                                                        <div className="col-2">
+                                                        <div className="col-1">
                                                             <div className="user-date">
                                                                 {formatDate(data.dateOfPosting)}
                                                             </div>
@@ -292,6 +310,11 @@ function Dashboard() {
                                                         <div className="col-2">
                                                             <div className={`user-payment ${data.payment ? 'paid' : 'un-paid'}`}>
                                                                 {data.payment ? 'Paid' : 'Unpaid'}
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-2">
+                                                            <div className='user-date'>
+                                                                {data.paymentResponseId}
                                                             </div>
                                                         </div>
                                                         <div className="col-2">
@@ -370,6 +393,27 @@ function Dashboard() {
                                                 </div>
                                             </div>
                                         ))} */}
+                                    </div>
+                                </div>
+
+                                <hr className='my-5' />
+                                <div className="container-xxl">
+                                    <div className="row justify-content-center">
+                                        <div className="col-md-5 text-center">
+                                            <form onSubmit={paymentFetch}>
+                                                <h2>Check Payment Method</h2>
+                                                <input type="text" name='paymentId' id='paymentId' className='form-control p-3 mb-3' />
+                                                <button className="th-btn fill w-100" type='submit'> Fetch Payment</button>
+                                                <div className='mt-4'>
+                                                    <ul className='list-unstyled'>
+                                                        <li>Amount: {responseState.amount / 100} Rs.</li>
+                                                        <li>Currency: {responseState.currency}</li>
+                                                        <li>Status: {responseState.status}</li>
+                                                        <li>Method: {responseState.method}</li>
+                                                    </ul>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
