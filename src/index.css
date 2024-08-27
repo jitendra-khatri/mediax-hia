@@ -115,15 +115,118 @@ p {
 /* ------------- Base Section End ------------- */
 
 /* Header Section Start ------------------------------ */
-.header {
-    height: 107px;
-    background: var(--whitesmoke);
+#header {
+    background: #F5F5F5;
+    padding: 20px;
+}
+
+#header .nav-brand {
+    max-width: 80px;
+}
+
+#header .sign-out .fas,
+#header .sign-in .fas {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 22px;
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+    border-radius: 50%;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+#header .sign-out .fas:hover,
+#header .sign-in .fas:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+#header .sign-up {
+    background-color: var(--primary);
+    border-radius: 10px;
+    padding: 12px 25px;
+    color: var(--black);
+    border: 1px solid var(--primary);
+    font-weight: 500;
+    transition: all .5s;
+}
+
+#header .sign-up:hover {
+    background-color: var(--white);
 }
 
 /* ------------- Header Section End ------------- */
+/* Footer Section Start ------------------------------ */
+footer {
+    background-color: var(--secondary);
+    padding: 50px 0px;
+}
+
+footer p {
+    color: var(--white);
+}
+
+footer .hia-insta,
+footer .foot-brand {
+    max-width: 200px;
+    margin: auto;
+}
+.foot-link{
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.foot-link h4 {
+    font-family: var(--font-family);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 140%;
+    letter-spacing: 1px;
+color: var(--white);
+}
+
+.foot-link ul {
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-top: 30px !important;
+}
+
+.foot-link ul li {
+    margin-top: 15px;
+}
+
+.foot-link ul li a {
+    color: var(--white);
+    transition: all .5s;
+}
+.foot-link .fas{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid var(--white);
+    background-color: transparent;
+    transition: all .5s;
+}
+.foot-link a:hover .fas{
+    background-color: var(--white);
+    color: var(--secondary);
+}
+/* ------------- Footer Section End ------------- */
+
 
 
 /* Hero Section Start ------------------------------ */
+.hero {
+    margin-bottom: 80px;
+}
+
 .hero h1 {
     padding: 30px;
     text-align: center;
@@ -168,7 +271,7 @@ p {
 }
 
 .hoitwo-pera p {
-    margin: 0;
+    margin: auto;
     text-align: center;
     max-width: 900px;
 }
@@ -187,11 +290,13 @@ p {
     background-color: var(--white);
     border-radius: 16px;
 }
-.imageUrl{
+
+.imageUrl {
     width: 100%;
     max-width: 400px;
     margin: auto;
 }
+
 #boobit-img {
     width: 464px;
     padding: 40px 0px;
@@ -321,7 +426,8 @@ p {
 form .mb-3 {
     position: relative;
 }
-.form-label{
+
+.form-label {
     color: #2E2E2E;
     font-family: var(--font-family);
     font-size: 18px;
@@ -329,6 +435,7 @@ form .mb-3 {
     font-weight: 600;
     line-height: 144%;
 }
+
 .form-control,
 .form-select {
     padding: 22px;
@@ -708,13 +815,14 @@ form .mb-3 {
 }
 
 /* User Data Box Start  */
-.user-data-head{
+.user-data-head {
     background-color: #F1F4F9;
     padding: 20px 0px;
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
     border: 0.6px solid #D5D5D5;
 }
+
 .usdahe-text {
     /* text-transform: uppercase; */
     text-align: center;
@@ -723,12 +831,14 @@ form .mb-3 {
     font-weight: 600;
     line-height: 140%;
 }
-.user-data-list-item{
+
+.user-data-list-item {
     padding: 20px 0px;
     background-color: var(--white);
-    border-bottom:0.6px solid rgba(213, 213, 213, 0.5) ;
+    border-bottom: 0.6px solid rgba(213, 213, 213, 0.5);
 }
-.user-data-list-item .user-slot{
+
+.user-data-list-item .user-slot {
     font-family: var(--font-family-nunito);
     font-size: 14px;
     font-weight: 700;
@@ -736,8 +846,9 @@ form .mb-3 {
     text-align: center;
     color: #8B8B8B;
 }
+
 .user-data-list-item .user-name,
-.user-data-list-item .user-date{
+.user-data-list-item .user-date {
     font-family: var(--font-family-nunito);
     font-size: 14px;
     font-weight: 600;
@@ -746,7 +857,9 @@ form .mb-3 {
     color: #202224;
 
 }
-.user-data-list-item .user-status, .user-data-list-item .user-payment{
+
+.user-data-list-item .user-status,
+.user-data-list-item .user-payment {
     font-family: var(--font-family-nunito);
     font-size: 14px;
     font-weight: 600;
@@ -757,23 +870,28 @@ form .mb-3 {
     max-width: 100px;
     margin: auto;
 }
-.user-data-list-item .user-status.posted{
+
+.user-data-list-item .user-status.posted {
     background-color: #00B69B24;
     color: #00B69B;
 }
-.user-data-list-item .user-status.pending{
+
+.user-data-list-item .user-status.pending {
     background-color: #F9F6D7;
     color: #E2BC2A;
 }
-.user-data-list-item .user-payment.paid{
-background-color: #C7FFD9;
-color: #28643B;
+
+.user-data-list-item .user-payment.paid {
+    background-color: #C7FFD9;
+    color: #28643B;
 }
-.user-data-list-item .user-payment.un-paid{
-background-color: #FFE4E4;
-color: #A6373E;
+
+.user-data-list-item .user-payment.un-paid {
+    background-color: #FFE4E4;
+    color: #A6373E;
 }
-.user-action .fal{
+
+.user-action .fal {
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -784,17 +902,21 @@ color: #A6373E;
     cursor: pointer;
     transition: all .5s;
 }
-.user-action .fal:hover{
+
+.user-action .fal:hover {
     background-color: rgba(152, 152, 152, 0.2);
     color: #000000;
 }
-.user-action .delete-action .fal{
+
+.user-action .delete-action .fal {
     border: 0.5px solid #D30000;
     color: #D30000;
 }
-.user-action .delete-action .fal:hover{
+
+.user-action .delete-action .fal:hover {
     background-color: rgba(211, 0, 0, 0.25);
     color: #ff0000;
 }
+
 /* User Data Box End  */
 /* ------------- Admin Dashboard Section End ------------- */

@@ -6,41 +6,51 @@
         height: 130px;
         padding: 10px;
     }
-    .ad-tab-btn{
+
+    .ad-tab-btn {
         padding: 10px;
     }
+
     .admin-sidebar {
         padding: 50px 10px;
     }
 }
+
 /* Extra large devices (1200px and down) */
 
 @media screen and (max-width: 1200px) {
-    .sor-date .form-select, .sor-date .form-control {
+
+    .sor-date .form-select,
+    .sor-date .form-control {
         padding: 10px 8px;
         max-width: 185px;
         min-width: 100px;
         font-size: 14px;
     }
+
     .sor-date .sor-icon {
         position: absolute;
         right: 8px;
         top: 0;
         transform: translateY(50%);
     }
-    .sor-border{
+
+    .sor-border {
         border-left: 1px solid #f1f1f1;
         margin: 0px 10px;
     }
+
     .nav-btn {
         font-size: 30px;
         opacity: 1;
         cursor: pointer;
     }
-    .admin-sidebar .close{
+
+    .admin-sidebar .close {
         opacity: 1;
     }
-    .admin-sidebar{
+
+    .admin-sidebar {
         width: 210px;
         position: absolute;
         top: 0;
@@ -50,7 +60,8 @@
         transform: translateX(-100%);
         transition: all .5s;
     }
-    .admin-sidebar.active{
+
+    .admin-sidebar.active {
         transform: translateX(0%);
     }
 }
@@ -59,58 +70,67 @@
 /* Large devices (992px and down) */
 
 @media screen and (max-width: 992px) {
-    
+
     .boobit-container,
-    .boobit-box{
+    .boobit-box {
         padding: 30px;
     }
-    #boobit-img{
+
+    #boobit-img {
         transform: scale(.7);
     }
-   
+
 }
 
 
 /* Medium devices (768px and down) */
 
 @media screen and (max-width: 768px) {
-    
-    #boobit-img{
+
+    #boobit-img {
         transform: scale(1);
     }
-    .boobit-container{
+
+    .boobit-container {
         padding: 0;
         background-color: var(--white);
     }
-    .boobit-box{
+
+    .boobit-box {
         padding: 10px;
     }
+
     h1 {
         font-size: calc(40px*.8);
     }
-    
+
     h2 {
         font-size: calc(32px*.8);
     }
-    .hoitwo-pera{
+
+    .hoitwo-pera {
         padding: 15px;
     }
+
     .post-listing {
         padding: 24px;
     }
-   
+
     .napr-img img {
         max-width: 40px;
         min-width: 40px;
     }
-    .nav-btn{
+
+    .nav-btn {
         font-size: 18px;
     }
+
     .nav-search .form-control {
         padding: 10px 10px 10px 40px;
         font-size: 14px;
 
     }
+
     .nav-search form .fal {
         position: absolute;
         top: 50%;
@@ -119,18 +139,23 @@
         font-size: 15px;
         color: #7B7B7D;
     }
+
     .napr-name .name {
         font-size: 16px;
     }
-    
+
     .napr-name .admin {
         font-size: 12px;
     }
-    .user-data-list-item .user-name, .user-data-list-item .user-date,
-    .user-data-list-item .user-status, .user-data-list-item .user-payment{
+
+    .user-data-list-item .user-name,
+    .user-data-list-item .user-date,
+    .user-data-list-item .user-status,
+    .user-data-list-item .user-payment {
         font-size: 12px;
     }
-    .usdahe-text{
+
+    .usdahe-text {
         font-size: 14px;
     }
 }
@@ -142,62 +167,99 @@
     h1 {
         font-size: calc(40px*.7);
     }
-    
+
     h2 {
         font-size: calc(32px*.7);
     }
+
     .hero h1 {
         padding: 0px;
         margin-bottom: 20px;
     }
-    .boobit-left{
+
+    .boobit-left {
         height: 455px;
         position: relative;
         bottom: 150px;
     }
-    #boobit-img{
+
+    #boobit-img {
         transform: scale(0.65);
         position: relative;
-       right: 70px;
-       top: 70px;
+        right: 70px;
+        top: 70px;
     }
-    .boobit-box{
+
+    .boobit-box {
         padding: 0px;
     }
-    
-    .th-btn{
+
+    .th-btn {
         min-width: auto;
         padding: 10px 15px;
     }
-    #apply-change{
+
+    #apply-change {
         min-width: auto;
         margin-top: 0px;
         padding: 10px 15px;
     }
+
     .fo-box {
-    flex-direction: column;
+        flex-direction: column;
     }
+
     .fo-line {
         width: 100%;
         background-color: var(--white);
         height: 2px;
     }
-    .hoitwo-img{
-        width: 100% !important  ;
+
+    .hoitwo-img {
+        width: 100% !important;
     }
-    .th-btn{
+
+    .th-btn {
         font-size: 16px;
     }
-    .hoitwo-box{
+
+    .hoitwo-box {
         padding: 25px;
     }
-    .sorting-feature{
+
+    .sorting-feature {
         flex-direction: column;
     }
-    .sort-by-date{
+
+    .sort-by-date {
         padding: 10px 20px !important;
     }
-    .sor-date .form-select, .sor-date .form-control{
+
+    .sor-date .form-select,
+    .sor-date .form-control {
         min-width: auto;
+    }
+
+    footer {
+        padding: 40px 0px;
+    }
+
+    footer .hia-insta,
+    footer .foot-brand {
+        max-width: 200px;
+        margin: 0;
+    }
+
+    .foot-link {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .foot-link ul li {
+        margin-top: 10px;
+    }
+
+    .foot-link ul {
+        margin-top: 20px;
     }
 }
