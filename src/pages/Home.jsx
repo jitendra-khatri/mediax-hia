@@ -52,6 +52,11 @@ function Home() {
                 console.log(docSnap.data())
                 setListingExists(true)
                 setListingDataCheck(docSnap.data())
+                if(docSnap.data().listingCreated && docSnap.data().dateOfPosting === ''){
+                    navigate('/pick-date')
+                } else if(!docSnap.data().payment){
+                    navigate('/payment')
+                }
             }
         }
         fetchData()
@@ -98,7 +103,8 @@ function Home() {
                                 userId: auth.currentUser.uid,
                                 name: auth.currentUser.displayName,
                                 gmail: auth.currentUser.email,
-                                dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+                                // dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+                                dateOfPosting: '',
                                 postStatus: false,
                                 slotNumber: 0,
                                 payment: false,
@@ -112,7 +118,7 @@ function Home() {
                             await setDoc(docRef, listingData);
     
                             console.log("Document written with ID: ", auth.currentUser.uid);
-                            alert('File Uploaded and Listing Created'); // Consider using toast instead
+                            // alert('File Uploaded and Listing Created'); // Consider using toast instead
                             navigate('/pick-date');
                         } catch (error) {
                             console.error("Error adding document: ", error);

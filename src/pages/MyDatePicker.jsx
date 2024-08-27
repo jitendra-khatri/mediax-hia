@@ -1,93 +1,105 @@
-import { useState } from "react"
-import { db } from "../firebase.config"
-import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
-import { toast } from "react-toastify"
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
-import Header from "../component/Header"
-import { getAuth } from "firebase/auth"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { db } from "../firebase.config";
+import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Header from "../component/Header";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function MyDatePicker() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
   const [newSlot, setNewSlot] = useState(null);
-  // const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false); // New state for disabling the DatePicker
+  const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false);
+
+  useEffect(() => {
+    const auth = getAuth()
+    const fetchData = async () => {
+      const docRef = doc(db, 'listings', auth.currentUser.uid)
+      const docSnap = await getDoc(docRef)
+
+      if (docSnap.exists()) {
+        console.log(docSnap.data())
+        if (docSnap.data().dateOfPosting !== '') {
+          navigate('/payment')
+        }
+      }
+    }
+    fetchData()
+  }, [])
 
   const onSubmitDate = async (e) => {
-    e.preventDefault()
-    const date = selectedDate
+    e.preventDefault();
+    const date = selectedDate;
     if (!(date instanceof Date) || isNaN(date)) {
       console.error("Invalid date selected");
       return;
     }
-    // setSelectedDate(date);
 
-    // const formattedDate = date.toISOString().split('T')[0]; // Formatting date for the document ID
-    const formattedDate = date.toLocaleDateString('en-CA'); // 'en-CA' format: 'YYYY-MM-DD'
-
-    // alert(formattedDate)
+    const formattedDate = date.toLocaleDateString('en-CA');
     const docRef = doc(db, 'bookedSlot', formattedDate);
     const docSnap = await getDoc(docRef);
-    let newSlot;
+
+    let slotNumber;
 
     if (docSnap.exists()) {
       const availableSlots = docSnap.data().availableSlot || [];
 
       if (availableSlots.length >= 8) {
         toast.error('All slots booked for this date');
+        return false
       } else {
         const lastSlot = availableSlots.length > 0 ? Math.max(...availableSlots) : 0;
-        newSlot  = lastSlot + 1;
-
-        if (newSlot  <= 8) {
-          // setNewSlot(nextSlot);
+        slotNumber = lastSlot + 1;
+        if (slotNumber <= 8) {
           await updateDoc(docRef, {
-            availableSlot: [...availableSlots, newSlot]
+            availableSlot: [...availableSlots, slotNumber]
           });
         }
       }
     } else {
-      // setNewSlot(1);
-      newSlot = 1
+      slotNumber = 1;
       await setDoc(docRef, {
         date: date,
-        availableSlot: [newSlot]
+        availableSlot: [slotNumber]
       });
     }
-    // Disable the DatePicker after the change is done
-    // setIsDatePickerDisabled(true);
-    // Update the listings collection with the new date and slot
-    const auth = getAuth()
-    const listingRef = doc(db, 'listings', auth.currentUser.uid); // Replace 'yourListingId' with the correct listing ID
-    await updateDoc(listingRef, {
-      dateOfPosting: date,
-      slotNumber: newSlot,
-    });
 
-    navigate('/payment')
+    if (slotNumber !== undefined) {
+      const auth = getAuth();
+      const listingRef = doc(db, 'listings', auth.currentUser.uid);
+      await updateDoc(listingRef, {
+        dateOfPosting: date,
+        slotNumber: slotNumber,
+      });
+
+      navigate('/payment');
+    } else {
+      console.error('Error: slotNumber is undefined');
+    }
+
+    setIsDatePickerDisabled(true);
   };
 
   return (
     <>
       <Header />
-      {/* <!-- Book an Obituary Section Start --> */}
-      <section class="book-obituary" id="book-obituary">
-        <div class="container-xxl">
-          <div class="boobit-container">
-            <div class="boobit-box">
-              <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 col-sm-10">
-                  <h2 class="text-center mb-4">Check Available Slot</h2>
-                  {/* <p class="text-center mb-4">Provide details and upload an image to create a personalised
-                                            obituary. Fill the form below.</p> */}
+      <section className="book-obituary" id="book-obituary">
+        <div className="container-xxl">
+          <div className="boobit-container">
+            <div className="boobit-box">
+              <div className="row justify-content-center">
+                <div className="col-lg-6 col-md-8 col-sm-10">
+                  <h2 className="text-center mb-4">Check Available Slot</h2>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12 order-md-0">
-                  <div class="boobit-right">
+              <div className="row">
+                <div className="col-md-12 order-md-0">
+                  <div className="boobit-right">
                     <form onSubmit={onSubmitDate}>
-                      <div class="mb-3">
+                      <div className="mb-3">
                         <DatePicker
                           onChange={(date) => setSelectedDate(date)}
                           selected={selectedDate}
@@ -98,13 +110,15 @@ function MyDatePicker() {
                           showMonthDropdown
                           scrollableMonthYearDropdown
                           minDate={new Date()}
-                        // disabled={isDatePickerDisabled} // Disable the DatePicker if the change is done
+                          disabled={isDatePickerDisabled}
                         />
-                        <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div className="ob-icon"><i className="fas fa-calendar-alt"></i></div>
                       </div>
-                      {selectedDate && (<div className="d-flex justify-content-center mt-3">
-                        <button class="th-btn fill">Proceed</button>
-                      </div>)}
+                      {selectedDate && (
+                        <div className="d-flex justify-content-center mt-3">
+                          <button className="th-btn fill">Proceed</button>
+                        </div>
+                      )}
                     </form>
                   </div>
                 </div>
@@ -113,9 +127,8 @@ function MyDatePicker() {
           </div>
         </div>
       </section>
-      {/* <!-- Book an Obituary Section End --> */}
     </>
-  )
+  );
 }
 
-export default MyDatePicker
+export default MyDatePicker;

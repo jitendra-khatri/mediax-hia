@@ -124,7 +124,7 @@ function Payment() {
             <h2>Slot Number: {listingData?.slotNumber}</h2>
             <img src={listingData?.imageUrl} className="w-100" alt="" />
             <button className="th-btn fill" onClick={() => createRazorpayOrder(1000)}>
-              Payment of 1000
+            Proceed to payment Rs 1000
             </button>
           </div>
         </div>

@@ -27,8 +27,14 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/listings" element={<Listings />} />
-        <Route path="/pick-date" element={<MyDatePicker />} />
-        <Route path="/payment" element={<Payment />} />
+        <Route path="/pick-date" element={<Privateroute />}>
+          <Route path="/pick-date" element={<MyDatePicker />} />
+        </Route>
+        {/* <Route path="/pick-date" element={<MyDatePicker />} /> */}
+        <Route path="/payment" element={<Privateroute />}>
+          <Route path="/payment" element={<Payment />} />
+        </Route>
+        {/* <Route path="/payment" element={<Payment />} /> */}
         <Route path="/admin/dashboard" element={<Privaterouteadmin />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
         </Route>

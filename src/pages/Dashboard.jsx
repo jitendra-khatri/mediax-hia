@@ -299,7 +299,8 @@ function Dashboard() {
                                                         </div>
                                                         <div className="col-1">
                                                             <div className="user-date">
-                                                                {formatDate(data.dateOfPosting)}
+                                                                {data.dateOfPosting && formatDate(data.dateOfPosting)}
+                                                                {!data.dateOfPosting && (<span>Not Booked</span>)}
                                                             </div>
                                                         </div>
                                                         <div className="col-2">
@@ -395,9 +396,10 @@ function Dashboard() {
                                         ))} */}
                                     </div>
                                 </div>
-
-                                <hr className='my-5' />
-                                <div className="container-xxl">
+                            </section>
+                            <section className='bg-white'>
+                            <hr className='my-5' />
+                                <div className="container-xxl bg-white">
                                     <div className="row justify-content-center">
                                         <div className="col-md-5 text-center">
                                             <form onSubmit={paymentFetch}>
@@ -416,6 +418,7 @@ function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
+                                <hr className='my-5' />
                             </section>
                         </div>
                     </div>
