@@ -101,7 +101,7 @@ function Payment() {
  
 
   const updatePaymentStatus = async(resId) => {
-    toast.success(resId)
+    // toast.success(resId)
     try {
     const auth = getAuth()
     const docRef = doc(db, 'listings', auth.currentUser.uid)
