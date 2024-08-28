@@ -232,14 +232,14 @@ function Home() {
             {/* <!-- Header Section End --> */}
             <main>
                 {/* <!-- Hero Section Start --> */}
-                <section className={`hero ${listingExists ? 'd-none' : ' '}`}>
+                <section className='hero'>
                     <img src={hero} class="d-none d-sm-block w-100" alt="" />
                     <img src={heroMobile} class="d-block d-sm-none w-100" alt="" />
                 </section>
                 {/* <!-- Hero Section End --> */}
 
                 {/* <!-- How It Works Section Start --> */}
-                <section className={`how-it-works ${listingExists ? 'd-none' : ' '}`}>
+                <section className='how-it-works'>
                     <div class="container-xxl">
                         <div class="hoitwo-box">
                             <div class="mb-3 mb-sm-5 text-center">
@@ -654,7 +654,7 @@ function Home() {
                                 </div>
                                 <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===5?'':'d-none'}`} >
                                     <div className={`faq-box mb-3 ${privacyToggle === 1? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPaymentToggle(1)}>
+                                        <div className="faq-h" onClick={()=> setPrivacyToggle(1)}>
                                             <h5 className="m-0">How is my personal information protected?</h5>
                                             <div className="faq-icon">{privacyToggle === 1? '-':'+'}</div>
                                         </div>
@@ -664,7 +664,7 @@ function Home() {
                                         </div>
                                     </div>
                                     <div className={`faq-box mb-3 ${privacyToggle === 2? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPaymentToggle(2)}>
+                                        <div className="faq-h" onClick={()=> setPrivacyToggle(2)}>
                                             <h5 className="m-0">Who has access to the obituary details I provide?
                                             </h5>
                                             <div className="faq-icon">{privacyToggle === 2? '-':'+'}</div>
@@ -674,7 +674,7 @@ function Home() {
                                         </div>
                                     </div>
                                     <div className={`faq-box mb-3 ${privacyToggle === 3? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPaymentToggle(3)}>
+                                        <div className="faq-h" onClick={()=> setPrivacyToggle(3)}>
                                             <h5 className="m-0">Can I request the deletion of my data after the obituary post?</h5>
                                             <div className="faq-icon">{privacyToggle === 3? '-':'+'}</div>
                                         </div>
