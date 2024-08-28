@@ -512,7 +512,7 @@ function Home() {
                                 </div>
                             </div>
                             <div className="col-md-9">
-                                <div className={`faq-tab-container mt-3 mt-sm-0 ${tabToggle ===1?'':'d-none'}`} >
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===1?'':'d-none'}`} >
                                     <div className={`faq-box mb-3 ${bookingToggle === 1? 'active':''}`}>
                                         <div className="faq-h" onClick={()=> setBookingToggle(1)}>
                                             <h5 className="m-0">How do I book an obituary post with Happening in Agra?
@@ -547,7 +547,7 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-3 mt-sm-0 ${tabToggle ===2?'':'d-none'}`} >
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===2?'':'d-none'}`} >
                                     <div className={`faq-box mb-3 ${cancellationsToggle === 1? 'active':''}`}>
                                         <div className="faq-h" onClick={()=> setCancellationsToggle(1)}>
                                             <h5 className="m-0">Can I cancel my booking?
@@ -582,7 +582,7 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-3 mt-sm-0 ${tabToggle ===3?'':'d-none'}`} >
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===3?'':'d-none'}`} >
                                     <div className={`faq-box mb-3 ${viewingToggle === 1? 'active':''}`}>
                                         <div className="faq-h" onClick={()=> setViewingToggle(1)}>
                                             <h5 className="m-0">Where can I see my obituary posting?
@@ -617,7 +617,7 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-3 mt-sm-0 ${tabToggle ===4?'':'d-none'}`} >
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===4?'':'d-none'}`} >
                                     <div className={`faq-box mb-3 ${paymentToggle === 1? 'active':''}`}>
                                         <div className="faq-h" onClick={()=> setPaymentToggle(1)}>
                                             <h5 className="m-0">What is your refund policy?
@@ -652,7 +652,7 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-3 mt-sm-0 ${tabToggle ===5?'':'d-none'}`} >
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===5?'':'d-none'}`} >
                                     <div className={`faq-box mb-3 ${privacyToggle === 1? 'active':''}`}>
                                         <div className="faq-h" onClick={()=> setPaymentToggle(1)}>
                                             <h5 className="m-0">How is my personal information protected?</h5>

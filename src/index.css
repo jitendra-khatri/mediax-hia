@@ -945,7 +945,7 @@ form .mb-3 {
     color: var(--black);
     transition: all .5s;
 }
-
+.faq-btn-box li .d-flex .far,
 .policy-sidebar li a .far {
     color: var(--secondary);
 }
@@ -1037,9 +1037,9 @@ form .mb-3 {
 }
 
 .faq-h .faq-icon {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
     text-align: center;
     border-radius: 50%;
     font-size: 20px;
