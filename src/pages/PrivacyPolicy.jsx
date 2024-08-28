@@ -16,7 +16,7 @@ function PrivacyPolicy() {
                 <div className="policy-sidebar">
                   <ul className='list-unstyled p-0 m-0'>
                     <li><Link to='/privacy-policy' className='d-flex justify-content-between align-items-center active'><span className="posi-text">Privacy policy</span> <i class="far fa-angle-right"></i></Link></li>
-                    <li><Link to='/refund-policy' className='d-flex justify-content-between align-items-center'><span className="posi-text">Refund policy</span> <i class="far fa-angle-right"></i></Link></li>
+                    <li><Link to='/refund-policy' className='d-flex justify-content-between align-items-center'><span className="posi-text">Refund & Cancellation Policy</span> <i class="far fa-angle-right"></i></Link></li>
                     <li><Link to='/terms-n-conditions' className='d-flex justify-content-between align-items-center'><span className="posi-text">Terms & conditions</span> <i class="far fa-angle-right"></i></Link></li>
                   </ul>
                 </div>

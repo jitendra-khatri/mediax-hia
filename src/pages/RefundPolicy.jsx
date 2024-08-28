@@ -16,7 +16,7 @@ function RefundPolicy() {
               <div className="policy-sidebar">
                 <ul className='list-unstyled p-0 m-0'>
                   <li><Link to='/privacy-policy' className='d-flex justify-content-between align-items-center'><span className="posi-text">Privacy policy</span> <i class="far fa-angle-right"></i></Link></li>
-                  <li><Link to='/refund-policy' className='d-flex justify-content-between align-items-center active'><span className="posi-text">Refund policy</span> <i class="far fa-angle-right"></i></Link></li>
+                  <li><Link to='/refund-policy' className='d-flex justify-content-between align-items-center active'><span className="posi-text">Refund & Cancellation Policy</span> <i class="far fa-angle-right"></i></Link></li>
                   <li><Link to='/terms-n-conditions' className='d-flex justify-content-between align-items-center'><span className="posi-text">Terms & conditions</span> <i class="far fa-angle-right"></i></Link></li>
                 </ul>
               </div>
@@ -24,7 +24,7 @@ function RefundPolicy() {
             <div className="col-sm-9 mt-4 mt-sm-0">
               <div className="policy-main">
                 <div className="mb-3 mb-md-5">
-                  <h2>Refund Policy</h2>
+                  <h2>Refund & Cancellation Policy</h2>
                   <p>At Happening in Agra, we aim to ensure a seamless and respectful experience for users registering obituaries on our Instagram community page. Please review our refund policy thoroughly:
                   </p>
                 </div>

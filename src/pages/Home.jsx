@@ -81,6 +81,17 @@ function Home() {
         }
     }
 
+    function confirmDetails(){
+        const confirm = window.confirm("Please check everything before going forward");
+
+        if (confirm) {
+            handleClick(); // Call the function or operation you want to perform
+        } else {
+           toast.error('Please check all the details')
+           return false
+        }
+        
+    }
 
 
     function handleClick() {
@@ -463,7 +474,7 @@ function Home() {
                                         </div>
                                     </div>
 
-                                    <div class="col-12 d-flex justify-content-center my-4 order-md-2" onClick={handleClick}>
+                                    <div class="col-12 d-flex justify-content-center my-4 order-md-2" onClick={confirmDetails}>
                                         <div class="th-btn fill">Proceed</div>
                                     </div>
                                 </div>
