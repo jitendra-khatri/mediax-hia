@@ -174,7 +174,8 @@ footer .foot-brand {
     max-width: 200px;
     margin: auto;
 }
-.foot-link{
+
+.foot-link {
     max-width: 300px;
     margin-left: auto;
     margin-right: auto;
@@ -186,7 +187,7 @@ footer .foot-brand {
     font-weight: 700;
     line-height: 140%;
     letter-spacing: 1px;
-color: var(--white);
+    color: var(--white);
 }
 
 .foot-link ul {
@@ -204,7 +205,8 @@ color: var(--white);
     color: var(--white);
     transition: all .5s;
 }
-.foot-link .fas{
+
+.foot-link .fas {
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -214,10 +216,12 @@ color: var(--white);
     background-color: transparent;
     transition: all .5s;
 }
-.foot-link a:hover .fas{
+
+.foot-link a:hover .fas {
     background-color: var(--white);
     color: var(--secondary);
 }
+
 /* ------------- Footer Section End ------------- */
 
 
@@ -920,3 +924,136 @@ form .mb-3 {
 
 /* User Data Box End  */
 /* ------------- Admin Dashboard Section End ------------- */
+
+
+
+/* Policy Page Section Start ------------------------------ */
+.policy {
+    background-color: #FAFAFA;
+    padding: 80px 0px;
+}
+
+.policy-sidebar {
+    padding: 20px;
+    border-radius: 20px;
+    background: #01B4BB17;
+}
+
+.faq-btn-box li .d-flex,
+.policy-sidebar li a {
+    padding: 20px 5px;
+    color: var(--black);
+    transition: all .5s;
+}
+
+.policy-sidebar li a .far {
+    color: var(--secondary);
+}
+
+.policy-sidebar li:nth-child(2) {
+    border-top: 1px solid #E3DBD8;
+    border-bottom: 1px solid #E3DBD8;
+}
+
+.faq-btn-box li {
+    border-bottom: 1px solid #E3DBD8;
+}
+
+.faq-btn-box li .d-flex {
+    padding: 15px 5px;
+    cursor: pointer;
+}
+
+.faq-btn-box li:nth-child(2) {
+    border-top: 0px solid #E3DBD8;
+    border-bottom: 1px solid #E3DBD8;
+}
+
+.faq-btn-box li:nth-child(5) {
+    border: none;
+}
+
+.faq-btn-box li .d-flex.active,
+.policy-sidebar li a:hover,
+.policy-sidebar li a.active {
+    font-weight: 700;
+}
+
+.policy-main {
+    padding: 50px;
+    background-color: #ffffff;
+}
+
+.policy-main h2 {
+    font-family: var(--font-family);
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 130%;
+    color: var(--secondary);
+}
+
+.policy-main h3 {
+    font-family: var(--font-family);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 130%;
+    color: var(--black);
+}
+
+.policy-main p {
+    font-family: var(--font-family);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 130%;
+    color: var(--black);
+}
+
+/* ------------- Policy Page Section End ------------- */
+
+/* Faqs Section Start ------------------------------ */
+.faqs {
+    background-color: var(--whitesmoke);
+    padding: 50px 0px;
+}
+
+.faq-box {
+    border-radius: 20px;
+    background-color: var(--white);
+}
+
+.faq-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    /* transition: all .5s; */
+}
+.faq-box.active .faq-h{
+    border: 1px solid #E3DBD8;
+
+}
+
+.faq-h .faq-icon {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+.faq-text {
+    padding: 20px;
+    color: #727272;
+    display: none;
+}
+.faq-box.active .faq-text {
+    display: block;
+}
+
+/* ------------- Faqs Section End ------------- */

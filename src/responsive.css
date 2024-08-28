@@ -158,6 +158,28 @@
     .usdahe-text {
         font-size: 14px;
     }
+    /* Policy Pages */
+    .policy {
+        padding: 40px 0px;
+    }
+    .policy-sidebar{
+        border-radius: 0px;
+    }
+    .policy-sidebar li a{
+        padding: 10px 5px;
+    }
+    .policy-main{
+        padding: 30px;
+    }
+    .policy-main h2 {
+        font-size: 24px;
+    }
+    .policy-main h3 {
+        font-size: 20px;
+    }
+    .policy-main p {
+        font-size: 16px;
+    }
 }
 
 
@@ -261,5 +283,18 @@
 
     .foot-link ul {
         margin-top: 20px;
+    }
+    .policy-main{
+        padding: 20px;
+    }
+    .faq-h h5{
+        max-width: 350px;
+        font-size: 18px;
+    }
+    .faq-h .faq-icon {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 16px;
     }
 }

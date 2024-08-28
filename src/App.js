@@ -15,6 +15,9 @@ import EditListing from "./pages/EditListing";
 import AdminSignIn from "./pages/AdminSignIn";
 import Privaterouteadmin from "./component/Privaterouteadmin";
 import DeleteListing from "./pages/DeleteListing";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import RefundPolicy from "./pages/RefundPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 function App() {
   return (
     <Router>
@@ -45,6 +48,9 @@ function App() {
           <Route path="/admin/delete/:listingId" element={<DeleteListing />} />
         </Route>
         <Route path="/admin/sign-in" element={<AdminSignIn />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/terms-n-conditions" element={<TermsAndConditions />} />
       </Routes>
       <ToastContainer />
     </Router>

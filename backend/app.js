@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const cors = require('cors')
+const cors = require('cors');
 const Razorpay = require('razorpay')
 require('dotenv').config(); // Ensure you have dotenv configured
 
@@ -10,6 +10,7 @@ const port = 5000;
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cors())
 
 app.get('/', (req, res) => {
