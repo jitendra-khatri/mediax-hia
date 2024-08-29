@@ -16,7 +16,9 @@
 body {
     overflow-x: hidden;
 }
-
+.container-xxl{
+    padding: 0px 35px;
+}
 a {
     text-decoration: none;
 }
@@ -202,6 +204,7 @@ footer .foot-brand {
 }
 
 .foot-link ul li a {
+    font-family: var(--font-family);
     color: var(--white);
     transition: all .5s;
 }
@@ -938,6 +941,9 @@ form .mb-3 {
     border-radius: 20px;
     background: #01B4BB17;
 }
+.posi-text{
+    font-family: var(--font-family);
+}
 
 .faq-btn-box li .d-flex,
 .policy-sidebar li a {
@@ -1057,3 +1063,13 @@ form .mb-3 {
 }
 
 /* ------------- Faqs Section End ------------- */
+
+.instDesk{
+    display: block;
+}
+.instTab{
+    display: none;
+}
+.instMob{
+    display: none;
+}

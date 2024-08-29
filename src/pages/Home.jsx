@@ -4,6 +4,9 @@ import work1 from '../assets/work-1.png'
 import work2 from '../assets/work-2.png'
 import work3 from '../assets/work-3.png'
 import work4 from '../assets/work-4.png'
+import instDesk from '../assets/foot-ban-desk.jpg'
+import instTab from '../assets/foot-ban-tab.jpg'
+import instMob from '../assets/foot-ban-mob.jpg'
 import workRight from '../assets/work-right.png'
 import profile from '../assets/profile.jpg'
 import happenImg from '../assets/happen-img.png'
@@ -528,7 +531,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setBookingToggle(1)}>
                                             <h5 className="m-0">How do I book an obituary post with Happening in Agra?
                                             </h5>
-                                            <div className="faq-icon">{bookingToggle === 1? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">You can book an obituary post by visiting our obituary registration form, providing the necessary details, and making the payment through Razorpay. Once the payment is confirmed, your slot is booked.
@@ -539,7 +542,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setBookingToggle(2)}>
                                             <h5 className="m-0">What details are required to submit an obituary?
                                             </h5>
-                                            <div className="faq-icon">{bookingToggle === 2? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">You need to provide your name, email, phone number, and details about the deceased, including names of those in mourning. These details will be used to prepare the post.
@@ -550,7 +553,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setBookingToggle(3)}>
                                             <h5 className="m-0">Can I choose a specific format for my obituary post?
                                             </h5>
-                                            <div className="faq-icon">{bookingToggle === 3? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">No, we maintain a standard format for all obituary posts to ensure consistency and respect across our platform. Custom templates or formats are not available.
@@ -563,7 +566,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setCancellationsToggle(1)}>
                                             <h5 className="m-0">Can I cancel my booking?
                                             </h5>
-                                            <div className="faq-icon">{cancellationsToggle === 1? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, you can cancel your booking by emailing us at happeninginagra@gmail.com. However, please note that refunds are not applicable even if the booking is canceled.
@@ -574,7 +577,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setCancellationsToggle(2)}>
                                             <h5 className="m-0">Can I edit the obituary after submitting it?
                                             </h5>
-                                            <div className="faq-icon">{cancellationsToggle === 2? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, but you need to inform us of any changes via email at least 16 hours before the posting time. After this period, edits cannot be accommodated.
@@ -585,7 +588,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setCancellationsToggle(3)}>
                                             <h5 className="m-0">What happens if I need to change the date of the obituary post?
                                             </h5>
-                                            <div className="faq-icon">{cancellationsToggle === 3? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">If you need to reschedule, please inform us via email at least 16 hours before the original posting time. We will try our best to offer an alternative slot, subject to availability.
@@ -598,7 +601,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setViewingToggle(1)}>
                                             <h5 className="m-0">Where can I see my obituary posting?
                                             </h5>
-                                            <div className="faq-icon">{viewingToggle === 1? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Your obituary post will be shared on our Instagram community page. 
@@ -609,7 +612,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setViewingToggle(2)}>
                                             <h5 className="m-0">When will my obituary be posted?
                                             </h5>
-                                            <div className="faq-icon">{viewingToggle === 2? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">You can view the obituary on the posting date you selected during booking. It will be shared at 10:00 AM on our Instagram community page. If there are any changes to the schedule, we will notify you in advance.
@@ -620,7 +623,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setViewingToggle(3)}>
                                             <h5 className="m-0">Can I request specific posting slots or dates?
                                             </h5>
-                                            <div className="faq-icon">{viewingToggle === 3? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">While we try to accommodate preferred slots, we cannot guarantee availability. If your requested slot is unavailable, we will offer alternative options.
@@ -633,7 +636,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setPaymentToggle(1)}>
                                             <h5 className="m-0">What is your refund policy?
                                             </h5>
-                                            <div className="faq-icon">{paymentToggle === 1? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">We do not offer refunds once a slot is booked. Even if you choose to cancel your booking, refunds will not be provided.
@@ -644,7 +647,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setPaymentToggle(2)}>
                                             <h5 className="m-0">What payment methods do you accept?
                                             </h5>
-                                            <div className="faq-icon">{paymentToggle === 2? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Payments are processed securely through Razorpay, and we accept most major payment methods. Please note that all payments are subject to 18% GST taxation, billed by MediaX Digital Solutions.
@@ -655,7 +658,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setPaymentToggle(3)}>
                                             <h5 className="m-0">Is there any additional cost apart from the listed price?
                                             </h5>
-                                            <div className="faq-icon">{paymentToggle === 3? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, all payments are subject to 18% GST as required by law, which will be included in your final bill.
@@ -667,7 +670,7 @@ function Home() {
                                     <div className={`faq-box mb-3 ${privacyToggle === 1? 'active':''}`}>
                                         <div className="faq-h" onClick={()=> setPrivacyToggle(1)}>
                                             <h5 className="m-0">How is my personal information protected?</h5>
-                                            <div className="faq-icon">{privacyToggle === 1? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">We take data security seriously and implement measures to protect your information. Your payment is processed securely through Razorpay, and no payment information is stored on our servers.
@@ -678,7 +681,7 @@ function Home() {
                                         <div className="faq-h" onClick={()=> setPrivacyToggle(2)}>
                                             <h5 className="m-0">Who has access to the obituary details I provide?
                                             </h5>
-                                            <div className="faq-icon">{privacyToggle === 2? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Only authorized team members involved in processing and posting your obituary have access to the information you provide. We do not share your data with third parties except as necessary for payment processing.</p>
@@ -687,7 +690,7 @@ function Home() {
                                     <div className={`faq-box mb-3 ${privacyToggle === 3? 'active':''}`}>
                                         <div className="faq-h" onClick={()=> setPrivacyToggle(3)}>
                                             <h5 className="m-0">Can I request the deletion of my data after the obituary post?</h5>
-                                            <div className="faq-icon">{privacyToggle === 3? '-':'+'}</div>
+                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, you can request the deletion of your personal data after the post by contacting us at happeninginagra@gmail.com. We will process your request in accordance with our privacy policy.</p>
@@ -700,6 +703,15 @@ function Home() {
                 </section>
                 {/* <!-- Faq Section End --> */}
 
+                {/* <!-- Instagarm Banner Section Start --> */}
+                <section className="instagarm-banner">
+                    <a href='https://www.instagram.com/happeningin.agra/' target='_blank'>
+                        <img src={instDesk} alt="" className="w-100 instDesk" />
+                        <img src={instTab} alt="" className="w-100 instTab" />
+                        <img src={instMob} alt="" className="w-100 instMob" />
+                    </a>
+                </section>
+                {/* <!-- Instagarm Banner Section End --> */}
 
 
             </main>

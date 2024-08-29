@@ -86,7 +86,9 @@
 /* Medium devices (768px and down) */
 
 @media screen and (max-width: 768px) {
-
+    .container-xxl {
+        padding: 0px 20px;
+    }
     #boobit-img {
         transform: scale(1);
     }
@@ -190,6 +192,18 @@
 
     .faq-btn-box li .d-flex .far, .policy-sidebar li a .far {
         transform: rotate(90deg) !important;
+    }
+    .faq-h .faq-icon {
+        width: 25px !important;
+        height: 25px !important;
+        line-height: 25px !important;
+        font-size: 16px;
+    }
+    .instDesk{
+        display: none;
+    }
+    .instTab{
+        display: block;
     }
 }
 
@@ -310,12 +324,13 @@
         max-width: 350px;
         font-size: 18px;
     }
-
-    .faq-h .faq-icon {
-        width: 25px !important;
-        height: 25px !important;
-        line-height: 25px !important;
-        font-size: 16px;
+    .instDesk{
+        display: none;
     }
-    
+    .instTab{
+        display: none;
+    }
+    .instMob{
+        display: block;
+    }
 }
