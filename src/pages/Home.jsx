@@ -64,12 +64,16 @@ function Home() {
                 setListingDataCheck(docSnap.data())
                 if (docSnap.data().listingCreated && docSnap.data().dateOfPosting === '') {
                     navigate('/pick-date')
+                    toast.success('you have created obitury last time you visited')
                 } else if (!docSnap.data().payment) {
                     navigate('/payment')
+                    toast.success('you have booked slot obitury last time you visited')
                 }
             }
         }
-        fetchData()
+        if(auth.currentUser){
+            fetchData()
+        }
     }, [])
 
 
@@ -85,8 +89,12 @@ function Home() {
     }
 
     function confirmDetails(){
+        const auth = getAuth()
+        if(!auth.currentUser){
+            toast.error('You have to login first to create obituary')
+            return false
+        }
         const confirm = window.confirm("Please check everything before going forward");
-
         if (confirm) {
             handleClick(); // Call the function or operation you want to perform
         } else {
@@ -98,6 +106,7 @@ function Home() {
 
 
     function handleClick() {
+        
         html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });

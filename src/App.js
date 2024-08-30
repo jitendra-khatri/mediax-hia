@@ -22,9 +22,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Privateroute />}>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Privateroute />}>
           <Route path="/" element={<Home />} />
-        </Route>
+        </Route> */}
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
