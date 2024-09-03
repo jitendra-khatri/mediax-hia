@@ -89,6 +89,7 @@
     .container-xxl {
         padding: 0px 20px;
     }
+
     #boobit-img {
         transform: scale(1);
     }
@@ -190,20 +191,28 @@
         font-size: 16px;
     }
 
-    .faq-btn-box li .d-flex .far, .policy-sidebar li a .far {
+    .faq-btn-box li .d-flex .far,
+    .policy-sidebar li a .far {
         transform: rotate(90deg) !important;
     }
+
     .faq-h .faq-icon {
         width: 25px !important;
         height: 25px !important;
         line-height: 25px !important;
         font-size: 16px;
     }
-    .instDesk{
+
+    .instDesk {
         display: none;
     }
-    .instTab{
+
+    .instTab {
         display: block;
+    }
+
+    .faq-text p {
+        font-size: 14px;
     }
 }
 
@@ -233,7 +242,7 @@
     #boobit-img {
         transform: scale(0.65);
         position: relative;
-        right: 70px;
+        right: 56px;
         top: 70px;
     }
 
@@ -317,20 +326,51 @@
     .faq-h {
         padding: 15px;
     }
-    .faq-text {
+
+    /* .faq-text {
         padding: 15px;
-    }
+    } */
     .faq-h h5 {
         max-width: 350px;
         font-size: 18px;
     }
-    .instDesk{
+
+    .instDesk {
         display: none;
     }
-    .instTab{
+
+    .instTab {
         display: none;
     }
-    .instMob{
+
+    .instMob {
         display: block;
+    }
+
+    #header .sign-up {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    #header .sign-out .fas,
+    #header .sign-in .fas {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+    }
+
+    .hero {
+        margin-bottom: 50px;
+    }
+
+    .faq-box.active .faq-text {
+        /* padding: 20px; */
+        height: 150px;
+    }
+
+    .th-btn.outline,
+    .th-btn.fill {
+        width: 100%;
     }
 }

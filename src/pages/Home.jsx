@@ -17,6 +17,15 @@ import { getAuth } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "react-widgets/styles.css";
+import DatePickerWidgets from "react-widgets/DatePicker";
+import {
+    FaCalendar,
+    FaCalendarWeek,
+    FaCalendarDay,
+    FaCalendarCheck,
+    FaClock
+} from 'react-icons/fa';
 import { format } from 'date-fns'
 import html2canvas from 'html2canvas';
 import { toast } from 'react-toastify'
@@ -31,7 +40,8 @@ function Home() {
     const [prefix, setPrefix] = useState(null)
     const [nameOfDeceased, setNameOfDeceased] = useState(null)
     const [memoService, setMemoService] = useState(null)
-    const [serviceTime, setServiceTime] = useState(null)
+    const [serviceTimeStart, setServiceTimeStart] = useState(null)
+    const [serviceTimeEnd, setServiceTimeEnd] = useState(null)
     const [serviceAddress, setServiceAddress] = useState(null)
     const [dateOfBirth, setDateOfBirth] = useState(null)
     const [dateOfDeath, setDateOfDeath] = useState(null)
@@ -71,7 +81,7 @@ function Home() {
                 }
             }
         }
-        if(auth.currentUser){
+        if (auth.currentUser) {
             fetchData()
         }
     }, [])
@@ -88,9 +98,9 @@ function Home() {
         }
     }
 
-    function confirmDetails(){
+    function confirmDetails() {
         const auth = getAuth()
-        if(!auth.currentUser){
+        if (!auth.currentUser) {
             toast.error('You have to login first to create obituary')
             return false
         }
@@ -98,15 +108,15 @@ function Home() {
         if (confirm) {
             handleClick(); // Call the function or operation you want to perform
         } else {
-           toast.error('Please check all the details')
-           return false
+            toast.error('Please check all the details')
+            return false
         }
-        
+
     }
 
 
     function handleClick() {
-        
+
         html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
@@ -265,7 +275,7 @@ function Home() {
                 <section className='how-it-works'>
                     <div class="container-xxl">
                         <div class="hoitwo-box">
-                            <div class="mb-3 mb-sm-5 text-center">
+                            <div class="mb-3 mb-sm-5 text-sm-center">
                                 <h2>How it works</h2>
                             </div>
                             <div class="row justify-content-center">
@@ -310,8 +320,8 @@ function Home() {
                                 </div>
 
                                 <div className={`row ${listingExists ? 'd-none' : ' '}`}>
-                                    <div class="col-md-7 order-md-1">
-                                        <div class="boobit-left d-flex flex-column mb-5">
+                                    <div class="col-md-7 order-md-1 boobit-left-conatiner">
+                                        <div class="boobit-left d-flex flex-column mb-sm-5">
                                             <div id="boobit-img" class="boobit-img">
                                                 <div class="boobit-head">in loving memory of </div>
                                                 <div class="boobit-img"><img src={profile} class="w-100"
@@ -333,7 +343,10 @@ function Home() {
                                                     </div>
                                                     <div class="boobit-service">{memoService ? memoService : 'Memorial Service'}</div>
                                                     <div class="boobit-details">
-                                                        <div class="boobit-time"> {serviceTime ? serviceTime : '10am - 12:30pm'}</div>
+                                                        <div class="boobit-time"> 
+                                                            {serviceTimeStart ? serviceTimeStart : '10:00am'}
+                                                            &nbsp;-    {serviceTimeEnd ? serviceTimeEnd : '12:30pm'}
+                                                        </div>
                                                         <div class="">|</div>
                                                         <div class="boobit-date">
                                                             {dateOfService ? format(dateOfService, 'do MMMM, yyyy') : '20th April, 1883'}
@@ -347,8 +360,8 @@ function Home() {
                                                 </div>
                                                 <div class="boobit-greif">
 
-                                                    {griefPersonText1 ? `${griefPersonText1} | ` : 'Natasha Singh | '}
-                                                    {griefPersonText2 ? ` ${griefPersonText2}` : ' Prem Singh'}
+                                                    {griefPersonText1 ? `${griefPersonText1} | ` : 'Person 1(relation) | '}
+                                                    {griefPersonText2 ? ` ${griefPersonText2}` : ' Person 2(relation)'}
                                                     {griefPersonText3 ? ` | ${griefPersonText3}` : ''}
                                                 </div>
                                                 <div class="boobit-happening">
@@ -378,7 +391,26 @@ function Home() {
                                                     <input type="text" class="form-control" maxLength='21' id="name-of-deceased" value={nameOfDeceased}
                                                         placeholder="Name of deceased" onChange={(prev) => setNameOfDeceased(prev.target.value)} />
                                                 </div>
-                                                <div class="mb-3">
+                                                <div className="mb-3">
+                                                    <DatePickerWidgets
+                                                        // className='date form-control'
+                                                        selected={dateOfBirth}
+                                                        onChange={(date) => setDateOfBirth(date)}
+                                                        // valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
+                                                        dateFormat="dd MMM yyyy"  // This ensures the format is Day Month Year
+                                                        placeholder='Date of Birth' />
+                                                </div>
+                                                <div className="mb-3">
+                                                    <DatePickerWidgets
+                                                        selected={dateOfDeath}
+                                                        onChange={(date) => setDateOfDeath(date)}
+                                                        valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
+                                                        placeholder='Date of Death' />
+                                                </div>
+                                                
+                                                {/* <DatePickerWidgets caretAs={FaClock} format="HH:mm:ss" /> */}
+                                                {/* <div class="mb-3">
+                                                    
                                                     <DatePicker
                                                         selected={dateOfBirth}
                                                         onChange={(date) => setDateOfBirth(date)}
@@ -391,11 +423,11 @@ function Home() {
                                                         maxDate={new Date()}
                                                     />
                                                     <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    {/* <input type="text" class="date form-control" id="dateOfBirth"
+                                                    <input type="text" class="date form-control" id="dateOfBirth"
                                                         placeholder="Date of Birth" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
-                                                </div>
-                                                <div class="mb-3">
+                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
+                                                </div> */}
+                                                {/* <div class="mb-3">
                                                     <DatePicker
                                                         selected={dateOfDeath}
                                                         onChange={(date) => setDateOfDeath(date)}
@@ -408,10 +440,10 @@ function Home() {
                                                         maxDate={new Date()}
                                                     />
                                                     <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    {/* <input type="text" class="date form-control" id="date-of-death"
+                                                    <input type="text" class="date form-control" id="date-of-death"
                                                         placeholder="Date of Death" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
-                                                </div>
+                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
+                                                </div> */}
                                                 <div class="mb-3">
                                                     <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
                                                         <option selected>Service</option>
@@ -422,14 +454,112 @@ function Home() {
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <select class="form-select" id="service-time-select" value={serviceTime} onChange={(time) => setServiceTime(time.target.value)}>
-                                                        <option selected>Time of service</option>
-                                                        <option value="10 am - 12:30 pm">10 am - 12:30 pm</option>
-                                                        <option value="11 am - 12:30 pm">11 am - 12:30 pm</option>
-                                                        <option value="12 am - 12:30 pm">12 am - 12:30 pm</option>
+                                                    <select class="form-select" id="service-time-select" value={serviceTimeStart} onChange={(time) => setServiceTimeStart(time.target.value)}>
+                                                        <option selected value="00">Time of service (Start)</option>
+                                                        <option value="12:00 AM">12:00 AM</option>
+                                                        <option value="12:30 AM">12:30 AM</option>
+                                                        <option value="1:00 AM">1:00 AM</option>
+                                                        <option value="1:30 AM">1:30 AM</option>
+                                                        <option value="2:00 AM">2:00 AM</option>
+                                                        <option value="2:30 AM">2:30 AM</option>
+                                                        <option value="3:00 AM">3:00 AM</option>
+                                                        <option value="3:30 AM">3:30 AM</option>
+                                                        <option value="4:00 AM">4:00 AM</option>
+                                                        <option value="4:30 AM">4:30 AM</option>
+                                                        <option value="5:00 AM">5:00 AM</option>
+                                                        <option value="5:30 AM">5:30 AM</option>
+                                                        <option value="6:00 AM">6:00 AM</option>
+                                                        <option value="6:30 AM">6:30 AM</option>
+                                                        <option value="7:00 AM">7:00 AM</option>
+                                                        <option value="7:30 AM">7:30 AM</option>
+                                                        <option value="8:00 AM">8:00 AM</option>
+                                                        <option value="8:30 AM">8:30 AM</option>
+                                                        <option value="9:00 AM">9:00 AM</option>
+                                                        <option value="9:30 AM">9:30 AM</option>
+                                                        <option value="10:00 AM">10:00 AM</option>
+                                                        <option value="10:30 AM">10:30 AM</option>
+                                                        <option value="11:00 AM">11:00 AM</option>
+                                                        <option value="11:30 AM">11:30 AM</option>
+                                                        <option value="12:00 PM">12:00 PM</option>
+                                                        <option value="12:30 PM">12:30 PM</option>
+                                                        <option value="1:00 PM">1:00 PM</option>
+                                                        <option value="1:30 PM">1:30 PM</option>
+                                                        <option value="2:00 PM">2:00 PM</option>
+                                                        <option value="2:30 PM">2:30 PM</option>
+                                                        <option value="3:00 PM">3:00 PM</option>
+                                                        <option value="3:30 PM">3:30 PM</option>
+                                                        <option value="4:00 PM">4:00 PM</option>
+                                                        <option value="4:30 PM">4:30 PM</option>
+                                                        <option value="5:00 PM">5:00 PM</option>
+                                                        <option value="5:30 PM">5:30 PM</option>
+                                                        <option value="6:00 PM">6:00 PM</option>
+                                                        <option value="6:30 PM">6:30 PM</option>
+                                                        <option value="7:00 PM">7:00 PM</option>
+                                                        <option value="7:30 PM">7:30 PM</option>
+                                                        <option value="8:00 PM">8:00 PM</option>
+                                                        <option value="8:30 PM">8:30 PM</option>
+                                                        <option value="9:00 PM">9:00 PM</option>
+                                                        <option value="9:30 PM">9:30 PM</option>
+                                                        <option value="10:00 PM">10:00 PM</option>
+                                                        <option value="10:30 PM">10:30 PM</option>
+                                                        <option value="11:00 PM">11:00 PM</option>
+                                                        <option value="11:30 PM">11:30 PM</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
+                                                    <select class="form-select" id="service-time-select" value={serviceTimeEnd} onChange={(time) => setServiceTimeEnd(time.target.value)}>
+                                                        <option selected value="00">Time of service (End)</option>
+                                                        <option value="12:00 AM">12:00 AM</option>
+                                                        <option value="12:30 AM">12:30 AM</option>
+                                                        <option value="1:00 AM">1:00 AM</option>
+                                                        <option value="1:30 AM">1:30 AM</option>
+                                                        <option value="2:00 AM">2:00 AM</option>
+                                                        <option value="2:30 AM">2:30 AM</option>
+                                                        <option value="3:00 AM">3:00 AM</option>
+                                                        <option value="3:30 AM">3:30 AM</option>
+                                                        <option value="4:00 AM">4:00 AM</option>
+                                                        <option value="4:30 AM">4:30 AM</option>
+                                                        <option value="5:00 AM">5:00 AM</option>
+                                                        <option value="5:30 AM">5:30 AM</option>
+                                                        <option value="6:00 AM">6:00 AM</option>
+                                                        <option value="6:30 AM">6:30 AM</option>
+                                                        <option value="7:00 AM">7:00 AM</option>
+                                                        <option value="7:30 AM">7:30 AM</option>
+                                                        <option value="8:00 AM">8:00 AM</option>
+                                                        <option value="8:30 AM">8:30 AM</option>
+                                                        <option value="9:00 AM">9:00 AM</option>
+                                                        <option value="9:30 AM">9:30 AM</option>
+                                                        <option value="10:00 AM">10:00 AM</option>
+                                                        <option value="10:30 AM">10:30 AM</option>
+                                                        <option value="11:00 AM">11:00 AM</option>
+                                                        <option value="11:30 AM">11:30 AM</option>
+                                                        <option value="12:00 PM">12:00 PM</option>
+                                                        <option value="12:30 PM">12:30 PM</option>
+                                                        <option value="1:00 PM">1:00 PM</option>
+                                                        <option value="1:30 PM">1:30 PM</option>
+                                                        <option value="2:00 PM">2:00 PM</option>
+                                                        <option value="2:30 PM">2:30 PM</option>
+                                                        <option value="3:00 PM">3:00 PM</option>
+                                                        <option value="3:30 PM">3:30 PM</option>
+                                                        <option value="4:00 PM">4:00 PM</option>
+                                                        <option value="4:30 PM">4:30 PM</option>
+                                                        <option value="5:00 PM">5:00 PM</option>
+                                                        <option value="5:30 PM">5:30 PM</option>
+                                                        <option value="6:00 PM">6:00 PM</option>
+                                                        <option value="6:30 PM">6:30 PM</option>
+                                                        <option value="7:00 PM">7:00 PM</option>
+                                                        <option value="7:30 PM">7:30 PM</option>
+                                                        <option value="8:00 PM">8:00 PM</option>
+                                                        <option value="8:30 PM">8:30 PM</option>
+                                                        <option value="9:00 PM">9:00 PM</option>
+                                                        <option value="9:30 PM">9:30 PM</option>
+                                                        <option value="10:00 PM">10:00 PM</option>
+                                                        <option value="10:30 PM">10:30 PM</option>
+                                                        <option value="11:00 PM">11:00 PM</option>
+                                                        <option value="11:30 PM">11:30 PM</option>
+                                                    </select>
+                                                </div>
+                                                {/* <div class="mb-3">
                                                     <DatePicker
                                                         selected={dateOfService}
                                                         onChange={(date) => setDateOfService(date)}
@@ -442,12 +572,20 @@ function Home() {
                                                         minDate={new Date()}
                                                     />
                                                     <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    {/* <input type="text" class="date form-control" id="date-of-service"
+                                                    <input type="text" class="date form-control" id="date-of-service"
                                                         placeholder="Date of Service" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div> */}
+                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
+                                                </div> */}
+                                                <div className="mb-3">
+                                                    <DatePickerWidgets
+                                                        selected={dateOfService}
+                                                        min={new Date()}
+                                                        onChange={(date) => setDateOfService(date)}
+                                                        valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
+                                                        placeholder='Date of Service' />
                                                 </div>
                                                 <div class="mb-3">
-                                                    <input type="text" class="form-control" id="address" placeholder="Address" value={serviceAddress}
+                                                    <input type="text" class="form-control" id="address" placeholder="Address of Memorial Service" value={serviceAddress}
                                                         maxLength="24" onChange={(addr) => setServiceAddress(addr.target.value)} />
                                                 </div>
                                                 <div class="">
@@ -535,34 +673,34 @@ function Home() {
                                 </div>
                             </div>
                             <div className="col-md-9">
-                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===1?'':'d-none'}`} >
-                                    <div className={`faq-box mb-3 ${bookingToggle === 1? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setBookingToggle(1)}>
-                                            <h5 className="m-0">How do I book an obituary post with Happening in Agra?
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle === 1 ? '' : 'd-none'}`} >
+                                    <div className={`faq-box mb-3 ${bookingToggle === 1 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setBookingToggle(1)}>
+                                            <h5 className="m-0">How do I book an obituary post with Happening In Agra?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 1 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">You can book an obituary post by visiting our obituary registration form, providing the necessary details, and making the payment through Razorpay. Once the payment is confirmed, your slot is booked.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${bookingToggle === 2? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setBookingToggle(2)}>
+                                    <div className={`faq-box mb-3 ${bookingToggle === 2 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setBookingToggle(2)}>
                                             <h5 className="m-0">What details are required to submit an obituary?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 2 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">You need to provide your name, email, phone number, and details about the deceased, including names of those in mourning. These details will be used to prepare the post.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${bookingToggle === 3? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setBookingToggle(3)}>
+                                    <div className={`faq-box mb-3 ${bookingToggle === 3 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setBookingToggle(3)}>
                                             <h5 className="m-0">Can I choose a specific format for my obituary post?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${bookingToggle === 3 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">No, we maintain a standard format for all obituary posts to ensure consistency and respect across our platform. Custom templates or formats are not available.
@@ -570,34 +708,34 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===2?'':'d-none'}`} >
-                                    <div className={`faq-box mb-3 ${cancellationsToggle === 1? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setCancellationsToggle(1)}>
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle === 2 ? '' : 'd-none'}`} >
+                                    <div className={`faq-box mb-3 ${cancellationsToggle === 1 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setCancellationsToggle(1)}>
                                             <h5 className="m-0">Can I cancel my booking?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 1 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, you can cancel your booking by emailing us at happeninginagra@gmail.com. However, please note that refunds are not applicable even if the booking is canceled.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${cancellationsToggle === 2? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setCancellationsToggle(2)}>
+                                    <div className={`faq-box mb-3 ${cancellationsToggle === 2 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setCancellationsToggle(2)}>
                                             <h5 className="m-0">Can I edit the obituary after submitting it?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 2 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, but you need to inform us of any changes via email at least 16 hours before the posting time. After this period, edits cannot be accommodated.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${cancellationsToggle === 3? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setCancellationsToggle(3)}>
+                                    <div className={`faq-box mb-3 ${cancellationsToggle === 3 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setCancellationsToggle(3)}>
                                             <h5 className="m-0">What happens if I need to change the date of the obituary post?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${cancellationsToggle === 3 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">If you need to reschedule, please inform us via email at least 16 hours before the original posting time. We will try our best to offer an alternative slot, subject to availability.
@@ -605,34 +743,34 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===3?'':'d-none'}`} >
-                                    <div className={`faq-box mb-3 ${viewingToggle === 1? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setViewingToggle(1)}>
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle === 3 ? '' : 'd-none'}`} >
+                                    <div className={`faq-box mb-3 ${viewingToggle === 1 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setViewingToggle(1)}>
                                             <h5 className="m-0">Where can I see my obituary posting?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 1 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
-                                            <p className="m-0">Your obituary post will be shared on our Instagram community page. 
+                                            <p className="m-0">Your obituary post will be shared on our Instagram community page.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${viewingToggle === 2? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setViewingToggle(2)}>
+                                    <div className={`faq-box mb-3 ${viewingToggle === 2 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setViewingToggle(2)}>
                                             <h5 className="m-0">When will my obituary be posted?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 2 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">You can view the obituary on the posting date you selected during booking. It will be shared at 10:00 AM on our Instagram community page. If there are any changes to the schedule, we will notify you in advance.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${viewingToggle === 3? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setViewingToggle(3)}>
+                                    <div className={`faq-box mb-3 ${viewingToggle === 3 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setViewingToggle(3)}>
                                             <h5 className="m-0">Can I request specific posting slots or dates?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${viewingToggle === 3 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">While we try to accommodate preferred slots, we cannot guarantee availability. If your requested slot is unavailable, we will offer alternative options.
@@ -640,34 +778,34 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===4?'':'d-none'}`} >
-                                    <div className={`faq-box mb-3 ${paymentToggle === 1? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPaymentToggle(1)}>
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle === 4 ? '' : 'd-none'}`} >
+                                    <div className={`faq-box mb-3 ${paymentToggle === 1 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setPaymentToggle(1)}>
                                             <h5 className="m-0">What is your refund policy?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 1 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">We do not offer refunds once a slot is booked. Even if you choose to cancel your booking, refunds will not be provided.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${paymentToggle === 2? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPaymentToggle(2)}>
+                                    <div className={`faq-box mb-3 ${paymentToggle === 2 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setPaymentToggle(2)}>
                                             <h5 className="m-0">What payment methods do you accept?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 2 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Payments are processed securely through Razorpay, and we accept most major payment methods. Please note that all payments are subject to 18% GST taxation, billed by MediaX Digital Solutions.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${paymentToggle === 3? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPaymentToggle(3)}>
+                                    <div className={`faq-box mb-3 ${paymentToggle === 3 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setPaymentToggle(3)}>
                                             <h5 className="m-0">Is there any additional cost apart from the listed price?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${paymentToggle === 3 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, all payments are subject to 18% GST as required by law, which will be included in your final bill.
@@ -675,31 +813,31 @@ function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle ===5?'':'d-none'}`} >
-                                    <div className={`faq-box mb-3 ${privacyToggle === 1? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPrivacyToggle(1)}>
+                                <div className={`faq-tab-container mt-5 mt-md-0 ${tabToggle === 5 ? '' : 'd-none'}`} >
+                                    <div className={`faq-box mb-3 ${privacyToggle === 1 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setPrivacyToggle(1)}>
                                             <h5 className="m-0">How is my personal information protected?</h5>
-                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 1? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 1 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">We take data security seriously and implement measures to protect your information. Your payment is processed securely through Razorpay, and no payment information is stored on our servers.
                                             </p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${privacyToggle === 2? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPrivacyToggle(2)}>
+                                    <div className={`faq-box mb-3 ${privacyToggle === 2 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setPrivacyToggle(2)}>
                                             <h5 className="m-0">Who has access to the obituary details I provide?
                                             </h5>
-                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 2? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 2 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Only authorized team members involved in processing and posting your obituary have access to the information you provide. We do not share your data with third parties except as necessary for payment processing.</p>
                                         </div>
                                     </div>
-                                    <div className={`faq-box mb-3 ${privacyToggle === 3? 'active':''}`}>
-                                        <div className="faq-h" onClick={()=> setPrivacyToggle(3)}>
+                                    <div className={`faq-box mb-3 ${privacyToggle === 3 ? 'active' : ''}`}>
+                                        <div className="faq-h" onClick={() => setPrivacyToggle(3)}>
                                             <h5 className="m-0">Can I request the deletion of my data after the obituary post?</h5>
-                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 3? 'fa-minus':'fa-plus'}`}></i></div>
+                                            <div className="faq-icon"><i className={`fal ${privacyToggle === 3 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
                                             <p className="m-0">Yes, you can request the deletion of your personal data after the post by contacting us at happeninginagra@gmail.com. We will process your request in accordance with our privacy policy.</p>
