@@ -16,9 +16,11 @@
 body {
     overflow-x: hidden;
 }
-.container-xxl{
+
+.container-xxl {
     padding: 0px 35px;
 }
+
 a {
     text-decoration: none;
 }
@@ -291,9 +293,11 @@ footer .foot-brand {
     padding: 50px;
     background-color: var(--whitesmoke);
 }
-.boobit-left-conatiner{
+
+.boobit-left-conatiner {
     height: 360px;
 }
+
 .boobit-box {
     padding: 50px;
     background-color: var(--white);
@@ -340,7 +344,7 @@ footer .foot-brand {
 
 #boobit-img .boobit-img img {
     width: 100%;
-    /* height: 200px; */
+    height: 100%;
     object-fit: cover;
 }
 
@@ -504,7 +508,8 @@ form .mb-3 {
     line-height: normal;
     letter-spacing: 0.16px;
 }
-.rw-widget-picker{
+
+.rw-widget-picker {
     padding: 22px;
     font-family: var(--font-family);
     font-size: 18px;
@@ -513,17 +518,22 @@ form .mb-3 {
     line-height: 144%;
     border: var(--bs-border-width) solid var(--bs-border-color);
 }
-.rw-widget-input{
+
+.rw-widget-input {
     padding: 0 !important;
     border: none !important;
     box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075) !important;
 }
-.rw-widget-input::placeholder{
+
+.rw-widget-input::placeholder {
     color: #2E2E2E !important;
 }
-.rw-input-addon, .rw-input-addon.rw-picker-btn{
+
+.rw-input-addon,
+.rw-input-addon.rw-picker-btn {
     border: none !important;
 }
+
 /* ------------- Footer Section End ------------- */
 
 
@@ -962,7 +972,8 @@ form .mb-3 {
     border-radius: 20px;
     background: #01B4BB17;
 }
-.posi-text{
+
+.posi-text {
     font-family: var(--font-family);
 }
 
@@ -972,6 +983,7 @@ form .mb-3 {
     color: var(--black);
     transition: all .5s;
 }
+
 .faq-btn-box li .d-flex .far,
 .policy-sidebar li a .far {
     color: var(--secondary);
@@ -1058,7 +1070,8 @@ form .mb-3 {
     cursor: pointer;
     /* transition: all .5s; */
 }
-.faq-box.active .faq-h{
+
+.faq-box.active .faq-h {
     border: 1px solid #E3DBD8;
 
 }
@@ -1081,6 +1094,7 @@ form .mb-3 {
     overflow: hidden;
     transition: all .5s;
 }
+
 .faq-box.active .faq-text {
     padding: 20px;
     height: 125px;
@@ -1088,12 +1102,58 @@ form .mb-3 {
 
 /* ------------- Faqs Section End ------------- */
 
-.instDesk{
+.instDesk {
     display: block;
 }
-.instTab{
+
+.instTab {
     display: none;
 }
-.instMob{
+
+.instMob {
     display: none;
+}
+
+.crop-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crop-img-container {
+    width: 100%;
+    /* height: 100%; */
+    max-width: 600px;
+    /* max-height: 600px; */
+    border-radius: 10px;
+    padding: 40px;
+    background-color: var(--white);
+}
+
+.crop-img-container .fal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background-color: var(--white);
+    text-align: center;
+    cursor: pointer;
+    transition: all .5s;
+}
+.crop-img-container .fal:hover{
+    background-color: var(--whitesmoke);
+}
+.crop-img-container img {
+    width: 100%;
 }

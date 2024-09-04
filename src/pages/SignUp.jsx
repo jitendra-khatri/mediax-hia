@@ -18,9 +18,10 @@ function SignUp() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     password: ''
   })
-  const { name, email, password } = formData
+  const { name, email, phone, password } = formData
 
   const onChangeHandler = (e) => {
     setFormData((prevStat) => ({
@@ -31,7 +32,6 @@ function SignUp() {
   const onSubmitHandler = async (e) => {
     e.preventDefault()
     try {
-
       const auth = getAuth()
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       const user = userCredential.user
@@ -48,8 +48,11 @@ function SignUp() {
       await setDoc(doc(db, 'users', user.uid), formDataCopy)
       navigate('/sign-in')
     } catch (error) {
-      console.log(error)
-      toast.error(error.message);
+      const errorMessage = error.message;
+      const match = errorMessage.match(/\(([^)]+)\)/);
+      const extractedMessage = match ? match[1] : errorMessage; // Fallback to full message if no match
+      toast.error(extractedMessage);
+      // toast.error(error.message);
     }
   }
   return (
@@ -67,17 +70,20 @@ function SignUp() {
             <div className="lo-box right">
               <div className="lo-text">
                 <h3>Welcome to <br /> Happening In Agra</h3>
-                <OAuth img={googleImg}/>
+                <OAuth img={googleImg} />
                 <p className="or-t">Or</p>
                 <form onSubmit={onSubmitHandler} method="post">
                   <div className="mb-3">
-                    <input type="text" className="form-control" id="name" value={name} placeholder="Name" onChange={onChangeHandler} />
+                    <input type="text" className="form-control" name="name" id="name" value={name} placeholder="Name" onChange={onChangeHandler} required />
                   </div>
                   <div className="mb-3">
-                    <input type="email" className="form-control" id="email" value={email} placeholder="Email" onChange={onChangeHandler} />
+                    <input type="email" className="form-control" name="email" id="email" value={email} placeholder="Email" onChange={onChangeHandler} required />
+                  </div>
+                  <div className="mb-3">
+                    <input type="number" className="form-control" name="phone" id="phone" value={phone} placeholder="+91(0000000000)" onChange={onChangeHandler} required />
                   </div>
                   <div className="mb-3 pass-container">
-                    <input type={passToggle ? 'text' : 'password'} className="form-control" id="password" value={password} placeholder="Password" onChange={onChangeHandler} />
+                    <input type={passToggle ? 'text' : 'password'} className="form-control" id="password" name="password" value={password} placeholder="Password" onChange={onChangeHandler} required />
                     <i className={passToggle ? 'far fa-eye-slash' : 'far fa-eye'} onClick={passToggleHandler}></i>
                   </div>
                   {/* <div className="forgot-pass">
@@ -92,7 +98,7 @@ function SignUp() {
                     By signing in you accept the.
                     <Link to='/terms-of-services'>
                       Terms of Services
-                    </Link> 
+                    </Link>
                     <span> and </span>
                     <Link to='/privacy-policy'>
                       Privacy Policy

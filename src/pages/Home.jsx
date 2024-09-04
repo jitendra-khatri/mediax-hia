@@ -11,7 +11,7 @@ import workRight from '../assets/work-right.png'
 import profile from '../assets/profile.jpg'
 import happenImg from '../assets/happen-img.png'
 import upImg from '../assets/up-img.png'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import $ from 'jquery'
 import { getAuth } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
@@ -35,6 +35,9 @@ import { collection, addDoc, setDoc, doc, getDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid'
 import Header from '../component/Header'
 import Footer from '../component/Footer'
+import ReactCrop, { centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
+import setCanvasPreview from './setCanvasPreview'
 function Home() {
     const navigate = useNavigate()
     const [prefix, setPrefix] = useState(null)
@@ -61,6 +64,12 @@ function Home() {
     const [viewingToggle, setViewingToggle] = useState(1)
     const [paymentToggle, setPaymentToggle] = useState(1)
     const [privacyToggle, setPrivacyToggle] = useState(1)
+    const [uploadImgSrc, setUploadImgSrc] = useState('')
+    const [uploadImgSrcFinal, setUploadImgSrcFinal] = useState('')
+    const [crop, setCrop] = useState()
+    const [error, setError] = useState('')
+    const imgRef = useRef(null)
+    const previewCanvasRef = useRef(null)
     const auth = getAuth()
     useEffect(() => {
         setUser(auth.currentUser)
@@ -92,7 +101,19 @@ function Home() {
         if (file) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#boobit-up-img').attr('src', e.target.result);
+                const imgElement = new Image();
+                imgElement.src = e.target.result
+                imgElement.addEventListener('load', (e) => {
+                    const { naturalWidth, naturalHeight } = e.currentTarget;
+                    if (naturalWidth < 150 || naturalHeight < 150) {
+                        setError('Image must be at least 150 x 150 pixels')
+                        return setUploadImgSrc(" ")
+                    }
+                })
+                // $('#boobit-up-img').attr('src', e.target.result);
+                // console.log(e.target.result)
+                setError('')
+                setUploadImgSrc(e.target.result)
             }
             reader.readAsDataURL(file);
         }
@@ -151,7 +172,7 @@ function Home() {
                                 imageUrl: url,
                                 paymentResponseId: 'No Id Yet',
                             };
-
+                            localStorage.setItem('image', url)
                             console.log(listingData);
 
                             const docRef = doc(db, "listings", auth.currentUser.uid);
@@ -179,7 +200,18 @@ function Home() {
             console.log('Error capturing the section:', error);
         });
     }
-
+    const onImageLoad = (e) => {
+        const { width, height } = e.currentTarget;
+        const cropWidthInPercent = (150 / width) * 100
+        const crop = makeAspectCrop(
+            {
+                unit: '%',
+                width: cropWidthInPercent,
+            }, 1, width, height
+        )
+        const centeredCrop = centerCrop(crop, width, height)
+        setCrop(centeredCrop)
+    }
     /*  function handleClick() {
  
          html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
@@ -324,7 +356,7 @@ function Home() {
                                         <div class="boobit-left d-flex flex-column mb-sm-5">
                                             <div id="boobit-img" class="boobit-img">
                                                 <div class="boobit-head">in loving memory of </div>
-                                                <div class="boobit-img"><img src={profile} class="w-100"
+                                                <div class="boobit-img"><img src={uploadImgSrcFinal? uploadImgSrcFinal: profile} class="w-100"
                                                     id="boobit-up-img" alt="" /></div>
                                                 <div class="boobit-text">
                                                     <div class="boobit-name">
@@ -343,7 +375,7 @@ function Home() {
                                                     </div>
                                                     <div class="boobit-service">{memoService ? memoService : 'Memorial Service'}</div>
                                                     <div class="boobit-details">
-                                                        <div class="boobit-time"> 
+                                                        <div class="boobit-time">
                                                             {serviceTimeStart ? serviceTimeStart : '10:00am'}
                                                             &nbsp;-    {serviceTimeEnd ? serviceTimeEnd : '12:30pm'}
                                                         </div>
@@ -404,46 +436,9 @@ function Home() {
                                                     <DatePickerWidgets
                                                         selected={dateOfDeath}
                                                         onChange={(date) => setDateOfDeath(date)}
-                                                        valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
+                                                        // valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
                                                         placeholder='Date of Death' />
                                                 </div>
-                                                
-                                                {/* <DatePickerWidgets caretAs={FaClock} format="HH:mm:ss" /> */}
-                                                {/* <div class="mb-3">
-                                                    
-                                                    <DatePicker
-                                                        selected={dateOfBirth}
-                                                        onChange={(date) => setDateOfBirth(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        className='date form-control'
-                                                        placeholderText='Date of Birth'
-                                                        showYearDropdown
-                                                        showMonthDropdown
-                                                        scrollableMonthYearDropdown
-                                                        maxDate={new Date()}
-                                                    />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    <input type="text" class="date form-control" id="dateOfBirth"
-                                                        placeholder="Date of Birth" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                </div> */}
-                                                {/* <div class="mb-3">
-                                                    <DatePicker
-                                                        selected={dateOfDeath}
-                                                        onChange={(date) => setDateOfDeath(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        className='date form-control'
-                                                        placeholderText='Date of Death'
-                                                        showYearDropdown
-                                                        showMonthDropdown
-                                                        scrollableMonthYearDropdown
-                                                        maxDate={new Date()}
-                                                    />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    <input type="text" class="date form-control" id="date-of-death"
-                                                        placeholder="Date of Death" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                </div> */}
                                                 <div class="mb-3">
                                                     <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
                                                         <option selected>Service</option>
@@ -559,29 +554,12 @@ function Home() {
                                                         <option value="11:30 PM">11:30 PM</option>
                                                     </select>
                                                 </div>
-                                                {/* <div class="mb-3">
-                                                    <DatePicker
-                                                        selected={dateOfService}
-                                                        onChange={(date) => setDateOfService(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        className='date form-control'
-                                                        placeholderText='Date of Service'
-                                                        showYearDropdown
-                                                        showMonthDropdown
-                                                        scrollableMonthYearDropdown
-                                                        minDate={new Date()}
-                                                    />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                    <input type="text" class="date form-control" id="date-of-service"
-                                                        placeholder="Date of Service" />
-                                                    <div class="ob-icon"><i class="fas fa-calendar-alt"></i></div>
-                                                </div> */}
                                                 <div className="mb-3">
                                                     <DatePickerWidgets
                                                         selected={dateOfService}
                                                         min={new Date()}
                                                         onChange={(date) => setDateOfService(date)}
-                                                        valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
+                                                        // valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
                                                         placeholder='Date of Service' />
                                                 </div>
                                                 <div class="mb-3">
@@ -609,13 +587,63 @@ function Home() {
                                                             </div>)}
                                                     </div>
                                                 </div>
-
                                                 <div class="mb-3">
                                                     <label htmlFor="up-img" class="up-img">
                                                         <img src={upImg} alt="" />
                                                     </label>
                                                     <input class="form-control position-fixed opacity-0" type="file"
                                                         id="up-img" onInput={fileUpload} />
+
+                                                    {uploadImgSrc && (
+                                                        <div className="crop-img">
+                                                            <div className="crop-img-container">
+                                                                <i class="fal fa-times" onClick={() => setUploadImgSrc('')}></i>
+                                                                {error && (<p className='text-danger'>{error}</p>)}
+                                                                <ReactCrop
+                                                                    crop={crop}
+                                                                    onChange={
+                                                                        (pixelCrop, percentCrop) => setCrop(percentCrop)
+                                                                    }
+                                                                    circularCrop
+                                                                    keepSelection
+                                                                    aspect={1}
+                                                                    minWidth={150}
+                                                                >
+                                                                    <img ref={imgRef} src={uploadImgSrc} alt="" onLoad={onImageLoad} />
+                                                                </ReactCrop>
+                                                                <div className="text-center ">
+                                                                    <div className="th-btn fill py-2" onClick={()=>{
+                                                                        setCanvasPreview(
+                                                                            imgRef.current,
+                                                                            previewCanvasRef.current,
+                                                                            convertToPixelCrop(
+                                                                                crop,
+                                                                                imgRef.current.width,
+                                                                                imgRef.current.height
+                                                                            )
+                                                                        )
+                                                                        const dataUrl = previewCanvasRef.current.toDataURL()
+                                                                        setUploadImgSrcFinal(dataUrl)
+                                                                        setUploadImgSrc('')
+                                                                    }}> Crop Image</div>
+                                                                </div>
+                                                                {crop && (
+                                                        <canvas
+                                                        ref={previewCanvasRef}
+                                                        className='mt-4'
+                                                        style={{
+                                                            display:'none',
+                                                            width:150,
+                                                            height:150,
+                                                            objectFit:'contain',
+                                                            border:'1px solid black'
+                                                        }}
+                                                        />
+                                                    )}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    
                                                 </div>
 
                                                 {/* <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" /> */}
