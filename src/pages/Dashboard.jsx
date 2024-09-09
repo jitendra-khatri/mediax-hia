@@ -59,6 +59,13 @@ function Dashboard() {
 
                 q = query(docRef, where('dateOfPosting', '>=', startOfMonth), where('dateOfPosting', '<=', endOfMonth));
             }
+            if (fromDate) {
+                q = query(
+                    docRef,
+                    where('dateOfPosting', '>=', fromDate),
+                    where('dateOfPosting', '<=', fromDate)
+                  );
+            }
             const querySnapshot = await getDocs(q);
             const listings = [];
             querySnapshot.forEach((doc) => {
@@ -68,7 +75,7 @@ function Dashboard() {
         };
 
         fetchListings();
-    }, [sortField, dateOfDeath]);
+    }, [sortField, dateOfDeath, fromDate]);
 
     useEffect(() => {
         const fetchListings = async () => {
@@ -175,7 +182,7 @@ function Dashboard() {
                                 <h1>Post list</h1>
                                 <div className="sorting-feature">
                                     <div className="sort-by-date d-flex flex-wrap align-items-center gap-3 ps-3">
-                                        <div className="sor-heading ">Sort By</div>
+                                        <div className="sor-heading ">Sort By Month</div>
                                         <div className="sor-icon"><i class="fal fa-calendar-alt"></i></div>
                                         <div className="sor-date">
                                             <DatePicker
@@ -190,10 +197,10 @@ function Dashboard() {
                                             <div class="sor-icon"><i class="far fa-chevron-down"></i></div>
                                         </div>
                                     </div>
-                                    {/* <div className="sor-border"></div>
+                                    <div className="sor-border"></div>
                                     <div className="sort-by-date mid d-flex align-items-center gap-3">
                                         <div className="d-flex align-items-center flex-wrap gap-3">
-                                            <div className="sor-heading">From</div>
+                                            <div className="sor-heading">Sort By Date</div>
                                             <div className="sor-date">
                                                 <DatePicker
                                                     selected={fromDate}
@@ -210,7 +217,7 @@ function Dashboard() {
                                                 <div class="sor-icon"><i class="far fa-chevron-down"></i></div>
                                             </div>
                                         </div>
-                                        <div className="d-flex align-items-center flex-wrap gap-3">
+                                        {/* <div className="d-flex align-items-center flex-wrap gap-3">
                                             <div className="sor-heading">To</div>
                                             <div className="sor-date">
                                                 <DatePicker
@@ -227,13 +234,13 @@ function Dashboard() {
                                                 />
                                                 <div class="sor-icon"><i class="far fa-chevron-down"></i></div>
                                             </div>
-                                        </div>
+                                        </div> */}
 
-                                    </div> */}
+                                    </div> 
                                     <div className="sor-border"></div>
                                     <form className="sort-by-date d-flex align-items-center gap-3 pe-3">
                                         <div className="d-flex align-items-center flex-wrap gap-3">
-                                            <div className="sor-heading">Sort:</div>
+                                            <div className="sor-heading">Sort By Category:</div>
                                             <div className="sor-date">
                                                 <select class="form-select" id="status-select" onChange={(e) => setSortField(e.target.value)} value={sortField}>
                                                     <option value="name">Name</option>

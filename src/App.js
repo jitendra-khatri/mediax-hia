@@ -18,6 +18,7 @@ import DeleteListing from "./pages/DeleteListing";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PhoneAuth from "./pages/PhoneAuth";
 function App() {
   return (
     <Router>
@@ -52,6 +53,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/terms-n-conditions" element={<TermsAndConditions />} />
+        <Route path="/phone-auth" element={<PhoneAuth />} />
       </Routes>
       <ToastContainer />
     </Router>

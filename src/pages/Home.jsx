@@ -51,9 +51,15 @@ function Home() {
     const [dateOfService, setDateOfService] = useState(null)
     const [griefPerson1, setGriefPerson1] = useState(false)
     const [griefPerson2, setGriefPerson2] = useState(false)
+    const [griefPerson3, setGriefPerson3] = useState(false)
     const [griefPersonText1, setGriefPersonText1] = useState(null)
     const [griefPersonText2, setGriefPersonText2] = useState(null)
     const [griefPersonText3, setGriefPersonText3] = useState(null)
+    const [griefPersonText4, setGriefPersonText4] = useState(null)
+    const [griefPersonRelation1, setGriefPersonRelation1] = useState(null)
+    const [griefPersonRelation2, setGriefPersonRelation2] = useState(null)
+    const [griefPersonRelation3, setGriefPersonRelation3] = useState(null)
+    const [griefPersonRelation4, setGriefPersonRelation4] = useState(null)
     const [imageUpload, setImageUpload] = useState(null)
     const [user, setUser] = useState(null)
     const [listingDataCheck, setListingDataCheck] = useState()
@@ -356,7 +362,7 @@ function Home() {
                                         <div class="boobit-left d-flex flex-column mb-sm-5">
                                             <div id="boobit-img" class="boobit-img">
                                                 <div class="boobit-head">in loving memory of </div>
-                                                <div class="boobit-img"><img src={uploadImgSrcFinal? uploadImgSrcFinal: profile} class="w-100"
+                                                <div class="boobit-img"><img src={uploadImgSrcFinal ? uploadImgSrcFinal : profile} class="w-100"
                                                     id="boobit-up-img" alt="" /></div>
                                                 <div class="boobit-text">
                                                     <div class="boobit-name">
@@ -391,10 +397,11 @@ function Home() {
                                                     In Grief
                                                 </div>
                                                 <div class="boobit-greif">
-
-                                                    {griefPersonText1 ? `${griefPersonText1} | ` : 'Person 1(relation) | '}
-                                                    {griefPersonText2 ? ` ${griefPersonText2}` : ' Person 2(relation)'}
-                                                    {griefPersonText3 ? ` | ${griefPersonText3}` : ''}
+                                                    {griefPersonText1 ? `${griefPersonText1} ${`(${griefPersonRelation1})`}` : 'Person1 (Relation)'}
+                                                    {griefPersonText2 ? ` | ${griefPersonText2} ${griefPersonRelation2 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation2})`}` : ' | Person2 (Relation)'}
+                                                    <div className="mt-1"></div>
+                                                    {griefPersonText3 ? `${griefPersonText3} ${griefPersonRelation3 == 'Relation' ?'(Select Relation)': `(${griefPersonRelation3})`}` : 'Person3 (Relation) | '}
+                                                    {griefPersonText4 ? ` | ${griefPersonText4} ${griefPersonRelation4 == 'Relation' ?'(Select Relation)': `(${griefPersonRelation4})`}` : ' Person4 (Relation)'}
                                                 </div>
                                                 <div class="boobit-happening">
                                                     <img src={happenImg} alt="" class="w-100" id="happening-img" />
@@ -570,19 +577,89 @@ function Home() {
                                                     <div class="greif">
                                                         <div class="d-flex gap-3 mb-3">
                                                             <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText1} onChange={(prev) => setGriefPersonText1(prev.target.value)} placeholder="Person in greif" />
+                                                            <select class="form-select" name="prefix" id="prefix-select" value={griefPersonRelation1} onChange={(rel) => setGriefPersonRelation1(rel.target.value)}>
+                                                                <option value="Relation" selected>Relation</option>
+                                                                <option value="Father">Father</option>
+                                                                <option value="Mother">Mother</option>
+                                                                <option value="Son">Son</option>
+                                                                <option value="Daughter">Daughter</option>
+                                                                <option value="Sister">Sister</option>
+                                                                <option value="Brother">Brother</option>
+                                                                <option value="Husband">Husband</option>
+                                                                <option value="Wife">Wife</option>
+                                                                <option value="Grandfather">Grandfather</option>
+                                                                <option value="Grandmother">Grandmother</option>
+                                                                <option value="Father-in-law">Father-in-law</option>
+                                                                <option value="Mother-in-law">Mother-in-law</option>
+                                                                <option value="Friend">Friend</option>
+                                                            </select>
                                                             <div class="form-control w-auto" onClick={() => { setGriefPerson1(true) }}><i
                                                                 class="fal fa-plus fa-plus-icon"></i></div>
                                                         </div>
                                                         {griefPerson1 && (
                                                             <div class="d-flex gap-3 mb-3">
                                                                 <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText2} onChange={(prev) => setGriefPersonText2(prev.target.value)} placeholder="Person in greif" />
+                                                                <select class="form-select" name="prefix" id="prefix-select" value={griefPersonRelation2} onChange={(rel) => setGriefPersonRelation2(rel.target.value)}>
+                                                                    <option value="Relation" selected>Relation</option>
+                                                                    <option value="Father">Father</option>
+                                                                    <option value="Mother">Mother</option>
+                                                                    <option value="Son">Son</option>
+                                                                    <option value="Daughter">Daughter</option>
+                                                                    <option value="Sister">Sister</option>
+                                                                    <option value="Brother">Brother</option>
+                                                                    <option value="Husband">Husband</option>
+                                                                    <option value="Wife">Wife</option>
+                                                                    <option value="Grandfather">Grandfather</option>
+                                                                    <option value="Grandmother">Grandmother</option>
+                                                                    <option value="Father-in-law">Father-in-law</option>
+                                                                    <option value="Mother-in-law">Mother-in-law</option>
+                                                                    <option value="Friend">Friend</option>
+                                                                </select>
                                                                 <div class="form-control w-auto" onClick={() => { setGriefPerson2(true) }}><i
                                                                     class="fal fa-plus fa-plus-icon"></i></div>
                                                             </div>)}
                                                         {griefPerson2 && (
                                                             <div class="d-flex gap-3 mb-3">
                                                                 <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText3} onChange={(prev) => setGriefPersonText3(prev.target.value)} placeholder="Person in greif" />
-                                                                <div class="form-control w-auto" onClick={() => { alert("You can not add more then 3") }}><i
+                                                                <select class="form-select" name="prefix" id="prefix-select" value={griefPersonRelation3} onChange={(rel) => setGriefPersonRelation3(rel.target.value)}>
+                                                                    <option value="Relation" selected>Relation</option>
+                                                                    <option value="Father">Father</option>
+                                                                    <option value="Mother">Mother</option>
+                                                                    <option value="Son">Son</option>
+                                                                    <option value="Daughter">Daughter</option>
+                                                                    <option value="Sister">Sister</option>
+                                                                    <option value="Brother">Brother</option>
+                                                                    <option value="Husband">Husband</option>
+                                                                    <option value="Wife">Wife</option>
+                                                                    <option value="Grandfather">Grandfather</option>
+                                                                    <option value="Grandmother">Grandmother</option>
+                                                                    <option value="Father-in-law">Father-in-law</option>
+                                                                    <option value="Mother-in-law">Mother-in-law</option>
+                                                                    <option value="Friend">Friend</option>
+                                                                </select>
+                                                                <div class="form-control w-auto" onClick={() => { setGriefPerson3(true) }}><i
+                                                                    class="fal fa-plus fa-plus-icon"></i></div>
+                                                            </div>)}
+                                                        {griefPerson3 && (
+                                                            <div class="d-flex gap-3 mb-3">
+                                                                <input type="text" class="form-control greif-input" maxLength="15" value={griefPersonText4} onChange={(prev) => setGriefPersonText4(prev.target.value)} placeholder="Person in greif" />
+                                                                <select class="form-select" name="prefix" id="prefix-select" value={griefPersonRelation4} onChange={(rel) => setGriefPersonRelation4(rel.target.value)}>
+                                                                    <option value="Relation" selected>Relation</option>
+                                                                    <option value="Father">Father</option>
+                                                                    <option value="Mother">Mother</option>
+                                                                    <option value="Son">Son</option>
+                                                                    <option value="Daughter">Daughter</option>
+                                                                    <option value="Sister">Sister</option>
+                                                                    <option value="Brother">Brother</option>
+                                                                    <option value="Husband">Husband</option>
+                                                                    <option value="Wife">Wife</option>
+                                                                    <option value="Grandfather">Grandfather</option>
+                                                                    <option value="Grandmother">Grandmother</option>
+                                                                    <option value="Father-in-law">Father-in-law</option>
+                                                                    <option value="Mother-in-law">Mother-in-law</option>
+                                                                    <option value="Friend">Friend</option>
+                                                                </select>
+                                                                <div class="form-control w-auto" onClick={() => { alert("You can not mention more than 4 person in grief") }}><i
                                                                     class="fal fa-plus fa-plus-icon"></i></div>
                                                             </div>)}
                                                     </div>
@@ -612,7 +689,7 @@ function Home() {
                                                                     <img ref={imgRef} src={uploadImgSrc} alt="" onLoad={onImageLoad} />
                                                                 </ReactCrop>
                                                                 <div className="text-center ">
-                                                                    <div className="th-btn fill py-2" onClick={()=>{
+                                                                    <div className="th-btn fill py-2" onClick={() => {
                                                                         setCanvasPreview(
                                                                             imgRef.current,
                                                                             previewCanvasRef.current,
@@ -628,22 +705,22 @@ function Home() {
                                                                     }}> Crop Image</div>
                                                                 </div>
                                                                 {crop && (
-                                                        <canvas
-                                                        ref={previewCanvasRef}
-                                                        className='mt-4'
-                                                        style={{
-                                                            display:'none',
-                                                            width:150,
-                                                            height:150,
-                                                            objectFit:'contain',
-                                                            border:'1px solid black'
-                                                        }}
-                                                        />
-                                                    )}
+                                                                    <canvas
+                                                                        ref={previewCanvasRef}
+                                                                        className='mt-4'
+                                                                        style={{
+                                                                            display: 'none',
+                                                                            width: 150,
+                                                                            height: 150,
+                                                                            objectFit: 'contain',
+                                                                            border: '1px solid black'
+                                                                        }}
+                                                                    />
+                                                                )}
                                                             </div>
                                                         </div>
                                                     )}
-                                                    
+
                                                 </div>
 
                                                 {/* <input class="form-control form-control-lg"  id="formFileLg" onChange={(e)=>setImage(e.target.files[0])} type="file" /> */}

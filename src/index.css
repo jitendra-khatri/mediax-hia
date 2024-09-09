@@ -390,7 +390,7 @@ footer .foot-brand {
 #boobit-img .boobit-greif {
     font-family: var(--font-family-inter);
     font-size: 14px;
-    font-style: italic;
+    /* font-style: italic; */
     font-weight: 700;
     line-height: 144%;
     /* 20.16px */
@@ -405,7 +405,7 @@ footer .foot-brand {
 }
 
 #boobit-img .boobit-greif {
-    color: #686868;
+    /* color: #686868; */
     margin-bottom: 20px;
 }
 
@@ -451,7 +451,7 @@ form .mb-3 {
 
 .form-control,
 .form-select {
-    padding: 22px;
+    padding: 15px 22px;
     color: #2E2E2E;
     font-family: var(--font-family);
     font-size: 18px;
@@ -510,7 +510,7 @@ form .mb-3 {
 }
 
 .rw-widget-picker {
-    padding: 22px;
+    padding: 15px 22px;
     font-family: var(--font-family);
     font-size: 18px;
     font-style: normal;
