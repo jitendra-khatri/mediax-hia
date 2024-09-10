@@ -10,7 +10,7 @@ function Footer() {
           <div className="col-md-4">
             <div className="text-sm-center">
               <div className="foot-brand mx-sm-auto"><img src={Logo} alt="" className="w-100" /></div>
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+              {/* <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p> */}
               <div className="hia-insta"><a href="#" target='_blank'><img src={HiaInsta} alt="" className="w-100" /></a></div>
             </div>
           </div>
