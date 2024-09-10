@@ -8,9 +8,11 @@ import instDesk from '../assets/foot-ban-desk.jpg'
 import instTab from '../assets/foot-ban-tab.jpg'
 import instMob from '../assets/foot-ban-mob.jpg'
 import workRight from '../assets/work-right.png'
-import profile from '../assets/profile.jpg'
-import happenImg from '../assets/happen-img.png'
+import profile from '../assets/profile.png'
+import happenImg from '../assets/happen-img.jpg'
 import upImg from '../assets/up-img.png'
+import postLine from '../assets/post-line.png'
+import postBird from '../assets/bird.png'
 import React, { useEffect, useRef, useState } from 'react'
 import $ from 'jquery'
 import { getAuth } from 'firebase/auth'
@@ -126,11 +128,11 @@ function Home() {
     }
 
     function confirmDetails() {
-        const auth = getAuth()
-        if (!auth.currentUser) {
-            toast.error('You have to login first to create obituary')
-            return false
-        }
+        // const auth = getAuth()
+        // if (!auth.currentUser) {
+        //     toast.error('You have to login first to create obituary')
+        //     return false
+        // }
         const confirm = window.confirm("Please check everything before going forward");
         if (confirm) {
             handleClick(); // Call the function or operation you want to perform
@@ -140,72 +142,94 @@ function Home() {
         }
 
     }
-
-
     function handleClick() {
-
         html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
                 const image = dataTransfer.files;
-
-                // Use image[0] directly instead of waiting for state update
-                if (image[0] == null) {
-                    return false;
-                }
-
-                const storage = getStorage();
-                const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
-                uploadBytes(imageRef, image[0]).then(() => {
-                    getDownloadURL(imageRef).then(async (url) => {
-                        try {
-                            const auth = getAuth();
-                            if (!auth.currentUser) {
-                                throw new Error("User not authenticated");
-                            }
-                            const listingData = {
-                                listingCreated: true,
-                                userId: auth.currentUser.uid,
-                                name: auth.currentUser.displayName,
-                                gmail: auth.currentUser.email,
-                                // dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-                                dateOfPosting: '',
-                                postStatus: false,
-                                slotNumber: 0,
-                                payment: false,
-                                imageUrl: url,
-                                paymentResponseId: 'No Id Yet',
-                            };
-                            localStorage.setItem('image', url)
-                            console.log(listingData);
-
-                            const docRef = doc(db, "listings", auth.currentUser.uid);
-                            await setDoc(docRef, listingData);
-
-                            console.log("Document written with ID: ", auth.currentUser.uid);
-                            // alert('File Uploaded and Listing Created'); // Consider using toast instead
-                            navigate('/pick-date');
-                        } catch (error) {
-                            console.error("Error adding document: ", error);
-                            toast.error('Error creating listing: ' + error.message);
-                        }
-                    }).catch((error) => {
-                        console.error('Error getting download URL:', error);
-                        toast.error('Error getting download URL: ' + error.message);
-                    });
-
-                }).catch((error) => {
-                    console.log('Error uploading file:', error);
-                    toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
-                });
-
+    
+                // Convert the Blob to a Blob URL and store it in localStorage
+                const blobUrl = URL.createObjectURL(blob);
+                localStorage.setItem('imageBlobUrl', blobUrl);
+    
+                // Proceed with any other operations (e.g., navigating to /sign-in page)
+                console.log("Image saved to localStorage");
+                navigate('/sign-in')
             }, 'image/jpeg');
         }).catch(function (error) {
             console.log('Error capturing the section:', error);
         });
     }
+    
+
+
+    // function handleClick() {
+
+    //     html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
+    //         canvas.toBlob(function (blob) {
+    //             const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
+    //             const dataTransfer = new DataTransfer();
+    //             dataTransfer.items.add(file);
+    //             const image = dataTransfer.files;
+    //             console.log(dataTransfer.files)
+    //             localStorage.setItem('image',image[0])
+    //             // Use image[0] directly instead of waiting for state update
+    //             if (image[0] == null) {
+    //                 return false;
+    //             }
+
+    //             const storage = getStorage();
+    //             const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
+    //             uploadBytes(imageRef, image[0]).then(() => {
+    //                 getDownloadURL(imageRef).then(async (url) => {
+    //                     try {
+    //                         const auth = getAuth();
+    //                         if (!auth.currentUser) {
+    //                             throw new Error("User not authenticated");
+    //                         }
+    //                         const listingData = {
+    //                             listingCreated: true,
+    //                             userId: auth.currentUser.uid,
+    //                             name: auth.currentUser.displayName,
+    //                             gmail: auth.currentUser.email,
+    //                             // dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+    //                             dateOfPosting: '',
+    //                             postStatus: false,
+    //                             slotNumber: 0,
+    //                             payment: false,
+    //                             imageUrl: url,
+    //                             paymentResponseId: 'No Id Yet',
+    //                         };
+    //                         localStorage.setItem('image', url)
+    //                         console.log(listingData);
+
+    //                         const docRef = doc(db, "listings", auth.currentUser.uid);
+    //                         await setDoc(docRef, listingData);
+
+    //                         console.log("Document written with ID: ", auth.currentUser.uid);
+    //                         // alert('File Uploaded and Listing Created'); // Consider using toast instead
+    //                         navigate('/pick-date');
+    //                     } catch (error) {
+    //                         console.error("Error adding document: ", error);
+    //                         toast.error('Error creating listing: ' + error.message);
+    //                     }
+    //                 }).catch((error) => {
+    //                     console.error('Error getting download URL:', error);
+    //                     toast.error('Error getting download URL: ' + error.message);
+    //                 });
+
+    //             }).catch((error) => {
+    //                 console.log('Error uploading file:', error);
+    //                 toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
+    //             });
+
+    //         }, 'image/jpeg');
+    //     }).catch(function (error) {
+    //         console.log('Error capturing the section:', error);
+    //     });
+    // }
     const onImageLoad = (e) => {
         const { width, height } = e.currentTarget;
         const cropWidthInPercent = (150 / width) * 100
@@ -361,13 +385,17 @@ function Home() {
                                     <div class="col-md-7 order-md-1 boobit-left-conatiner">
                                         <div class="boobit-left d-flex flex-column mb-sm-5">
                                             <div id="boobit-img" class="boobit-img">
-                                                <div class="boobit-head">in loving memory of </div>
+                                                <div className="boobit-bird"><img src={postBird} className='w-100' alt="" /></div>
+                                                {/* <div class="boobit-head">in loving memory of </div> */}
                                                 <div class="boobit-img"><img src={uploadImgSrcFinal ? uploadImgSrcFinal : profile} class="w-100"
                                                     id="boobit-up-img" alt="" /></div>
                                                 <div class="boobit-text">
                                                     <div class="boobit-name">
                                                         <div class="boobit-prefix">{prefix ? prefix : 'Mr.'}</div>
                                                         <div class="boobit-n-t">{nameOfDeceased ? nameOfDeceased : 'Kalash Singh'}</div>
+                                                    </div>
+                                                    <div className="boobit-post-line">
+                                                        <img src={postLine} className='w-100' alt="" />
                                                     </div>
                                                     <div class="boobit-life-spam">
                                                         <div class="boobit-date-of-birth">
@@ -394,7 +422,7 @@ function Home() {
                                                     </div>
                                                 </div>
                                                 <div class="boobit-h-grif">
-                                                    In Grief
+                                                    In Grief:
                                                 </div>
                                                 <div class="boobit-greif">
                                                     {griefPersonText1 ? `${griefPersonText1} ${`(${griefPersonRelation1})`}` : 'Person1 (Relation)'}
@@ -449,10 +477,11 @@ function Home() {
                                                 <div class="mb-3">
                                                     <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
                                                         <option selected>Service</option>
-                                                        <option value="Memorial1">Memorial1</option>
-                                                        <option value="Memorial2">Memorial2</option>
-                                                        <option value="Memorial3">Memorial3</option>
-                                                        <option value="Memorial4">Memorial4</option>
+                                                        <option value="Memoriam">Memoriam</option>
+                                                        <option value="Death Anniversary">Death Anniversary</option>
+                                                        <option value="Funeral Announcement">Funeral Announcement</option>
+                                                        <option value="Condolence Message">Condolence Message</option>
+                                                        <option value="Tribute">Tribute</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">

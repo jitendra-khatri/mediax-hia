@@ -93,7 +93,7 @@ function SignUp() {
                 </form>
 
                 <div className="dont-have">
-                  <p className="m-0">Already have an account? <Link to="/sign-in">Sign In</Link></p>
+                  <p className="m-0">Already have an account? <Link to="/sign-in" className="text-primary">Sign In</Link></p>
                   <div className="terms">
                     By signing in you accept the.
                     <Link to='/terms-of-services'>

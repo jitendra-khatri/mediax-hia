@@ -123,7 +123,7 @@ function Payment() {
           <div className="col-md-7 col-lg-5 text-center">
             <h2>Slot Number: {listingData?.slotNumber}</h2>
             <img src={listingData?.imageUrl} className="w-100" alt="" />
-            <button className="th-btn fill" onClick={() => createRazorpayOrder(1000)}>
+            <button className="th-btn fill mt-5" onClick={() => createRazorpayOrder(1000)}>
             Proceed to payment Rs 1000
             </button>
           </div>

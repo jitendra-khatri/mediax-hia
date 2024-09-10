@@ -19,7 +19,7 @@ function Footer() {
               <h4>Important Links</h4>
               <ul>
                 <li><Link to='/privacy-policy'><i class="far fa-angle-right"></i> Privacy policy</Link></li>
-                <li><Link to='/refund-policy'><i class="far fa-angle-right"></i> Refund policy</Link></li>
+                <li><Link to='/refund-policy'><i class="far fa-angle-right"></i> Refund and cancellation policy</Link></li>
                 <li><Link to='/terms-n-conditions'><i class="far fa-angle-right"></i> Terms & conditions</Link></li>
               </ul>
             </div>
