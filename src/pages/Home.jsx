@@ -78,6 +78,8 @@ function Home() {
     const [error, setError] = useState('')
     const imgRef = useRef(null)
     const previewCanvasRef = useRef(null)
+    const [confirmToggle, setConfirmToggle] = useState(false)
+    const [confirm, setConfirm] = useState(true)
     const auth = getAuth()
     useEffect(() => {
         setUser(auth.currentUser)
@@ -128,6 +130,7 @@ function Home() {
     }
 
     function confirmDetails() {
+        setConfirmToggle(true)
         // const auth = getAuth()
         // if (!auth.currentUser) {
         //     toast.error('You have to login first to create obituary')
@@ -149,11 +152,11 @@ function Home() {
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
                 const image = dataTransfer.files;
-    
+
                 // Convert the Blob to a Blob URL and store it in localStorage
                 const blobUrl = URL.createObjectURL(blob);
                 localStorage.setItem('imageBlobUrl', blobUrl);
-    
+
                 // Proceed with any other operations (e.g., navigating to /sign-in page)
                 console.log("Image saved to localStorage");
                 navigate('/sign-in')
@@ -162,9 +165,6 @@ function Home() {
             console.log('Error capturing the section:', error);
         });
     }
-    
-
-
     // function handleClick() {
 
     //     html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
@@ -428,8 +428,8 @@ function Home() {
                                                     {griefPersonText1 ? `${griefPersonText1} ${`(${griefPersonRelation1})`}` : 'Person1 (Relation)'}
                                                     {griefPersonText2 ? ` | ${griefPersonText2} ${griefPersonRelation2 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation2})`}` : ' | Person2 (Relation)'}
                                                     <div className="mt-1"></div>
-                                                    {griefPersonText3 ? `${griefPersonText3} ${griefPersonRelation3 == 'Relation' ?'(Select Relation)': `(${griefPersonRelation3})`}` : 'Person3 (Relation) | '}
-                                                    {griefPersonText4 ? ` | ${griefPersonText4} ${griefPersonRelation4 == 'Relation' ?'(Select Relation)': `(${griefPersonRelation4})`}` : ' Person4 (Relation)'}
+                                                    {griefPersonText3 ? `${griefPersonText3} ${griefPersonRelation3 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation3})`}` : 'Person3 (Relation) | '}
+                                                    {griefPersonText4 ? ` | ${griefPersonText4} ${griefPersonRelation4 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation4})`}` : ' Person4 (Relation)'}
                                                 </div>
                                                 <div class="boobit-happening">
                                                     <img src={happenImg} alt="" class="w-100" id="happening-img" />
@@ -994,7 +994,15 @@ function Home() {
                 </section>
                 {/* <!-- Instagarm Banner Section End --> */}
 
-
+                <div className={`confirm-toggle position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center ${confirmToggle ? 'active' : ''}`}>
+                    <div className="contirm-box">
+                        <h4>Notice<span className="text-danger">!</span></h4>
+                        <p>Please check every details you filled in and then go forward</p>
+                        <div className="confirm-btn d-flex gap-3 justify-content-between">
+                            <button className="th-btn backward">Check Again</button>
+                            <button className="th-btn forward">Go Forward</button></div>
+                    </div>
+                </div>
             </main>
 
             {/* <!-- Footer Section Start --> */}

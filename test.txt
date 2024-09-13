@@ -1,0 +1,26 @@
+Pricing
+
+Phone Auth
+Free Tier: You get 10K verifications per month for free for all users, globally (including India).
+India (Tier 1 countries after Free Tier): The charge is typically $0.06 USD per successful phone verification after the free 10K verifications.
+
+Firestore
+
+Free Tier (available even in Blaze Plan):
+
+1 GiB of storage free per month.
+50,000 document reads free per month.
+20,000 document writes free per month.
+20,000 document deletes free per month.
+Blaze Plan Pricing (after free tier):
+
+After Free Tier:
+1. Data Stored:
+$0.18 USD per GiB per month for stored data.
+2. Document Reads:
+$0.06 USD per 100,000 reads.
+3. Document Writes:
+$0.18 USD per 100,000 writes.
+4. Document Deletes:
+$0.02 USD per 100,000 deletes.
+
