@@ -217,6 +217,9 @@
     .faq-text p {
         font-size: 14px;
     }
+    .contact-us .container-xxl{
+        padding: 50px 30px;
+    }
 }
 
 
@@ -374,5 +377,24 @@
     .th-btn.outline,
     .th-btn.fill {
         width: 100%;
+    }
+    .contact-us .container-xxl{
+        padding: 40px 20px;
+    }
+    .con-left{
+        padding: 20px;
+    }
+    .con-left a .con-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 50%;
+        color: var(--white);
+        border: 2px solid var(--whitesmoke);
+        transition: all .5s;
+        font-size:14px;
     }
 }

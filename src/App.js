@@ -19,6 +19,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import PhoneAuth from "./pages/PhoneAuth";
+import ContactUs from "./pages/ContactUs";
 function App() {
   return (
     <Router>
@@ -54,6 +55,7 @@ function App() {
         <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/terms-n-conditions" element={<TermsAndConditions />} />
         <Route path="/phone-auth" element={<PhoneAuth />} />
+        <Route path="/contact-us" element={<ContactUs />} />
       </Routes>
       <ToastContainer />
     </Router>
