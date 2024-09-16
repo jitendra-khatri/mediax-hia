@@ -5,13 +5,17 @@ import { db } from "../firebase.config"
 import { toast } from "react-toastify"
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid'
+import { useState } from "react"
+import Spinner from "./Spinner"
 
 function OAuth({ img }) {
 
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
 
     const onGoogleClick = async () => {
+        setLoading(true)
         try {
             const auth = getAuth()
             const provider = new GoogleAuthProvider()
@@ -94,10 +98,13 @@ function OAuth({ img }) {
         }
     }
     return (
+        <>
+      <Spinner clsName={loading ? 'd-flex' : 'd-none'} />
         <div className="th-btn  fill w-100 d-flex gap-2 justify-content-center align-items-center" onClick={onGoogleClick}>
             <span>Sign {location.pathname === '/sign-in' ? 'In' : 'Up'} with</span>
             <span> <img src={img} className="w-100" alt="goodle img" /> </span>
         </div>
+        </>
     )
 }
 

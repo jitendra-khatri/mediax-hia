@@ -98,36 +98,34 @@ function Payment() {
     paymentObject.open();
   };
 
- 
 
-  const updatePaymentStatus = async(resId) => {
+
+  const updatePaymentStatus = async (resId) => {
     // toast.success(resId)
     try {
-    const auth = getAuth()
-    const docRef = doc(db, 'listings', auth.currentUser.uid)
-    await updateDoc(docRef, {
-      payment: true,
-      paymentResponseId: resId,
-    })
-    toast.success('Payment successfully!');
-    navigate('/')
-  } catch (error) {
-    toast.error('Something went wrong');
+      const auth = getAuth()
+      const docRef = doc(db, 'listings', auth.currentUser.uid)
+      await updateDoc(docRef, {
+        payment: true,
+        paymentResponseId: resId,
+      })
+      toast.success('Payment successfully!');
+      navigate('/')
+    } catch (error) {
+      toast.error('Something went wrong');
+    }
   }
-}
 
   return (
     <div>
-      <div className="container-xxl my-5">
-        <div className="row justify-content-center">
-          <div className="col-md-7 col-lg-5 text-center">
-            <h2>Slot Number: {listingData?.slotNumber}</h2>
-            <img src={listingData?.imageUrl} className="w-100" alt="" />
-            <button className="th-btn fill mt-5" onClick={() => createRazorpayOrder(1000)}>
-            Proceed to payment Rs 1000
-            </button>
-          </div>
+      <div className="container-xxl my-5 text-center">
+        <h2>Slot Number: {listingData?.slotNumber}</h2>
+        <div className="final-post">
+        <img src={listingData?.imageUrl} className="w-100" alt="" />
         </div>
+        <button className="th-btn fill mt-5" onClick={() => createRazorpayOrder(1999)}>
+          Proceed to pay Rs 1,999
+        </button>
       </div>
     </div>
   );
