@@ -93,9 +93,9 @@
     #boobit-img {
         transform: scale(.7) translate(0px, -90px) !important;
     }
-    .boobit-left-conatiner{
+    /* .boobit-left-conatiner{
         height: 400px;
-    }
+    } */
 
     .boobit-container {
         padding: 0;
@@ -243,12 +243,12 @@
         width: 100%;
         height: 455px;
         position: relative;
-        bottom: 150px;
+        bottom: 170px;
     }
 
     #boobit-img {
         transform: scale(.6) translate(0px, 150px) !important;
-        left: -30px;
+        /* left: -30px; */
     }
 
     .boobit-box {
@@ -305,11 +305,11 @@
         padding: 40px 0px;
     }
 
-    footer .hia-insta,
+    /* footer .hia-insta,
     footer .foot-brand {
         max-width: 200px;
         margin: 0;
-    }
+    } */
 
     .foot-link {
         max-width: 100%;
@@ -368,12 +368,6 @@
     .hero {
         margin-bottom: 50px;
     }
-
-    .faq-box.active .faq-text {
-        /* padding: 20px; */
-        height: 150px;
-    }
-
     .th-btn.outline,
     .th-btn.fill {
         width: 100%;
@@ -396,5 +390,25 @@
         border: 2px solid var(--whitesmoke);
         transition: all .5s;
         font-size:14px;
+    }
+    .hoitwo-img{
+        max-width: 250px;
+        margin: auto;
+        margin-bottom: 20px;
+    } 
+    .rw-widget-picker,
+    .rw-widget-input,
+    .form-control, .form-select{
+        font-size: 14px !important;
+        padding: 10px;
+    }
+    .crop-img{
+        padding: 20px;
+    }
+    .crop-img .th-btn{
+        margin-top: 15px;
+    }
+    .crop-img-container{
+        padding: 20px;
     }
 }

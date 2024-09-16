@@ -4,10 +4,10 @@ Phone Auth
 Free Tier: You get 10K verifications per month for free for all users, globally (including India).
 India (Tier 1 countries after Free Tier): The charge is typically $0.06 USD per successful phone verification after the free 10K verifications.
 
+
 Firestore
 
 Free Tier (available even in Blaze Plan):
-
 1 GiB of storage free per month.
 50,000 document reads free per month.
 20,000 document writes free per month.
@@ -24,3 +24,18 @@ $0.18 USD per 100,000 writes.
 4. Document Deletes:
 $0.02 USD per 100,000 deletes.
 
+
+Firebase Database
+
+Free Tier (available even in Blaze Plan):
+1 GiB of stored data is free per month.
+10 GiB of download data is free per month.
+
+Blaze Plan Pricing (after the free tier):
+1. Data Stored:
+$5 USD per GiB per month.
+2. Data Download (egress):
+$1 USD per GiB downloaded, once you exceed the 10 GiB free tier.
+Note: Data downloaded by clients in the same region is free.
+3. Operations (Read/Write/Delete):
+Operations in Firebase Realtime Database (reads/writes/deletes) are not charged directly; instead, they are indirectly included in the cost of the data storage and download.

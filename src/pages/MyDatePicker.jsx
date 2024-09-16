@@ -105,7 +105,7 @@ function MyDatePicker() {
                           selected={selectedDate}
                           dateFormat="dd/MM/yyyy"
                           className='date form-control'
-                          placeholderText='Date of Death'
+                          placeholderText='Date of Posting'
                           showYearDropdown
                           showMonthDropdown
                           scrollableMonthYearDropdown

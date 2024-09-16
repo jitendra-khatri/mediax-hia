@@ -9,8 +9,10 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid'
 import { doc, setDoc } from "firebase/firestore"
 import { db } from "../firebase.config"
+import Spinner from "../component/Spinner"
 
 function SignIn() {
+       const [loading, setLoading] = useState(false)
        const [passToggle, setPassToggle] = useState(false)
        const navigate = useNavigate()
        const passToggleHandler = () => {
@@ -30,6 +32,7 @@ function SignIn() {
               }))
        }
        const onSubmitHandler = async (e) => {
+              setLoading(true)
               e.preventDefault()
               try {
                      const auth = getAuth()
@@ -73,7 +76,6 @@ function SignIn() {
 
                                                                const docRef = doc(db, "listings", auth.currentUser.uid);
                                                                await setDoc(docRef, listingData);
-
                                                                console.log("Document written with ID: ", auth.currentUser.uid);
                                                                navigate('/pick-date');
                                                         } catch (error) {
@@ -95,58 +97,62 @@ function SignIn() {
                      }
               } catch (error) {
                      toast.error('Bad User Credential');
+                     setLoading(false)
               }
        }
        return (
-              <div id="login">
-                     <section className="login">
-                            <div className="row">
-                                   <div className="col-md-5 d-none d-md-block p-0">
-                                          <div className="lo-box left">
-                                                 <div className="lo-img">
-                                                        <img src={Logo} alt="" className="w-100" />
+              <>
+                     <Spinner clsName={loading ? 'd-flex' : 'd-none'} />
+                     <div id="login">
+                            <section className="login">
+                                   <div className="row">
+                                          <div className="col-md-5 d-none d-md-block p-0">
+                                                 <div className="lo-box left">
+                                                        <div className="lo-img">
+                                                               <img src={Logo} alt="" className="w-100" />
+                                                        </div>
                                                  </div>
                                           </div>
-                                   </div>
-                                   <div className="col-md-7 p-0">
-                                          <div className="lo-box right">
-                                                 <div className="lo-text">
-                                                        <h3>Welcome to <br /> Happening In Agra</h3>
-                                                        <OAuth img={googleImg} />
-                                                        <p className="or-t">Or</p>
-                                                        <form onSubmit={onSubmitHandler}>
-                                                               <div className="mb-3">
-                                                                      <input type="email" className="form-control" id="email" value={email} placeholder="Email" onChange={onChangeHandler} />
-                                                               </div>
-                                                               <div className="mb-3 pass-container">
-                                                                      <input type={passToggle ? 'text' : 'password'} className="form-control" id="password" value={password} placeholder="Password" onChange={onChangeHandler} />
-                                                                      <i className={passToggle ? 'far fa-eye-slash' : 'far fa-eye'} onClick={passToggleHandler}></i>
-                                                               </div>
-                                                               <div className="forgot-pass">
-                                                                      <Link to="/forgot-password">Forgot password?</Link>
-                                                               </div>
-                                                               <button type="submit" className="th-btn fill w-100">Sign in</button>
-                                                        </form>
+                                          <div className="col-md-7 p-0">
+                                                 <div className="lo-box right">
+                                                        <div className="lo-text">
+                                                               <h3>Welcome to <br /> Happening In Agra</h3>
+                                                               <OAuth img={googleImg} />
+                                                               <p className="or-t">Or</p>
+                                                               <form onSubmit={onSubmitHandler}>
+                                                                      <div className="mb-3">
+                                                                             <input type="email" className="form-control" id="email" value={email} placeholder="Email" onChange={onChangeHandler} />
+                                                                      </div>
+                                                                      <div className="mb-3 pass-container">
+                                                                             <input type={passToggle ? 'text' : 'password'} className="form-control" id="password" value={password} placeholder="Password" onChange={onChangeHandler} />
+                                                                             <i className={passToggle ? 'far fa-eye-slash' : 'far fa-eye'} onClick={passToggleHandler}></i>
+                                                                      </div>
+                                                                      <div className="forgot-pass">
+                                                                             <Link to="/forgot-password">Forgot password?</Link>
+                                                                      </div>
+                                                                      <button type="submit" className="th-btn fill w-100">Sign in</button>
+                                                               </form>
 
-                                                        <div className="dont-have">
-                                                               <p className="m-0">Don't have an account? <Link to="/sign-up" className="text-primary">Sign up</Link></p>
-                                                               <div className="terms">
-                                                                      By signing in you accept the.
-                                                                      <Link to='/terms-of-services'>
-                                                                             Terms of Services
-                                                                      </Link>
-                                                                      <span> and </span>
-                                                                      <Link to='/privacy-policy'>
-                                                                             Privacy Policy
-                                                                      </Link>.
+                                                               <div className="dont-have">
+                                                                      <p className="m-0">Don't have an account? <Link to="/sign-up" className="text-primary">Sign up</Link></p>
+                                                                      <div className="terms">
+                                                                             By signing in you accept the.
+                                                                             <Link to='/terms-of-services'>
+                                                                                    Terms of Services
+                                                                             </Link>
+                                                                             <span> and </span>
+                                                                             <Link to='/privacy-policy'>
+                                                                                    Privacy Policy
+                                                                             </Link>.
+                                                                      </div>
                                                                </div>
                                                         </div>
                                                  </div>
                                           </div>
                                    </div>
-                            </div>
-                     </section>
-              </div>
+                            </section>
+                     </div>
+              </>
        )
 }
 

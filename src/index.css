@@ -68,7 +68,7 @@ p {
     letter-spacing: 0.2px;
     text-align: center;
     padding: 15px 18px;
-    border-radius: 16px;
+    border-radius:24px;
     text-transform: capitalize;
     display: inline-block;
     min-width: 350px;
@@ -110,6 +110,7 @@ p {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 150;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -175,9 +176,12 @@ footer p {
     color: var(--white);
 }
 
-footer .hia-insta,
-footer .foot-brand {
+footer .hia-insta{
     max-width: 200px;
+    margin: auto;
+}
+footer .foot-brand {
+    max-width: 130px;
     margin: auto;
 }
 
@@ -256,7 +260,7 @@ footer .foot-brand {
     z-index: 1;
 }
 
-.hoitwo-con::before {
+/* .hoitwo-con::before {
     content: ' ';
     width: 2px;
     height: 78%;
@@ -266,7 +270,7 @@ footer .foot-brand {
     left: 23px;
     transform: translateY(-50%);
     z-index: -1;
-}
+} */
 
 .hoitwo-img {
     width: 100%;
@@ -335,12 +339,13 @@ footer .foot-brand {
 @media screen and (max-width: 380px) {
     #boobit-img {
         transform: scale(.6) translate(0px, 110px) !important;
-        left: -82px !important;
+        /* left: -82px !important; */
     }
 
-    .boobit-left-conatiner {
+    /* .boobit-left-conatiner {
         height: 323px !important;
-    }
+        bottom: 30px;
+    } */
 }
 
 #boobit-img .boobit-head {
@@ -501,6 +506,7 @@ form .mb-3 {
     font-style: normal;
     font-weight: 400;
     line-height: 144%;
+    /* text-transform: capitalize; */
 }
 
 .react-datepicker-wrapper {
@@ -1131,16 +1137,9 @@ form .mb-3 {
 }
 
 .faq-text {
-    padding: 0px 20px;
-    color: #727272;
-    height: 0px;
-    overflow: hidden;
-    transition: all .5s;
-}
-
-.faq-box.active .faq-text {
     padding: 20px;
-    height: 125px;
+    color: #727272;
+    transition: all .5s;
 }
 
 /* ------------- Faqs Section End ------------- */
@@ -1170,14 +1169,16 @@ form .mb-3 {
     justify-content: center;
     align-items: center;
 }
-
+.crop-img .th-btn{
+    margin-top: 20px;
+}
 .crop-img-container {
     width: 100%;
     /* height: 100%; */
     max-width: 600px;
     /* max-height: 600px; */
     border-radius: 10px;
-    padding: 40px;
+    padding: 30px;
     background-color: var(--white);
 }
 

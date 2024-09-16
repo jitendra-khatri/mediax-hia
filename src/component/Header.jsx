@@ -48,18 +48,23 @@ function Header() {
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="nav-brand"><img src={logo} className='w-100' alt="" /></div>
                                     <div className="nav-auth">
-                                        <div className="d-flex gap-1 gap-sm-3 align-items-center">
+                                    <a href='#book-obituary'>
+                                                <div className="sign-up">
+                                                    Register now
+                                                </div>
+                                            </a>
+                                        {/* <div className="d-flex gap-1 gap-sm-3 align-items-center">
                                             <Link to='/sign-in'>
                                                 <div className="sign-in">
                                                     <i class="fas fa-user"></i>
                                                 </div>
                                             </Link>
-                                            <Link to='/sign-up'>
+                                            <a href='#book-obituary'>
                                                 <div className="sign-up">
                                                     Register now
                                                 </div>
-                                            </Link>
-                                        </div>
+                                            </a>
+                                        </div> */}
                                     </div>
                                 </div>
                                 {/* <Link to='/sign-in' className='btn btn-primary'>Sign In</Link> */}
