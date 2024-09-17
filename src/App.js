@@ -20,6 +20,7 @@ import RefundPolicy from "./pages/RefundPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import PhoneAuth from "./pages/PhoneAuth";
 import ContactUs from "./pages/ContactUs";
+import Thankyou from "./pages/Thankyou";
 function App() {
   return (
     <Router>
@@ -56,6 +57,7 @@ function App() {
         <Route path="/terms-n-conditions" element={<TermsAndConditions />} />
         <Route path="/phone-auth" element={<PhoneAuth />} />
         <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/thankyou" element={<Thankyou />} />
       </Routes>
       <ToastContainer />
     </Router>

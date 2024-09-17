@@ -1309,3 +1309,36 @@ form .mb-3 {
     background: transparent;
     border: 1px solid var(--primary);
 }
+
+.thankyou{
+    padding: 100px 0px;
+    background: linear-gradient(180deg, #01B4BB 0%, #F5D765 100%);
+}
+.thankyou .th-icon .fa-heart{
+font-size: 100px;
+color: #fff;
+}
+.th-icon{
+    max-width: 150px;
+    margin: auto;
+}
+.th-body h1{
+    color: #ffff;
+}
+.th-body p{
+    color: #ffff;
+    max-width: 600px;
+    margin: auto;
+}
+.th-button{
+    background-color: var(--white);
+    color: var(--secondary);
+    border-radius: 40px;
+    padding:10px 20px;
+    border: 1px solid var(--white);
+    transition: all .5s;
+}
+.th-button:hover{
+background-color: transparent;
+color: var(--white);
+}

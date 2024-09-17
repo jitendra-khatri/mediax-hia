@@ -167,13 +167,13 @@ function Home() {
         if (confirm) {
             handleClick(); // Call the function or operation you want to perform
         } else {
-            toast.error('Please check all the details')
+            // toast.error('Please check all the details')
             return false
         }
 
     }
     function handleClick() {
-        html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
+        html2canvas(document.querySelector('#boobit-img'), { scale: 2 }).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
                 const dataTransfer = new DataTransfer();

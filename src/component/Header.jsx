@@ -46,7 +46,9 @@ function Header() {
                         (
                             <>
                                 <div className="d-flex justify-content-between align-items-center">
-                                    <div className="nav-brand"><img src={logo} className='w-100' alt="" /></div>
+                                    <div className="nav-brand">
+                                        <Link to='/'><img src={logo} className='w-100' alt="" /></Link>
+                                    </div>
                                     <div className="nav-auth">
                                     <a href='#book-obituary'>
                                                 <div className="sign-up">

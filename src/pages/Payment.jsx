@@ -109,8 +109,8 @@ function Payment() {
         payment: true,
         paymentResponseId: resId,
       })
-      toast.success('Payment successfully!');
-      navigate('/')
+      // toast.success('Payment successfully!');
+      navigate('/thankyou')
     } catch (error) {
       toast.error('Something went wrong');
     }
