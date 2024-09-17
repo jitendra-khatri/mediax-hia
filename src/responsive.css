@@ -402,13 +402,12 @@
         font-size: 14px !important;
         padding: 10px;
     }
-    .crop-img{
-        padding: 20px;
-    }
     .crop-img .th-btn{
         margin-top: 15px;
     }
     .crop-img-container{
+        width: calc(100% - 40px);
+
         padding: 20px;
     }
 }
