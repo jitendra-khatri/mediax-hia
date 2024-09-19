@@ -150,7 +150,7 @@ function Home() {
                 // console.log(e.target.result)
                 setError('')
                 setUploadImgSrc(e.target.result)
-            
+
             }
             reader.readAsDataURL(file);
         }
@@ -173,9 +173,10 @@ function Home() {
 
     }
     function handleClick() {
-        html2canvas(document.querySelector('#boobit-img'), 
-        // {  scale: 2, width: 1080, height: 1080 }
-    ).then(function (canvas) {
+        html2canvas(document.querySelector('#boobit-img'),
+            {  scale: 2}
+            // {  scale: 2, width: 1080, height: 1080 }
+        ).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
                 const dataTransfer = new DataTransfer();
@@ -194,7 +195,7 @@ function Home() {
             console.log('Error capturing the section:', error);
         });
     }
-    // function handleClick() {
+   /*  // function handleClick() {
 
     //     html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
     //         canvas.toBlob(function (blob) {
@@ -258,7 +259,7 @@ function Home() {
     //     }).catch(function (error) {
     //         console.log('Error capturing the section:', error);
     //     });
-    // }
+    // } */
     const onImageLoad = (e) => {
         const { width, height } = e.currentTarget;
         const cropWidthInPercent = (150 / width) * 100
@@ -348,35 +349,35 @@ function Home() {
          //      toast.error('Error capturing the section:', error);
          //  }); 
      }; */
-     const [endTimeOptions, setEndTimeOptions] = useState([
-       "5:30 AM", "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", 
-       "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
-       "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM",
-       "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM",
-       "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM",
-       "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM",
-       "11:30 PM"
-     ]);
-   
-     // Helper function to convert time to minutes
-     const timeToMinutes = (time) => {
-       const [hours, minutes] = time.split(/[: ]/);
-       return (parseInt(hours, 10) % 12) * 60 + parseInt(minutes, 10) + (time.includes("PM") ? 720 : 0);
-     };
-   
-     // Update end times options based on the selected start time
-     const updateEndTimeOptions = (startTime) => {
-       const filteredOptions = endTimeOptions.filter(option => timeToMinutes(option) >= timeToMinutes(startTime));
-       setServiceTimeEnd(prevEndTime => filteredOptions.includes(prevEndTime) ? prevEndTime : "00");
-       return filteredOptions;
-     };
-   
-     // Effect to update end time options whenever start time changes
-     useEffect(() => {
-       if (serviceTimeStart !== "00") {
-         setEndTimeOptions(updateEndTimeOptions(serviceTimeStart));
-       }
-     }, [serviceTimeStart]);
+    const [endTimeOptions, setEndTimeOptions] = useState([
+        "5:30 AM", "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM",
+        "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
+        "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM",
+        "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM",
+        "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM",
+        "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM",
+        "11:30 PM"
+    ]);
+
+    // Helper function to convert time to minutes
+    const timeToMinutes = (time) => {
+        const [hours, minutes] = time.split(/[: ]/);
+        return (parseInt(hours, 10) % 12) * 60 + parseInt(minutes, 10) + (time.includes("PM") ? 720 : 0);
+    };
+
+    // Update end times options based on the selected start time
+    const updateEndTimeOptions = (startTime) => {
+        const filteredOptions = endTimeOptions.filter(option => timeToMinutes(option) >= timeToMinutes(startTime));
+        setServiceTimeEnd(prevEndTime => filteredOptions.includes(prevEndTime) ? prevEndTime : "00");
+        return filteredOptions;
+    };
+
+    // Effect to update end time options whenever start time changes
+    useEffect(() => {
+        if (serviceTimeStart !== "00") {
+            setEndTimeOptions(updateEndTimeOptions(serviceTimeStart));
+        }
+    }, [serviceTimeStart]);
     return (
         <>
             {/* <!-- Header Section Start --> */}
@@ -439,59 +440,59 @@ function Home() {
                                 <div className={`row ${listingExists ? 'd-none' : ' '}`}>
                                     <div class="col-lg-7 order-lg-1 boobit-left-conatiner mb-sm-4">
                                         <div class="boobit-left d-flex justify-content-center align-items-start">
-                                           <div className="">
-                                           <div id="boobit-img" class="boobit-img mx-auto">
-                                                <div className="boobit-bird"><img src={postBird} className='w-100' alt="" /></div>
-                                                {/* <div class="boobit-head">in loving memory of </div> */}
-                                                <div class="boobit-img"><img src={uploadImgSrcFinal ? uploadImgSrcFinal : profile} class="w-100"
-                                                    id="boobit-up-img" alt="" /></div>
-                                                <div class="boobit-text">
-                                                    <div class="boobit-name">
-                                                        <div class="boobit-prefix">{prefix ? prefix : 'Mr.'}</div>
-                                                        <div class="boobit-n-t">{nameOfDeceased ? nameOfDeceased : 'Kalash Singh'}</div>
-                                                    </div>
-                                                    <div className="boobit-post-line">
-                                                        <img src={postLine} className='w-100' alt="" />
-                                                    </div>
-                                                    <div class="boobit-life-spam">
-                                                        <div class="boobit-date-of-birth">
-                                                            {dateOfBirth ? format(dateOfBirth, 'do MMMM, yyyy') : '20th April, 1883'}
-                                                            {/* {dateOfBirth? dateOfBirth.toLocaleDateString('en-GB') : '20th April, 1883'} */}
+                                            <div className="">
+                                                <div id="boobit-img" class="boobit-img mx-auto">
+                                                    <div className="boobit-bird"><img src={postBird} className='w-100' alt="" /></div>
+                                                    {/* <div class="boobit-head">in loving memory of </div> */}
+                                                    <div class="boobit-img"><img src={uploadImgSrcFinal ? uploadImgSrcFinal : profile} class="w-100"
+                                                        id="boobit-up-img" alt="" /></div>
+                                                    <div class="boobit-text">
+                                                        <div class="boobit-name">
+                                                            <div class="boobit-prefix">{prefix ? prefix : 'Mr.'}</div>
+                                                            <div class="boobit-n-t">{nameOfDeceased ? nameOfDeceased : 'Kalash Singh'}</div>
                                                         </div>
-                                                        <div class="">-</div>
-                                                        <div class="boobit-date-of-death">
-                                                            {dateOfDeath ? format(dateOfDeath, 'do MMMM, yyyy') : '19th April, 1945'}
+                                                        <div className="boobit-post-line">
+                                                            <img src={postLine} className='w-100' alt="" />
+                                                        </div>
+                                                        <div class="boobit-life-spam">
+                                                            <div class="boobit-date-of-birth">
+                                                                {dateOfBirth ? format(dateOfBirth, 'do MMMM, yyyy') : '20th April, 1883'}
+                                                                {/* {dateOfBirth? dateOfBirth.toLocaleDateString('en-GB') : '20th April, 1883'} */}
+                                                            </div>
+                                                            <div class="">-</div>
+                                                            <div class="boobit-date-of-death">
+                                                                {dateOfDeath ? format(dateOfDeath, 'do MMMM, yyyy') : '19th April, 1945'}
+                                                            </div>
+                                                        </div>
+                                                        <div class="boobit-service">{memoService ? memoService : 'Memorial Service'}</div>
+                                                        <div class="boobit-details">
+                                                            <div class="boobit-time">
+                                                                {serviceTimeStart ? serviceTimeStart : '10:00am'}
+                                                                &nbsp;-    {serviceTimeEnd ? serviceTimeEnd : '12:30pm'}
+                                                            </div>
+                                                            <div class="">|</div>
+                                                            <div class="boobit-date">
+                                                                {dateOfService ? format(dateOfService, 'do MMMM, yyyy') : '20th April, 1883'}
+                                                            </div>
+                                                            <div class="">|</div>
+                                                            <div class="boobit-address">{serviceAddress ? serviceAddress : 'Surya Nagar Mandir, Agra'}</div>
                                                         </div>
                                                     </div>
-                                                    <div class="boobit-service">{memoService ? memoService : 'Memorial Service'}</div>
-                                                    <div class="boobit-details">
-                                                        <div class="boobit-time">
-                                                            {serviceTimeStart ? serviceTimeStart : '10:00am'}
-                                                            &nbsp;-    {serviceTimeEnd ? serviceTimeEnd : '12:30pm'}
-                                                        </div>
-                                                        <div class="">|</div>
-                                                        <div class="boobit-date">
-                                                            {dateOfService ? format(dateOfService, 'do MMMM, yyyy') : '20th April, 1883'}
-                                                        </div>
-                                                        <div class="">|</div>
-                                                        <div class="boobit-address">{serviceAddress ? serviceAddress : 'Surya Nagar Mandir, Agra'}</div>
+                                                    <div class="boobit-h-grif">
+                                                        In Grief:
                                                     </div>
-                                                </div>
-                                                <div class="boobit-h-grif">
-                                                    In Grief:
-                                                </div>
-                                                <div class="boobit-greif">
-                                                    {griefPersonText1 ? `${griefPersonText1} ${`(${griefPersonRelation1})`}` : 'Person1 (Relation)'}
-                                                    {griefPersonText2 ? ` | ${griefPersonText2} ${griefPersonRelation2 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation2})`}` : ' | Person2 (Relation)'}
-                                                    <div className="mt-1"></div>
-                                                    {griefPersonText3 ? `${griefPersonText3} ${griefPersonRelation3 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation3})`}` : 'Person3 (Relation) | '}
-                                                    {griefPersonText4 ? ` | ${griefPersonText4} ${griefPersonRelation4 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation4})`}` : ' Person4 (Relation)'}
-                                                </div>
-                                                <div class="boobit-happening">
-                                                    <img src={happenImg} alt="" class="w-100" id="happening-img" />
+                                                    <div class="boobit-greif">
+                                                        {griefPersonText1 ? `${griefPersonText1} ${`(${griefPersonRelation1})`}` : 'Person1 (Relation)'}
+                                                        {griefPerson2 && griefPersonText2 ? ` | ${griefPersonText2} ${griefPersonRelation2 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation2})`}` : ' | Person2 (Relation)'}
+                                                        <div className="mt-1"></div>
+                                                        {griefPersonText3 && griefPersonText3 ? `${griefPersonText3} ${griefPersonRelation3 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation3})`}` : 'Person3 (Relation) | '}
+                                                        {griefPersonText4 && griefPersonText4 ? ` | ${griefPersonText4} ${griefPersonRelation4 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation4})`}` : ' Person4 (Relation)'}
+                                                    </div>
+                                                    <div class="boobit-happening">
+                                                        <img src={happenImg} alt="" class="w-100" id="happening-img" />
+                                                    </div>
                                                 </div>
                                             </div>
-                                           </div>
                                             {/* <div id="apply-change" onClick={handleClick} class="th-btn outline">
                                                 Apply Changes
                                             </div> */}
@@ -625,22 +626,22 @@ function Home() {
                                                         <option value="11:30 PM">11:30 PM</option>
                                                     </select>
                                                 </div> */}
-                                                  <div className="mb-3">
-        <select className="form-select" value={serviceTimeStart} onChange={(e) => setServiceTimeStart(e.target.value)}>
-          <option value="00">Time of service (start)</option>
-          {endTimeOptions.map(time => (
-            <option key={time} value={time}>{time}</option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-3">
-        <select className="form-select" value={serviceTimeEnd} onChange={(e) => setServiceTimeEnd(e.target.value)}>
-          <option value="00">Time of service (end)</option>
-          {endTimeOptions.map(time => (
-            <option key={time} value={time}>{time}</option>
-          ))}
-        </select>
-      </div>
+                                                <div className="mb-3">
+                                                    <select className="form-select" value={serviceTimeStart} onChange={(e) => setServiceTimeStart(e.target.value)}>
+                                                        <option value="00">Time of service (start)</option>
+                                                        {endTimeOptions.map(time => (
+                                                            <option key={time} value={time}>{time}</option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="mb-3">
+                                                    <select className="form-select" value={serviceTimeEnd} onChange={(e) => setServiceTimeEnd(e.target.value)}>
+                                                        <option value="00">Time of service (end)</option>
+                                                        {endTimeOptions.map(time => (
+                                                            <option key={time} value={time}>{time}</option>
+                                                        ))}
+                                                    </select>
+                                                </div>
                                                 <div className="mb-3">
                                                     <DatePickerWidgets
                                                         selected={dateOfService}
