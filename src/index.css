@@ -77,7 +77,17 @@ p {
     user-select: none;
     transition: all .5s;
 }
-
+.verify-btn{
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius:24px;
+    color: #fff;
+    background-color: var(--secondary);
+}
 .th-btn img {
     max-width: 20px;
 }
@@ -305,9 +315,9 @@ footer .foot-brand {
     background-color: var(--whitesmoke);
 }
 
-.boobit-left-conatiner {
+/* .boobit-left-conatiner {
     height: 360px;
-}
+} */
 
 .boobit-box {
     padding: 50px;
@@ -337,21 +347,15 @@ footer .foot-brand {
 
 @media screen and (max-width: 900px) {
     #boobit-img {
-        transform: scale(.7) translateX(10px) !important;
+        /* transform: scale(.7) translateX(10px); */
     }
 }
 
-@media screen and (max-width: 380px) {
+/* @media screen and (max-width: 380px) {
     #boobit-img {
         transform: scale(.6) translate(0px, 110px) !important;
-        /* left: -82px !important; */
     }
-
-    /* .boobit-left-conatiner {
-        height: 323px !important;
-        bottom: 30px;
-    } */
-}
+} */
 
 #boobit-img .boobit-head {
     color: var(--secondary);

@@ -76,9 +76,9 @@
         padding: 30px;
     }
 
-    #boobit-img {
+    /* #boobit-img {
         transform: scale(.7);
-    }
+    } */
 
 }
 
@@ -90,9 +90,9 @@
         padding: 0px 20px;
     }
 
-    #boobit-img {
+    /* #boobit-img {
         transform: scale(.7) translate(0px, -90px) !important;
-    }
+    } */
     /* .boobit-left-conatiner{
         height: 400px;
     } */
@@ -103,7 +103,7 @@
     }
 
     .boobit-box {
-        padding: 10px;
+        padding: 0px;
     }
 
     h1 {
@@ -242,7 +242,7 @@
         margin-bottom: 20px;
     }
 
-    .boobit-left {
+    /* .boobit-left {
         width: 100%;
         height: 455px;
         position: relative;
@@ -251,7 +251,9 @@
 
     #boobit-img {
         transform: scale(.6) translate(0px, 150px) !important;
-        /* left: -30px; */
+    } */
+    #boobit-img {
+        transform: scale(.6) translate(0px, 0px) !important;
     }
 
     .boobit-box {

@@ -173,7 +173,9 @@ function Home() {
 
     }
     function handleClick() {
-        html2canvas(document.querySelector('#boobit-img'), { scale: 2 }).then(function (canvas) {
+        html2canvas(document.querySelector('#boobit-img'), 
+        // {  scale: 2, width: 1080, height: 1080 }
+    ).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
                 const dataTransfer = new DataTransfer();
@@ -435,7 +437,7 @@ function Home() {
                                 </div>
 
                                 <div className={`row ${listingExists ? 'd-none' : ' '}`}>
-                                    <div class="col-md-7 order-md-1 boobit-left-conatiner">
+                                    <div class="col-lg-7 order-lg-1 boobit-left-conatiner mb-sm-4">
                                         <div class="boobit-left d-flex justify-content-center align-items-start">
                                            <div className="">
                                            <div id="boobit-img" class="boobit-img mx-auto">
@@ -495,7 +497,7 @@ function Home() {
                                             </div> */}
                                         </div>
                                     </div>
-                                    <div class="col-md-5 order-md-0">
+                                    <div class="col-lg-5 order-lg-0">
                                         <div class="boobit-right">
                                             <form action="" method="post">
                                                 <div class="mb-3">
