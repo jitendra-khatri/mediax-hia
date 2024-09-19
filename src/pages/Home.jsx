@@ -165,7 +165,7 @@ function Home() {
         // }
         const confirm = window.confirm("Please check everything before going forward");
         if (confirm) {
-            document.querySelector('#boobit-img').style.transform = 'scale(1)';
+            document.querySelector('.boobit-img-container').style.transform = 'scale(1)';
 
             handleClick(); // Call the function or operation you want to perform
         } else {
@@ -176,7 +176,6 @@ function Home() {
     }
     function handleClick() {
         html2canvas(document.querySelector('#boobit-img'),
-            { scale: 2 }
             // {  scale: 2, width: 1080, height: 1080 }
         ).then(function (canvas) {
             canvas.toBlob(function (blob) {
@@ -442,7 +441,7 @@ function Home() {
                                 <div className={`row ${listingExists ? 'd-none' : ' '}`}>
                                     <div class="col-lg-7 order-lg-1 boobit-left-conatiner mb-sm-4">
                                         <div class="boobit-left d-flex justify-content-center align-items-start">
-                                            <div className="">
+                                            <div className="boobit-img-container">
                                                 <div id="boobit-img" class="boobit-img mx-auto">
                                                     <div className="boobit-bird"><img src={postBird} className='w-100' alt="" /></div>
                                                     {/* <div class="boobit-head">in loving memory of </div> */}

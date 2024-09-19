@@ -252,8 +252,8 @@
     #boobit-img {
         transform: scale(.6) translate(0px, 150px) !important;
     } */
-    #boobit-img {
-        transform: scale(.7) !important;
+    .boobit-img-container {
+        transform: scale(.7) ;
     }
 
     .boobit-box {
