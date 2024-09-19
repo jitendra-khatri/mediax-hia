@@ -15,7 +15,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import $ from 'jquery'
 import { getAuth } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-widgets/styles.css";
 import DatePickerWidgets from "react-widgets/DatePicker";
@@ -165,6 +165,8 @@ function Home() {
         // }
         const confirm = window.confirm("Please check everything before going forward");
         if (confirm) {
+            document.querySelector('#boobit-img').style.transform = 'scale(1)';
+
             handleClick(); // Call the function or operation you want to perform
         } else {
             // toast.error('Please check all the details')
@@ -174,7 +176,7 @@ function Home() {
     }
     function handleClick() {
         html2canvas(document.querySelector('#boobit-img'),
-            {  scale: 2}
+            { scale: 2 }
             // {  scale: 2, width: 1080, height: 1080 }
         ).then(function (canvas) {
             canvas.toBlob(function (blob) {
@@ -195,71 +197,71 @@ function Home() {
             console.log('Error capturing the section:', error);
         });
     }
-   /*  // function handleClick() {
-
-    //     html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
-    //         canvas.toBlob(function (blob) {
-    //             const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
-    //             const dataTransfer = new DataTransfer();
-    //             dataTransfer.items.add(file);
-    //             const image = dataTransfer.files;
-    //             console.log(dataTransfer.files)
-    //             localStorage.setItem('image',image[0])
-    //             // Use image[0] directly instead of waiting for state update
-    //             if (image[0] == null) {
-    //                 return false;
-    //             }
-
-    //             const storage = getStorage();
-    //             const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
-    //             uploadBytes(imageRef, image[0]).then(() => {
-    //                 getDownloadURL(imageRef).then(async (url) => {
-    //                     try {
-    //                         const auth = getAuth();
-    //                         if (!auth.currentUser) {
-    //                             throw new Error("User not authenticated");
-    //                         }
-    //                         const listingData = {
-    //                             listingCreated: true,
-    //                             userId: auth.currentUser.uid,
-    //                             name: auth.currentUser.displayName,
-    //                             gmail: auth.currentUser.email,
-    //                             // dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
-    //                             dateOfPosting: '',
-    //                             postStatus: false,
-    //                             slotNumber: 0,
-    //                             payment: false,
-    //                             imageUrl: url,
-    //                             paymentResponseId: 'No Id Yet',
-    //                         };
-    //                         localStorage.setItem('image', url)
-    //                         console.log(listingData);
-
-    //                         const docRef = doc(db, "listings", auth.currentUser.uid);
-    //                         await setDoc(docRef, listingData);
-
-    //                         console.log("Document written with ID: ", auth.currentUser.uid);
-    //                         // alert('File Uploaded and Listing Created'); // Consider using toast instead
-    //                         navigate('/pick-date');
-    //                     } catch (error) {
-    //                         console.error("Error adding document: ", error);
-    //                         toast.error('Error creating listing: ' + error.message);
-    //                     }
-    //                 }).catch((error) => {
-    //                     console.error('Error getting download URL:', error);
-    //                     toast.error('Error getting download URL: ' + error.message);
-    //                 });
-
-    //             }).catch((error) => {
-    //                 console.log('Error uploading file:', error);
-    //                 toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
-    //             });
-
-    //         }, 'image/jpeg');
-    //     }).catch(function (error) {
-    //         console.log('Error capturing the section:', error);
-    //     });
-    // } */
+    /*  // function handleClick() {
+ 
+     //     html2canvas(document.querySelector('.boobit-img'), { scale: 2 }).then(function (canvas) {
+     //         canvas.toBlob(function (blob) {
+     //             const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
+     //             const dataTransfer = new DataTransfer();
+     //             dataTransfer.items.add(file);
+     //             const image = dataTransfer.files;
+     //             console.log(dataTransfer.files)
+     //             localStorage.setItem('image',image[0])
+     //             // Use image[0] directly instead of waiting for state update
+     //             if (image[0] == null) {
+     //                 return false;
+     //             }
+ 
+     //             const storage = getStorage();
+     //             const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
+     //             uploadBytes(imageRef, image[0]).then(() => {
+     //                 getDownloadURL(imageRef).then(async (url) => {
+     //                     try {
+     //                         const auth = getAuth();
+     //                         if (!auth.currentUser) {
+     //                             throw new Error("User not authenticated");
+     //                         }
+     //                         const listingData = {
+     //                             listingCreated: true,
+     //                             userId: auth.currentUser.uid,
+     //                             name: auth.currentUser.displayName,
+     //                             gmail: auth.currentUser.email,
+     //                             // dateOfPosting: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+     //                             dateOfPosting: '',
+     //                             postStatus: false,
+     //                             slotNumber: 0,
+     //                             payment: false,
+     //                             imageUrl: url,
+     //                             paymentResponseId: 'No Id Yet',
+     //                         };
+     //                         localStorage.setItem('image', url)
+     //                         console.log(listingData);
+ 
+     //                         const docRef = doc(db, "listings", auth.currentUser.uid);
+     //                         await setDoc(docRef, listingData);
+ 
+     //                         console.log("Document written with ID: ", auth.currentUser.uid);
+     //                         // alert('File Uploaded and Listing Created'); // Consider using toast instead
+     //                         navigate('/pick-date');
+     //                     } catch (error) {
+     //                         console.error("Error adding document: ", error);
+     //                         toast.error('Error creating listing: ' + error.message);
+     //                     }
+     //                 }).catch((error) => {
+     //                     console.error('Error getting download URL:', error);
+     //                     toast.error('Error getting download URL: ' + error.message);
+     //                 });
+ 
+     //             }).catch((error) => {
+     //                 console.log('Error uploading file:', error);
+     //                 toast.error('Error uploading file:', error.message); // Added catch block for file upload errors
+     //             });
+ 
+     //         }, 'image/jpeg');
+     //     }).catch(function (error) {
+     //         console.log('Error capturing the section:', error);
+     //     });
+     // } */
     const onImageLoad = (e) => {
         const { width, height } = e.currentTarget;
         const cropWidthInPercent = (150 / width) * 100
@@ -482,11 +484,12 @@ function Home() {
                                                         In Grief:
                                                     </div>
                                                     <div class="boobit-greif">
-                                                        {griefPersonText1 ? `${griefPersonText1} ${`(${griefPersonRelation1})`}` : 'Person1 (Relation)'}
-                                                        {griefPerson2 && griefPersonText2 ? ` | ${griefPersonText2} ${griefPersonRelation2 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation2})`}` : ' | Person2 (Relation)'}
+
+                                                        {griefPersonText1 ? `${griefPersonText1} ${`(${griefPersonRelation1})`}` : (<>Person1 (Relation) | Person2 (Relation) <br /> Person3 (Relation) | Person4 (Relation)</>)}
+                                                        {griefPersonText2 && ` | ${griefPersonText2} (${griefPersonRelation2})`}
                                                         <div className="mt-1"></div>
-                                                        {griefPersonText3 && griefPersonText3 ? `${griefPersonText3} ${griefPersonRelation3 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation3})`}` : 'Person3 (Relation) | '}
-                                                        {griefPersonText4 && griefPersonText4 ? ` | ${griefPersonText4} ${griefPersonRelation4 == 'Relation' ? '(Select Relation)' : `(${griefPersonRelation4})`}` : ' Person4 (Relation)'}
+                                                        {griefPersonText3 && `${griefPersonText3} (${griefPersonRelation3})`}
+                                                        {griefPersonText4 && ` | ${griefPersonText4} (${griefPersonRelation4})`}
                                                     </div>
                                                     <div class="boobit-happening">
                                                         <img src={happenImg} alt="" class="w-100" id="happening-img" />
@@ -518,19 +521,33 @@ function Home() {
                                                 </div>
                                                 <div className="mb-3">
                                                     <DatePickerWidgets
+                                                        value={dateOfBirth}
+                                                        onChange={setDateOfBirth}
+                                                        editFormat="DD MMM, YYYY" // User can input the date in this format
+                                                        parse={str => new Date(str)} // Parse the input into a Date object
+                                                        placeholder="Date of birth"
+                                                    />
+                                                    {/* <DatePickerWidgets
                                                         // className='date form-control'
                                                         selected={dateOfBirth}
                                                         onChange={(date) => setDateOfBirth(date)}
                                                         // valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
                                                         // dateFormat="dd MMM yyyy"  // This ensures the format is Day Month Year
-                                                        placeholder='Date of birth' />
+                                                        placeholder='Date of birth' /> */}
                                                 </div>
                                                 <div className="mb-3">
-                                                    <DatePickerWidgets
+                                                <DatePickerWidgets
+                                                        value={dateOfDeath}
+                                                        onChange={setDateOfDeath}
+                                                        editFormat="DD MMM, YYYY" // User can input the date in this format
+                                                        parse={str => new Date(str)} // Parse the input into a Date object
+                                                        placeholder="Date of death"
+                                                    />
+                                                    {/* <DatePickerWidgets
                                                         selected={dateOfDeath}
                                                         onChange={(date) => setDateOfDeath(date)}
                                                         // valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
-                                                        placeholder='Date of death' />
+                                                        placeholder='Date of death' /> */}
                                                 </div>
                                                 <div class="mb-3">
                                                     <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
@@ -643,12 +660,19 @@ function Home() {
                                                     </select>
                                                 </div>
                                                 <div className="mb-3">
-                                                    <DatePickerWidgets
+                                                <DatePickerWidgets
+                                                        value={dateOfService}
+                                                        onChange={setDateOfService}
+                                                        editFormat="DD MMM, YYYY" // User can input the date in this format
+                                                        parse={str => new Date(str)} // Parse the input into a Date object
+                                                        placeholder="ate of service"
+                                                    />
+                                                    {/* <DatePickerWidgets
                                                         selected={dateOfService}
                                                         min={new Date()}
                                                         onChange={(date) => setDateOfService(date)}
                                                         // valueFormat={{ day: "numeric", month: "short", year: "numeric" }}
-                                                        placeholder='Date of service' />
+                                                        placeholder='Date of service' /> */}
                                                 </div>
                                                 <div class="mb-3">
                                                     <input type="text" class="form-control" id="address" placeholder="Address of memorial service" value={serviceAddress}

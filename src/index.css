@@ -334,6 +334,8 @@ footer .foot-brand {
 #boobit-img {
     width: 480px;
     height: 480px;
+    min-width: 480px;
+    min-height: 480px;
     margin: auto;
     /* padding: 20px 0px 0px 0px; */
     margin: auto;
@@ -464,6 +466,7 @@ footer .foot-brand {
 #boobit-img .boobit-greif {
     /* color: #686868; */
     margin-bottom: 15px;
+    text-transform: capitalize;
 }
 
 #apply-change {
