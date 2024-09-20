@@ -387,8 +387,15 @@ function Home() {
             <main>
                 {/* <!-- Hero Section Start --> */}
                 <section className='hero'>
-                    <img src={hero} class="d-none d-sm-block w-100" alt="" />
-                    <img src={heroMobile} class="d-block d-sm-none w-100" alt="" />
+                    {/* <img src={hero} class="d-none d-sm-block w-100" alt="" />
+                    <img src={heroMobile} class="d-block d-sm-none w-100" alt="" />*/}
+                    <div className="container-xxl">
+                    <h1 className='mb-3'>Honor Their Memory. Share A Tribute</h1>
+                    <p>Remembering and honoring a loved one is a deeply personal journey. We are here to help you share their life with grace and dignity, ensuring that their memory is cherished and respected.</p>
+                    <div className="d-flex justify-content-center mt-3">
+                    <a href="#book-obituary" className="th-btn fill"> Register now</a>
+                    </div>
+                    </div>
                 </section>
                 {/* <!-- Hero Section End --> */}
 
@@ -417,8 +424,8 @@ function Home() {
                             </div>
                         </div>
                         <div class="hoitwo-pera">
-                            <p>We understand the importance of honoring the lives of those who have passed away, and our
-                                platform offers a compassionate space for you to share their stories. </p>
+                            <p>Losing a loved one is incredibly challenging. Our goal is to offer a straightforward and compassionate way to share these significant moments, helping friends and family come together to remember them with respect.
+                            </p>
                         </div>
                     </div>
                 </section>
@@ -432,8 +439,8 @@ function Home() {
                             <div class="boobit-box">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6 col-md-8 col-sm-10">
-                                        <h2 class="text-center mb-4">{listingExists ? 'You have created Obituary' : 'Book an Obituary'}</h2>
-                                        <p class="text-center mb-4">Provide details and upload an image to create a personalised obituary. Fill the form below.</p>
+                                        <h2 class="text-center mb-4">{listingExists ? 'You have created Obituary' : 'Create a Personalized Tribute'}</h2>
+                                        <p class="text-center mb-4">Share the details and upload a photo to craft a meaningful obituary. Simply complete the form below to get started.</p>
                                         {/* {listingExists &&(<div className="text-center"><img src={listingDataCheck?.imageUrl} alt="" className="w-50" /></div>)} */}
                                     </div>
                                 </div>
@@ -961,7 +968,7 @@ function Home() {
                                             <div className="faq-icon"><i className='fal fa-plus'></i></div>
                                         </div>
                                         <div className="faq-text">
-                                            <p className="m-0">Yes, you can cancel your booking by emailing us at happeninginagra@gmail.com. However, please note that refunds are not applicable even if the booking is canceled.
+                                            <p className="m-0">Yes, you can cancel your booking by emailing us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>. However, please note that refunds are not applicable even if the booking is canceled.
                                             </p>
                                         </div>
                                     </div>
@@ -972,7 +979,7 @@ function Home() {
                                             <div className="faq-icon"><i className='fal fa-plus'></i></div>
                                         </div>
                                         <div className="faq-text">
-                                            <p className="m-0">Yes, but you need to inform us of any changes via email at happeninginagra@gmail.com atleast 2 hours before the posting time. After this period, edits cannot be accommodated.
+                                            <p className="m-0">Yes, but you need to inform us of any changes via email at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a> atleast 2 hours before the posting time. After this period, edits cannot be accommodated.
                                             </p>
                                         </div>
                                     </div>
@@ -1050,7 +1057,7 @@ function Home() {
                                             <div className="faq-icon"><i className='fal fa-plus'></i></div>
                                         </div>
                                         <div className="faq-text">
-                                            <p className="m-0">Yes, you can request the deletion of your personal data after the post by contacting us at happeninginagra@gmail.com. We will process your request in accordance with our privacy policy.</p>
+                                            <p className="m-0">Yes, you can request the deletion of your personal data after the post by contacting us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>. We will process your request in accordance with our privacy policy.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1099,7 +1106,7 @@ function Home() {
                                             <div className="faq-icon"><i className={`fal ${cancellationsToggle === 1 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
-                                            <p className="m-0">Yes, you can cancel your booking by emailing us at happeninginagra@gmail.com. However, please note that refunds are not applicable even if the booking is canceled.
+                                            <p className="m-0">Yes, you can cancel your booking by emailing us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>. However, please note that refunds are not applicable even if the booking is canceled.
                                             </p>
                                         </div>
                                     </div>
@@ -1110,7 +1117,7 @@ function Home() {
                                             <div className="faq-icon"><i className={`fal ${cancellationsToggle === 2 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
-                                            <p className="m-0">Yes, but you need to inform us of any changes via email at happeninginagra@gmail.com atleast 2 hours before the posting time. After this period, edits cannot be accommodated.
+                                            <p className="m-0">Yes, but you need to inform us of any changes via email at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a> atleast 2 hours before the posting time. After this period, edits cannot be accommodated.
                                             </p>
                                         </div>
                                     </div>
@@ -1223,7 +1230,7 @@ function Home() {
                                             <div className="faq-icon"><i className={`fal ${privacyToggle === 3 ? 'fa-minus' : 'fa-plus'}`}></i></div>
                                         </div>
                                         <div className="faq-text">
-                                            <p className="m-0">Yes, you can request the deletion of your personal data after the post by contacting us at happeninginagra@gmail.com. We will process your request in accordance with our privacy policy.</p>
+                                            <p className="m-0">Yes, you can request the deletion of your personal data after the post by contacting us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>. We will process your request in accordance with our privacy policy.</p>
                                         </div>
                                     </div>
                                 </div>

@@ -67,8 +67,8 @@ p {
     font-weight: 600;
     letter-spacing: 0.2px;
     text-align: center;
-    padding: 15px 18px;
-    border-radius:24px;
+    padding: 10px 15px;
+    border-radius:40px;
     text-transform: capitalize;
     display: inline-block;
     min-width: 350px;
@@ -191,13 +191,18 @@ footer p {
     color: var(--white);
 }
 
-footer .hia-insta{
-    max-width: 200px;
+footer .hia-insta img{
+    border-radius: 4px;
+    padding: 4px;
+    max-width: 30px;
     margin: auto;
+    transition: all .5s;
+}
+footer .hia-insta img:hover{
+    background-color: var(--primary);
 }
 footer .foot-brand {
     max-width: 130px;
-    margin: auto;
 }
 
 .foot-link {
@@ -254,22 +259,25 @@ footer .foot-brand {
 
 /* Hero Section Start ------------------------------ */
 .hero {
-    margin-bottom: 80px;
+    padding: 80px 0px;
 }
 
 .hero h1 {
-    padding: 30px;
+    text-align: center;
+}
+.hero p {
+    max-width: 800px;
+    margin: auto;
     text-align: center;
 }
 
 /* ------------- Hero Section End ------------- */
 
 /* How it works Section Start ------------------------------ */
-.hoitwo-box {
-    padding: 50px 0px;
+.how-it-works{
     background-color: var(--whitesmoke);
+    padding: 50px 0px;
 }
-
 .hoitwo-con {
     position: relative;
     z-index: 1;
@@ -1103,12 +1111,14 @@ form .mb-3 {
 
 .policy-main p {
     font-family: var(--font-family);
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 300;
     line-height: 130%;
     color: var(--black);
 }
-
+.policy-main p a{
+    color: var(--black);
+}
 /* ------------- Policy Page Section End ------------- */
 
 /* Faqs Section Start ------------------------------ */
@@ -1153,6 +1163,10 @@ form .mb-3 {
     padding: 20px;
     color: #727272;
     transition: all .5s;
+}
+.faq-text a{
+    color: #262626;
+
 }
 
 /* ------------- Faqs Section End ------------- */

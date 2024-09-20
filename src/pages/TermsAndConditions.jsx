@@ -41,7 +41,7 @@ function TermsAndConditions() {
                       <p>Users are responsible for reviewing the details before final submission.</p>
                     </li>
                     <li>
-                      <p>If you need to change any information, please email us at least 16 hours before the posting time, which is 10 am, at happeninginagra@gmail.com.</p>
+                      <p>If you need to change any information, please email us at least 16 hours before the posting time, which is 10 am, at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>.</p>
                     </li>
                   </ul>
                 </div>
@@ -92,7 +92,7 @@ function TermsAndConditions() {
                 </div>
                 <div className="mb-3 mb-md-5">
                   <h3>Contact Information</h3>
-                  <p> For any questions regarding the terms and conditions, please contact us at happeninginagra@gmail.com.</p>
+                  <p> For any questions regarding the terms and conditions, please contact us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>.</p>
                 </div>
 
                 {/* 

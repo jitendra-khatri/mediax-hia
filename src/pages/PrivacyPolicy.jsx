@@ -63,11 +63,11 @@ function PrivacyPolicy() {
                   </div>
                   <div className="mb-3 mb-md-5">
                     <h3>Your Rights</h3>
-                    <p>You have the right to access, correct, or delete your personal information. To exercise these rights, please contact us at happeninginagra@gmail.com.</p>
+                    <p>You have the right to access, correct, or delete your personal information. To exercise these rights, please contact us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>.</p>
                   </div>
                   <div className="">
                     <h3>Contact Information</h3>
-                    <p className='m-0'>For any questions regarding the privacy policy, please contact us at happeninginagra@gmail.com.</p>
+                    <p className='m-0'>For any questions regarding the privacy policy, please contact us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>.</p>
                   </div>
                 </div>
               </div>
