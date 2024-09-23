@@ -424,9 +424,9 @@
         padding: 20px;
     }
     .hero h1 {
-        font-size: 30px;
+        font-size: 24px;
     }
     .hero h1 img{
-        max-width: 65px;
+        max-width: 50px;
     }
 }
