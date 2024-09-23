@@ -347,7 +347,10 @@
     } */
     .faq-h h5 {
         max-width: 350px;
-        font-size: 18px;
+        font-size: 15px;
+    }
+    .faq-text{
+        padding: 10px;
     }
 
     .instDesk {

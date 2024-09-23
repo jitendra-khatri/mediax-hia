@@ -81,6 +81,11 @@ function Home() {
     const previewCanvasRef = useRef(null)
     const [confirmToggle, setConfirmToggle] = useState(false)
     const [confirm, setConfirm] = useState(true)
+    const [policy1, setPolicy1] = useState(true)
+    const [policy2, setPolicy2] = useState(false)
+    const [policy3, setPolicy3] = useState(false)
+    const [policy4, setPolicy4] = useState(false)
+    const [policy5, setPolicy5] = useState(false)
     const auth = getAuth()
     useEffect(() => {
         setUser(auth.currentUser)
@@ -859,7 +864,7 @@ function Home() {
                 <section className="faqs">
                     <div className="container-xxl">
                         <h1 className='text-center'>Frequently Asked Questions</h1>
-                        <div className="row mt-5">
+                        <div className="row mt-5 d-none d-md-flex">
                             <div className="col-md-3">
                                 <div className="faq-btn-box">
                                     <div className="policy-sidebar">
@@ -893,7 +898,7 @@ function Home() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-9 d-none d-md-block">
                                 <div id='viewing-and-scheduling' className='faq-tab-container mt-5 mt-md-0' >
                                     <div className='faq-box mb-3'>
                                         <div className="faq-h">
@@ -1239,6 +1244,220 @@ function Home() {
                                     </div>
                                 </div>
                             </div> */}
+                        </div>
+                        <div className="d-block d-md-none">
+                            <div className="faq-btn-box">
+                                <div className="policy-sidebar">
+                                    <ul className='list-unstyled p-0 m-0'>
+                                        <li>
+                                            <div className='sidebar-btn d-flex justify-content-between align-items-center active' data-faq='viewing-and-scheduling'>
+                                                <span className="posi-text" onClick={() => setPolicy1(prev => !prev)}>Viewing and Scheduling</span> <i class="far fa-angle-right"></i>
+                                            </div>
+                                            <div className="d-block d-md-none">
+                                                <div id='viewing-and-scheduling' className={`faq-tab-container ${policy1 ? '' : 'd-none'}`} >
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">Where can I see my obituary posting?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">Your obituary post will be shared on our Instagram community page. (<a href='https://www.instagram.com/happeningin.agra/' target='_blank'>link</a>)
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">When will my obituary be posted?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">You can view the obituary on the posting date you selected during booking. It will be shared between 10:00 AM to 10:30 AM on our Instagram community page. (<a href='https://www.instagram.com/happeningin.agra/' target='_blank'>link</a>)
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    {/* <div className='faq-box mb-3'>
+                                        <div className="faq-h">
+                                            <h5 className="m-0">Can I request specific posting slots or dates?
+                                            </h5>
+                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                        </div>
+                                        <div className="faq-text">
+                                            <p className="m-0">While we try to accommodate preferred slots, we cannot guarantee availability. If your requested slot is unavailable, we will offer alternative options.
+                                            </p>
+                                        </div>
+                                    </div> */}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='sidebar-btn d-flex justify-content-between align-items-center' data-faq='booking-and-submission'>
+                                                <span className="posi-text" onClick={() => setPolicy2(prev => !prev)}>Booking and Submission</span> <i class="far fa-angle-right"></i>
+                                            </div>
+                                            <div className="d-block d-md-none">
+                                                <div id='booking-and-submission' className={`faq-tab-container ${policy2 ? '' : 'd-none'}`}>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">How do I book an obituary post with Happening In Agra?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">You can book an obituary post by visiting our obituary registration form, providing the necessary details, and making the payment through Razorpay. Once the payment is confirmed, your slot is booked.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">What details are required to submit an obituary?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">You need to provide your name, email/phone number, and details about the deceased, including names of those in mourning. These details will be used to prepare the post.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">Can I choose a specific format for my obituary post?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">No, we maintain a standard format for all obituary posts to ensure consistency and respect across our platform. Custom templates or formats are not available.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='sidebar-btn d-flex justify-content-between align-items-center' data-faq='cancellations-and-edits'>
+                                                <span className="posi-text" onClick={() => setPolicy3(prev => !prev)}>Cancellations and Edits</span> <i class="far fa-angle-right"></i>
+                                            </div>
+                                            <div className="d-block d-md-none">
+                                                <div id='cancellations-and-edits' className={`faq-tab-container ${policy3 ? '' : 'd-none'}`} >
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">Can I cancel my booking?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">Yes, you can cancel your booking by emailing us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>. However, please note that refunds are not applicable even if the booking is canceled.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">Can I edit the obituary after submitting it?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">Yes, but you need to inform us of any changes via email at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a> atleast 2 hours before the posting time. After this period, edits cannot be accommodated.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">What happens if I need to change the date of the obituary post?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">If you need to reschedule, please inform us via email at least 16 hours before the original posting time. We will try our best to offer an alternative slot, subject to availability.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='sidebar-btn d-flex justify-content-between align-items-center' data-faq='payment-and-refund-policy'>
+                                                <span className="posi-text" onClick={() => setPolicy4(prev => !prev)}>Payment and Refund Policy</span> <i class="far fa-angle-right"></i>
+                                            </div>
+                                            <div className="d-block d-md-none">
+                                                <div id='payment-and-refund-policy' className={`faq-tab-container ${policy4 ? '' : 'd-none'}`} >
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">What is your refund policy?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">We do not offer refunds once a slot is booked. Even if you choose to cancel your booking, refunds will not be provided.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">What payment methods do you accept?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">Payments are processed securely through Razorpay, and we accept most major payment methods. Please note that all payments are subject to 18% GST taxation, billed by MediaX Digital Solutions.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">Is there any additional cost apart from the listed price?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">Yes, all payments are subject to 18% GST as required by law, which will be included in your final bill.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='sidebar-btn d-flex justify-content-between align-items-center' data-faq='privacy-and-security'>
+                                                <span className="posi-text" onClick={() => setPolicy5(prev => !prev)}>Privacy and Security</span> <i class="far fa-angle-right"></i>
+                                            </div>
+                                            <div className="d-block d-md-none">
+                                                <div id='privacy-and-security' className={`faq-tab-container ${policy5 ? '' : 'd-none'}`} >
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">How is my personal information protected?</h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">We take data security seriously and implement measures to protect your information. Your payment is processed securely through Razorpay, and no payment information is stored on our servers.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">Who has access to the obituary details I provide?
+                                                            </h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">Only authorized team members involved in processing and posting your obituary have access to the information you provide. We do not share your data with third parties except as necessary for payment processing.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='faq-box mb-3'>
+                                                        <div className="faq-h">
+                                                            <h5 className="m-0">Can I request the deletion of my data after the obituary post?</h5>
+                                                            <div className="faq-icon"><i className='fal fa-plus'></i></div>
+                                                        </div>
+                                                        <div className="faq-text">
+                                                            <p className="m-0">Yes, you can request the deletion of your personal data after the post by contacting us at <a href="mailto:happeninginagra@gmail.com" className="d-inline text-decoration-underline" target='_blank'>happeninginagra@gmail.com</a>. We will process your request in accordance with our privacy policy.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
