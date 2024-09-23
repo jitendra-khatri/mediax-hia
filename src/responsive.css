@@ -64,6 +64,9 @@
     .admin-sidebar.active {
         transform: translateX(0%);
     }
+    .hero h1 {
+        font-size: 70px;
+    }
 }
 
 
@@ -79,7 +82,13 @@
     /* #boobit-img {
         transform: scale(.7);
     } */
-
+    .hero h1 {
+        font-size: 50px;
+    }
+    .hero h1 img {
+        transform: translate(0px, -40%);
+        max-width: 100px;
+    }
 }
 
 
@@ -89,13 +98,6 @@
     .container-xxl {
         padding: 0px 20px;
     }
-
-    /* #boobit-img {
-        transform: scale(.7) translate(0px, -90px) !important;
-    } */
-    /* .boobit-left-conatiner{
-        height: 400px;
-    } */
 
     .boobit-container {
         padding: 0;
@@ -222,6 +224,9 @@
     }
     .th-icon {
         max-width: 100px;
+    }
+    .hero{
+        padding: 100px 0px;
     }
 }
 
@@ -414,5 +419,11 @@
         width: calc(100% - 40px);
 
         padding: 20px;
+    }
+    .hero h1 {
+        font-size: 30px;
+    }
+    .hero h1 img{
+        max-width: 65px;
     }
 }

@@ -390,11 +390,15 @@ function Home() {
                     {/* <img src={hero} class="d-none d-sm-block w-100" alt="" />
                     <img src={heroMobile} class="d-block d-sm-none w-100" alt="" />*/}
                     <div className="container-xxl">
-                    <h1 className='mb-3'>Honor Their Memory. Share A Tribute</h1>
-                    <p>Remembering and honoring a loved one is a deeply personal journey. We are here to help you share their life with grace and dignity, ensuring that their memory is cherished and respected.</p>
-                    <div className="d-flex justify-content-center mt-3">
-                    <a href="#book-obituary" className="th-btn fill"> Register now</a>
-                    </div>
+                        <h1 className='mb-3  text-center'>
+                            <div className="primary">Honor Their Memory</div>
+                            <div className="secondary">Share A Tribute</div>
+                            <img src={postBird} alt="" />
+                        </h1>
+                        <p>Remembering and honoring a loved one is a deeply personal journey. We are here to help you share their life with grace and dignity, ensuring that their memory is cherished and respected.</p>
+                        <div className="d-flex justify-content-center mt-3">
+                            <a href="#book-obituary" className="th-btn fill"> Register now</a>
+                        </div>
                     </div>
                 </section>
                 {/* <!-- Hero Section End --> */}
@@ -542,7 +546,7 @@ function Home() {
                                                         placeholder='Date of birth' /> */}
                                                 </div>
                                                 <div className="mb-3">
-                                                <DatePickerWidgets
+                                                    <DatePickerWidgets
                                                         value={dateOfDeath}
                                                         onChange={setDateOfDeath}
                                                         editFormat="DD MMM, YYYY" // User can input the date in this format
@@ -666,7 +670,7 @@ function Home() {
                                                     </select>
                                                 </div>
                                                 <div className="mb-3">
-                                                <DatePickerWidgets
+                                                    <DatePickerWidgets
                                                         value={dateOfService}
                                                         onChange={setDateOfService}
                                                         editFormat="DD MMM, YYYY" // User can input the date in this format

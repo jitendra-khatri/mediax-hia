@@ -68,7 +68,7 @@ p {
     letter-spacing: 0.2px;
     text-align: center;
     padding: 10px 15px;
-    border-radius:40px;
+    border-radius: 40px;
     text-transform: capitalize;
     display: inline-block;
     min-width: 350px;
@@ -77,17 +77,19 @@ p {
     user-select: none;
     transition: all .5s;
 }
-.verify-btn{
+
+.verify-btn {
     font-family: var(--font-family);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.2px;
     text-align: center;
     padding: 10px 20px;
-    border-radius:24px;
+    border-radius: 24px;
     color: #fff;
     background-color: var(--secondary);
 }
+
 .th-btn img {
     max-width: 20px;
 }
@@ -124,12 +126,14 @@ p {
     justify-content: center;
     align-items: center;
 }
-.final-post{
+
+.final-post {
     padding: 0px 20px;
     max-width: 600px;
     width: 100%;
     margin: auto;
 }
+
 #loader img {
     max-width: 200px;
 }
@@ -191,16 +195,18 @@ footer p {
     color: var(--white);
 }
 
-footer .hia-insta img{
+footer .hia-insta img {
     border-radius: 4px;
     padding: 4px;
     max-width: 30px;
     margin: auto;
     transition: all .5s;
 }
-footer .hia-insta img:hover{
+
+footer .hia-insta img:hover {
     background-color: var(--primary);
 }
+
 footer .foot-brand {
     max-width: 130px;
 }
@@ -259,12 +265,28 @@ footer .foot-brand {
 
 /* Hero Section Start ------------------------------ */
 .hero {
-    padding: 80px 0px;
+    padding: 150px 0px;
 }
 
 .hero h1 {
     text-align: center;
+    background: linear-gradient(180deg, #01B4BB 0%, #F5D765 100%);
+    background-clip: text;
+    color: transparent;
+    font-size: 90px;
+    position: relative;
+    z-index: 100    ;
 }
+
+.hero h1 img {
+    position: absolute;
+    top:0%;
+    right: 0px;
+    transform: translate(-30px, -40%);
+    max-width: 125px;
+    z-index: 1;
+}
+
 .hero p {
     max-width: 800px;
     margin: auto;
@@ -274,10 +296,11 @@ footer .foot-brand {
 /* ------------- Hero Section End ------------- */
 
 /* How it works Section Start ------------------------------ */
-.how-it-works{
+.how-it-works {
     background-color: var(--whitesmoke);
     padding: 50px 0px;
 }
+
 .hoitwo-con {
     position: relative;
     z-index: 1;
@@ -1116,9 +1139,11 @@ form .mb-3 {
     line-height: 130%;
     color: var(--black);
 }
-.policy-main p a{
+
+.policy-main p a {
     color: var(--black);
 }
+
 /* ------------- Policy Page Section End ------------- */
 
 /* Faqs Section Start ------------------------------ */
@@ -1164,7 +1189,8 @@ form .mb-3 {
     color: #727272;
     transition: all .5s;
 }
-.faq-text a{
+
+.faq-text a {
     color: #262626;
 
 }
@@ -1195,9 +1221,11 @@ form .mb-3 {
     justify-content: center;
     align-items: center;
 }
-.crop-img .th-btn{
+
+.crop-img .th-btn {
     margin-top: 20px;
 }
+
 .crop-img-container {
     width: 100%;
     max-width: 600px;
@@ -1247,7 +1275,8 @@ form .mb-3 {
 .con-left p {
     color: rgba(255, 255, 255, 0.8);
 }
-.con-left p b{
+
+.con-left p b {
     color: var(--white);
 }
 
@@ -1276,15 +1305,18 @@ form .mb-3 {
     border: 2px solid var(--primary);
 
 }
-.con-right{
+
+.con-right {
     width: 100%;
     height: 100%;
 }
-.con-right iframe{
+
+.con-right iframe {
     width: 100%;
     height: 100%;
     min-height: 300px;
 }
+
 /* .confirm-toggle{
     position: absolute;
     top: 0;
@@ -1292,22 +1324,25 @@ form .mb-3 {
     width: 100%;
     height: 100vh;
 } */
- .confirm-toggle{
+.confirm-toggle {
     background-color: #00000050;
     opacity: 0;
     visibility: hidden;
     transition: all .5s;
- }
- .confirm-toggle.active{
+}
+
+.confirm-toggle.active {
     opacity: 1;
     visibility: visible;
- }
- .contirm-box{
+}
+
+.contirm-box {
     max-width: 400px;
     padding: 20px;
     background-color: var(--white);
- }
- .confirm-btn .th-btn{
+}
+
+.confirm-btn .th-btn {
     min-width: auto !important;
     padding: 10px;
     font-size: 16px;
@@ -1315,51 +1350,61 @@ form .mb-3 {
     transition: all .5s;
     border: 1px solid transparent;
 }
-.confirm-btn .th-btn.backward{
+
+.confirm-btn .th-btn.backward {
     border: 1px solid var(--primary);
     background-color: transparent;
     color: var(--black);
 }
-.confirm-btn .th-btn.backward:hover{
+
+.confirm-btn .th-btn.backward:hover {
     background-color: var(--primary);
 }
-.confirm-btn .th-btn.forward{
+
+.confirm-btn .th-btn.forward {
     background: var(--primary);
 }
-.confirm-btn .th-btn.forward:hover{
+
+.confirm-btn .th-btn.forward:hover {
     background: transparent;
     border: 1px solid var(--primary);
 }
 
-.thankyou{
+.thankyou {
     padding: 100px 0px;
     background: linear-gradient(180deg, #01B4BB 0%, #F5D765 100%);
 }
-.thankyou .th-icon .fa-heart{
-font-size: 100px;
-color: #fff;
+
+.thankyou .th-icon .fa-heart {
+    font-size: 100px;
+    color: #fff;
 }
-.th-icon{
+
+.th-icon {
     max-width: 150px;
     margin: auto;
 }
-.th-body h1{
+
+.th-body h1 {
     color: #ffff;
 }
-.th-body p{
+
+.th-body p {
     color: #ffff;
     max-width: 600px;
     margin: auto;
 }
-.th-button{
+
+.th-button {
     background-color: var(--white);
     color: var(--secondary);
     border-radius: 40px;
-    padding:10px 20px;
+    padding: 10px 20px;
     border: 1px solid var(--white);
     transition: all .5s;
 }
-.th-button:hover{
-background-color: transparent;
-color: var(--white);
+
+.th-button:hover {
+    background-color: transparent;
+    color: var(--white);
 }

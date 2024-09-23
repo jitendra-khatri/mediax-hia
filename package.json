@@ -47,11 +47,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "dev": "cd backend && nodemon app.js",
+  "start-dev": "concurrently \"npm start\" \"npm run dev\""
+},
   "eslintConfig": {
     "extends": [
       "react-app",
