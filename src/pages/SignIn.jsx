@@ -123,7 +123,7 @@ function SignIn() {
               if (phone.length >= 10) {
                   generateRecaptcha();
                   let appVerifier = window.recaptchaVerifier;
-                  let num = '+91' + phone;
+                  let num = '+' + phone;
                   signInWithPhoneNumber(auth, num, appVerifier)
                       .then((confirmationResult) => {
                           window.confirmationResult = confirmationResult;
@@ -172,13 +172,13 @@ function SignIn() {
                                                                <h4>Enter your
                                                                       Phone Number</h4>
                                                                <div className="mt-4">
-                                                                      {/* <PhoneInput
+                                                                      <PhoneInput
                                                                              country={'in'}
                                                                              value={phone}
                                                                              className="form-control"
                                                                              onChange={(phone) => setPhone(phone)}
-                                                                      /> */}
-                                                                      <input type="number" className="form-control" value={phone} placeholder="Enter Your number" onChange={(phone) => setPhone(phone.target.value)} />
+                                                                      />
+                                                                      {/* <input type="number" className="form-control" value={phone} placeholder="Enter Your number" onChange={(phone) => setPhone(phone.target.value)} /> */}
                                                                       <div id="recaptcha"></div>
                                                                       <button type="submit" className="th-btn mt-3 fill w-100" onClick={sendOtp}>
                                                                              {otpLoading ? 'Send Code...' : 'Send Code'}
