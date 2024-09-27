@@ -419,10 +419,19 @@
 
         padding: 20px;
     }
+    .hero {
+        padding: 50px 0px;
+    }
     .hero h1 {
         font-size: 24px;
     }
     .hero h1 img{
         max-width: 50px;
+    }
+    .hoitwo-pera{
+        margin: 0px;
+    }
+    .hoitwo-box{
+        padding-top: 0px;
     }
 }

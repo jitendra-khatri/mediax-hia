@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { auth } from '../firebase.config';
 
-function PhoneSign() {
+/* function PhoneSign() {
     const [phone, setPhone] = useState('');
     const [user, setUser] = useState(null);
     const [otp, setOtp] = useState('');
@@ -24,7 +24,6 @@ function PhoneSign() {
             const appVerifier = window.recaptchaVerifier;
             const mob = "+"+phone
             const confirmation = await signInWithPhoneNumber(auth, mob, appVerifier);
-            
             alert('OTP sent successfully!');
             setUser(confirmation);
             console.log('Confirmation result:', confirmation);
@@ -73,6 +72,81 @@ function PhoneSign() {
             </div>
         </>
     );
-}
+} */
+    function PhoneSign() {
+        const [phone, setPhone] = useState('');
+        const [user, setUser] = useState(null);
+        const [otp, setOtp] = useState('');
+    
+        const generateRecaptcha = () => {
+            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha', {
+                'size': 'invisible',
+                'callback': (response) => {
+                    // reCAPTCHA solved, allow signInWithPhoneNumber.
+                }
+            });
+        }
+    
+        const sendOtp = async () => {
+            if (phone.length >= 10) {
+                generateRecaptcha();
+                let appVerifier = window.recaptchaVerifier;
+                let num = '+' + phone;
+                signInWithPhoneNumber(auth, num, appVerifier)
+                    .then((confirmationResult) => {
+                        window.confirmationResult = confirmationResult;
+                        setUser(confirmationResult);
+                        alert("OTP has been sent!");
+                    }).catch((error) => {
+                        console.log(error);
+                        alert("Error sending OTP: " + error.message);
+                    });
+            }
+        }
+    
+    
+        const verifyOtp = () => {
+            if (otp.length === 6) {
+                window.confirmationResult.confirm(otp).then((result) => {
+                    // User signed in successfully.
+                    const user = result.user;
+                    console.log(user);
+                    alert("User is verified!");
+                }).catch((error) => {
+                    console.log(error);
+                    alert("Error verifying OTP: " + error.message);
+                });
+            }
+        }
+    
+        return (
+            <>
+                <div className="number-container">
+                    <div className="nuco-box">
+                        <PhoneInput
+                            country={'in'}
+                            value={phone}
+                            onChange={(phone) => setPhone(phone)}
+                        />
+                        <button onClick={sendOtp}>Send OTP</button>
+                        <div id='recaptcha'></div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <div className="nuco-box">
+                        <TextField
+                            id="outlined-basic"
+                            label="Enter OTP"
+                            variant="outlined"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        <button onClick={verifyOtp}>Verify OTP</button>
+                    </div>
+                </div>
+            </>
+        );
+    }
 
 export default PhoneSign;

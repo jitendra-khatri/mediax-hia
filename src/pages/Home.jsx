@@ -448,8 +448,8 @@ function Home() {
                             <div class="boobit-box">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-6 col-md-8 col-sm-10">
-                                        <h2 class="text-center mb-4">{listingExists ? 'You have created Obituary' : 'Create a Personalized Tribute'}</h2>
-                                        <p class="text-center mb-4">Share the details and upload a photo to craft a meaningful obituary. Simply complete the form below to get started.</p>
+                                        <h2 class="text-center mb-2 mb-sm-4">{listingExists ? 'You have created Obituary' : 'Create a Personalized Tribute'}</h2>
+                                        <p class="text-center mb-0 mb-sm-4">Share the details and upload a photo to craft a meaningful obituary. Simply complete the form below to get started.</p>
                                         {/* {listingExists &&(<div className="text-center"><img src={listingDataCheck?.imageUrl} alt="" className="w-50" /></div>)} */}
                                     </div>
                                 </div>
@@ -850,7 +850,7 @@ function Home() {
                                         </div>
                                     </div>
 
-                                    <div class="col-12 d-flex justify-content-center my-4 order-md-2" onClick={confirmDetails}>
+                                    <div class="col-12 d-flex justify-content-center my-sm-4 order-md-2" onClick={confirmDetails}>
                                         <div class="th-btn fill">Proceed</div>
                                     </div>
                                 </div>

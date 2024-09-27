@@ -10,8 +10,17 @@ import { v4 as uuidv4 } from 'uuid'
 import { doc, setDoc } from "firebase/firestore"
 import { db } from "../firebase.config"
 import Spinner from "../component/Spinner"
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import TextField from '@mui/material/TextField';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { auth } from '../firebase.config';
 
 function SignIn() {
+       const [phone, setPhone] = useState('');
+       const [user, setUser] = useState(null);
+       const [otp, setOtp] = useState('');
+       const [otpLoading, setOtpLoading] = useState(false)
        const [loading, setLoading] = useState(false)
        const [passToggle, setPassToggle] = useState(false)
        const navigate = useNavigate()
@@ -35,7 +44,7 @@ function SignIn() {
               setLoading(true)
               e.preventDefault()
               try {
-                     const auth = getAuth()
+                     // const auth = getAuth()
                      const userCredential = await signInWithEmailAndPassword(auth, email, password)
                      if (userCredential.user) {
                             const blobUrl = localStorage.getItem('imageBlobUrl');
@@ -100,6 +109,47 @@ function SignIn() {
                      setLoading(false)
               }
        }
+       const generateRecaptcha = () => {
+              window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha', {
+                  'size': 'invisible',
+                  'callback': (response) => {
+                      // reCAPTCHA solved, allow signInWithPhoneNumber.
+                  }
+              });
+          }
+      
+          const sendOtp = async () => {
+              setOtpLoading(true)
+              if (phone.length >= 10) {
+                  generateRecaptcha();
+                  let appVerifier = window.recaptchaVerifier;
+                  let num = '+91' + phone;
+                  signInWithPhoneNumber(auth, num, appVerifier)
+                      .then((confirmationResult) => {
+                          window.confirmationResult = confirmationResult;
+                          setUser(confirmationResult);
+                          toast.success("OTP has been sent!");
+                      }).catch((error) => {
+                          console.log(error);
+                          toast.error("Error sending OTP: " + error.message);
+                      });
+              }
+          }
+      
+      
+          const verifyOtp = () => {
+              if (otp.length === 6) {
+                  window.confirmationResult.confirm(otp).then((result) => {
+                      // User signed in successfully.
+                      const user = result.user;
+                      console.log(user);
+                      alert("User is verified!");
+                  }).catch((error) => {
+                      console.log(error);
+                      alert("Error verifying OTP: " + error.message);
+                  });
+              }
+          }
        return (
               <>
                      <Spinner clsName={loading ? 'd-flex' : 'd-none'} />
@@ -119,7 +169,23 @@ function SignIn() {
                                                                <h3>Welcome to <br /> Happening In Agra</h3>
                                                                <OAuth img={googleImg} />
                                                                <p className="or-t">Or</p>
-                                                               <form onSubmit={onSubmitHandler}>
+                                                               <h4>Enter your
+                                                                      Phone Number</h4>
+                                                               <div className="mt-4">
+                                                                      {/* <PhoneInput
+                                                                             country={'in'}
+                                                                             value={phone}
+                                                                             className="form-control"
+                                                                             onChange={(phone) => setPhone(phone)}
+                                                                      /> */}
+                                                                      <input type="number" className="form-control" value={phone} placeholder="Enter Your number" onChange={(phone) => setPhone(phone.target.value)} />
+                                                                      <div id="recaptcha"></div>
+                                                                      <button type="submit" className="th-btn mt-3 fill w-100" onClick={sendOtp}>
+                                                                             {otpLoading ? 'Send Code...' : 'Send Code'}
+                                                                      </button>
+
+                                                               </div>
+                                                               {/* <form onSubmit={onSubmitHandler}>
                                                                       <div className="mb-3">
                                                                              <input type="email" className="form-control" id="email" value={email} placeholder="Email" onChange={onChangeHandler} />
                                                                       </div>
@@ -131,9 +197,9 @@ function SignIn() {
                                                                              <Link to="/forgot-password">Forgot password?</Link>
                                                                       </div>
                                                                       <button type="submit" className="th-btn fill w-100">Sign in</button>
-                                                               </form>
+                                                               </form> */}
 
-                                                               <div className="dont-have">
+                                                               {/* <div className="dont-have">
                                                                       <p className="m-0">Don't have an account? <Link to="/sign-up" className="text-primary">Sign up</Link></p>
                                                                       <div className="terms">
                                                                              By signing in you accept the.
@@ -145,7 +211,7 @@ function SignIn() {
                                                                                     Privacy Policy
                                                                              </Link>.
                                                                       </div>
-                                                               </div>
+                                                               </div> */}
                                                         </div>
                                                  </div>
                                           </div>
