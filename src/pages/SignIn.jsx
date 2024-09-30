@@ -144,6 +144,8 @@ function SignIn() {
 
 
        const verifyOtp = () => {
+              setOtpLoading(true)
+
               if (otp.length === 6) {
                      window.confirmationResult.confirm(otp).then((result) => {
                             // User signed in successfully.
