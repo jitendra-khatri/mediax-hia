@@ -181,8 +181,9 @@ function Home() {
     }
     function handleClick() {
         html2canvas(document.querySelector('#boobit-img'),
-            // {  scale: 2, width: 1080, height: 1080 }
-        ).then(function (canvas) {
+        {  scale: 2 }
+        // {  scale: 2, width: 1080, height: 1080 }
+    ).then(function (canvas) {
             canvas.toBlob(function (blob) {
                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
                 const dataTransfer = new DataTransfer();
