@@ -276,12 +276,12 @@ footer .foot-brand {
     color: transparent;
     font-size: 90px;
     position: relative;
-    z-index: 100    ;
+    z-index: 100;
 }
 
 .hero h1 img {
     position: absolute;
-    top:0%;
+    top: 0%;
     right: 0px;
     transform: translate(-30px, -40%);
     max-width: 125px;
@@ -540,19 +540,24 @@ form .mb-3 {
     font-weight: 600;
     line-height: 144%;
 }
-.react-tel-input.form-control{
+
+.react-tel-input.form-control {
     padding: 6px 6px;
 }
-.react-tel-input .form-control{
+
+.react-tel-input .form-control {
     border: none !important;
 }
-.react-tel-input .form-control:focus{
+
+.react-tel-input .form-control:focus {
     box-shadow: none !important;
 }
-.react-tel-input .flag-dropdown{
+
+.react-tel-input .flag-dropdown {
     background-color: transparent !important;
     border: none !important;
 }
+
 .form-control,
 .form-select {
     padding: 15px 22px;
@@ -657,6 +662,22 @@ form .mb-3 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.lo-box p {
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #ACADB9;
+
+}
+
+.lo-box .otp-number {
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 600;
+    color: #ACADB9;
 }
 
 .login .lo-box.left {

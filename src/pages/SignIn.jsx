@@ -15,11 +15,13 @@ import 'react-phone-input-2/lib/style.css';
 import TextField from '@mui/material/TextField';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { auth } from '../firebase.config';
+import OtpInput from 'otp-input-react';
 
 function SignIn() {
        const [phone, setPhone] = useState('');
        const [user, setUser] = useState(null);
        const [otp, setOtp] = useState('');
+       const [otpSend, setOtpSend] = useState(false);
        const [otpLoading, setOtpLoading] = useState(false)
        const [loading, setLoading] = useState(false)
        const [passToggle, setPassToggle] = useState(false)
@@ -111,45 +113,105 @@ function SignIn() {
        }
        const generateRecaptcha = () => {
               window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha', {
-                  'size': 'invisible',
-                  'callback': (response) => {
-                      // reCAPTCHA solved, allow signInWithPhoneNumber.
-                  }
+                     'size': 'invisible',
+                     'callback': (response) => {
+                            // reCAPTCHA solved, allow signInWithPhoneNumber.
+                     }
               });
-          }
-      
-          const sendOtp = async () => {
+       }
+
+       const sendOtp = async () => {
               setOtpLoading(true)
               if (phone.length >= 10) {
-                  generateRecaptcha();
-                  let appVerifier = window.recaptchaVerifier;
-                  let num = '+' + phone;
-                  signInWithPhoneNumber(auth, num, appVerifier)
-                      .then((confirmationResult) => {
-                          window.confirmationResult = confirmationResult;
-                          setUser(confirmationResult);
-                          toast.success("OTP has been sent!");
-                      }).catch((error) => {
-                          console.log(error);
-                          toast.error("Error sending OTP: " + error.message);
-                      });
+                     generateRecaptcha();
+                     let appVerifier = window.recaptchaVerifier;
+                     let num = '+' + phone;
+                     signInWithPhoneNumber(auth, num, appVerifier)
+                            .then((confirmationResult) => {
+                                   window.confirmationResult = confirmationResult;
+                                   setUser(confirmationResult);
+                                   toast.success("OTP has been sent!");
+                                   setOtpSend(true)
+                                   setOtpLoading(false)
+
+                            }).catch((error) => {
+                                   console.log(error);
+                                   toast.error("Error sending OTP: " + error.message);
+                                   setOtpLoading(false)
+                            });
               }
-          }
-      
-      
-          const verifyOtp = () => {
+       }
+
+
+       const verifyOtp = () => {
               if (otp.length === 6) {
-                  window.confirmationResult.confirm(otp).then((result) => {
-                      // User signed in successfully.
-                      const user = result.user;
-                      console.log(user);
-                      alert("User is verified!");
-                  }).catch((error) => {
-                      console.log(error);
-                      alert("Error verifying OTP: " + error.message);
-                  });
+                     window.confirmationResult.confirm(otp).then((result) => {
+                            // User signed in successfully.
+                            const user = result.user;
+                            console.log(user);
+                            toast.success("User is verified!");
+                            if (user) {
+                                   const blobUrl = localStorage.getItem('imageBlobUrl');
+
+                                   if (!blobUrl) {
+                                          console.error('No image found in localStorage');
+                                          return;
+                                   }
+
+                                   // Fetch the Blob from the Blob URL
+                                   fetch(blobUrl)
+                                          .then(res => res.blob())
+                                          .then(blob => {
+                                                 const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
+
+                                                 const storage = getStorage();
+                                                 const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
+                                                 uploadBytes(imageRef, file).then(() => {
+                                                        getDownloadURL(imageRef).then(async (url) => {
+                                                               try {
+                                                                     /*  const auth = getAuth();
+                                                                      if (!auth.currentUser) {
+                                                                             throw new Error("User not authenticated");
+                                                                      } */
+                                                                      const listingData = {
+                                                                             listingCreated: true,
+                                                                             userId: user.uid,
+                                                                             number: user.phoneNumber,
+                                                                             dateOfPosting: '',
+                                                                             postStatus: false,
+                                                                             slotNumber: 0,
+                                                                             payment: false,
+                                                                             imageUrl: url,
+                                                                             paymentResponseId: 'No Id Yet',
+                                                                      };
+
+                                                                      const docRef = doc(db, "listings", user.uid);
+                                                                      await setDoc(docRef, listingData);
+                                                                      console.log("Document written with ID: ", user.uid);
+                                                                      navigate('/pick-date');
+                                                               } catch (error) {
+                                                                      console.error("Error adding document: ", error);
+                                                                      toast.error('Error creating listing: ' + error.message);
+                                                               }
+                                                        }).catch((error) => {
+                                                               console.error('Error getting download URL:', error);
+                                                               toast.error('Error getting download URL: ' + error.message);
+                                                        });
+                                                 }).catch((error) => {
+                                                        console.log('Error uploading file:', error);
+                                                        toast.error('Error uploading file:', error.message);
+                                                 });
+                                          })
+                                          .catch(error => {
+                                                 console.error('Error retrieving Blob from URL:', error);
+                                          });
+                            }
+                     }).catch((error) => {
+                            console.log(error);
+                            alert("Error verifying OTP: " + error.message);
+                     });
               }
-          }
+       }
        return (
               <>
                      <Spinner clsName={loading ? 'd-flex' : 'd-none'} />
@@ -169,22 +231,42 @@ function SignIn() {
                                                                <h3>Welcome to <br /> Happening In Agra</h3>
                                                                <OAuth img={googleImg} />
                                                                <p className="or-t">Or</p>
-                                                               <h4>Enter your
-                                                                      Phone Number</h4>
-                                                               <div className="mt-4">
-                                                                      <PhoneInput
-                                                                             country={'in'}
-                                                                             value={phone}
-                                                                             className="form-control"
-                                                                             onChange={(phone) => setPhone(phone)}
-                                                                      />
-                                                                      {/* <input type="number" className="form-control" value={phone} placeholder="Enter Your number" onChange={(phone) => setPhone(phone.target.value)} /> */}
-                                                                      <div id="recaptcha"></div>
-                                                                      <button type="submit" className="th-btn mt-3 fill w-100" onClick={sendOtp}>
-                                                                             {otpLoading ? 'Send Code...' : 'Send Code'}
-                                                                      </button>
+                                                               <div className=""></div>
+                                                               {otpSend ? (
+                                                                      <>
+                                                                             <h4>Verify Phone Number</h4>
+                                                                             <p>We Have Sent Code To Your Phone Number</p>
+                                                                             <div className="otp-number">
+                                                                                    {phone && (`+${phone}`)}
+                                                                             </div>
+                                                                             <div className="mt-4">
+                                                                                    <OtpInput OTPLength={6} value={otp} onChange={setOtp} otpType="number" className="d-flex justify-content-center" autoFocus disabled={false}></OtpInput>
+                                                                                    {/* <input type="number" className="form-control" value={phone} placeholder="Enter Your number" onChange={(phone) => setPhone(phone.target.value)} /> */}
+                                                                                    <div id="recaptcha"></div>
+                                                                                    <button type="submit" className="th-btn mt-3 fill w-100" onClick={verifyOtp}>
+                                                                                           {otpLoading ? 'Verify Code...' : 'Verify Code'}
+                                                                                    </button>
 
-                                                               </div>
+                                                                             </div>
+                                                                      </>
+                                                               ) : (<>
+                                                                      <h4>Enter your
+                                                                             Phone Number</h4>
+                                                                      <div className="mt-4">
+                                                                             <PhoneInput
+                                                                                    country={'in'}
+                                                                                    value={phone}
+                                                                                    className="form-control"
+                                                                                    onChange={(phone) => setPhone(phone)}
+                                                                             />
+                                                                             {/* <input type="number" className="form-control" value={phone} placeholder="Enter Your number" onChange={(phone) => setPhone(phone.target.value)} /> */}
+                                                                             <div id="recaptcha"></div>
+                                                                             <button type="submit" className="th-btn mt-3 fill w-100" onClick={sendOtp}>
+                                                                                    {otpLoading ? 'Send Code...' : 'Send Code'}
+                                                                             </button>
+
+                                                                      </div>
+                                                               </>)}
                                                                {/* <form onSubmit={onSubmitHandler}>
                                                                       <div className="mb-3">
                                                                              <input type="email" className="form-control" id="email" value={email} placeholder="Email" onChange={onChangeHandler} />

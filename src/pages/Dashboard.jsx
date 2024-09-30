@@ -86,9 +86,9 @@ function Dashboard() {
             });
             // Apply search filter here
             const filteredListings = listings.filter(listing =>
-                listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                listing.gmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                listing.dateOfPosting.toLowerCase().includes(searchTerm.toLowerCase())
+                listing.name && listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                listing.gmail && listing.gmail.toLowerCase().includes(searchTerm.toLowerCase())
+                //  || listing.dateOfPosting.toLowerCase().includes(searchTerm.toLowerCase())
             );
 
             setAllListingData(filteredListings);
@@ -301,7 +301,7 @@ function Dashboard() {
                                                         </div>
                                                         <div className="col-2">
                                                             <div className="user-name">
-                                                                {data.name}
+                                                                {data.name? data.name: data.number}
                                                             </div>
                                                         </div>
                                                         <div className="col-1">
