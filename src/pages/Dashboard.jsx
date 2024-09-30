@@ -25,7 +25,7 @@ function Dashboard() {
     const [dateOfDeath, setDateOfDeath] = useState()
     const [status, setStatus] = useState()
     const auth = getAuth()
-    const [sortField, setSortField] = useState('name'); // Default sort by name
+    const [sortField, setSortField] = useState('dateOfPosting'); // Default sort by name
     const [searchTerm, setSearchTerm] = useState(''); // Search term
     const [responseState, setResponseState] = useState({});
 
@@ -38,7 +38,7 @@ function Dashboard() {
             collSnap.forEach((doc) => {
                 listings.push({ id: doc.id, ...doc.data() }); // Collect each document's data
             });
-
+            console.log(listings)
             setAllListingData(listings); // Update state with the fetched data
             console.log(allListingData)
         };
@@ -77,27 +77,27 @@ function Dashboard() {
         fetchListings();
     }, [sortField, dateOfDeath, fromDate]);
 
-    useEffect(() => {
-        const fetchListings = async () => {
-            const querySnapshot = await getDocs(collection(db, 'listings'));
-            const listings = [];
-            querySnapshot.forEach((doc) => {
-                listings.push({ id: doc.id, ...doc.data() }); // Collect each document's data
-            });
-            // Apply search filter here
-            const filteredListings = listings.filter(listing =>
-                listing.name && listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                listing.gmail && listing.gmail.toLowerCase().includes(searchTerm.toLowerCase())
-                //  || listing.dateOfPosting.toLowerCase().includes(searchTerm.toLowerCase())
-            );
+    // useEffect(() => {
+    //     const fetchListings = async () => {
+    //         const querySnapshot = await getDocs(collection(db, 'listings'));
+    //         const listings = [];
+    //         querySnapshot.forEach((doc) => {
+    //             listings.push({ id: doc.id, ...doc.data() }); // Collect each document's data
+    //         });
+    //         // Apply search filter here
+    //         const filteredListings = listings.filter(listing =>
+    //             listing.name && listing.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //             listing.gmail && listing.gmail.toLowerCase().includes(searchTerm.toLowerCase())
+    //             //  || listing.dateOfPosting.toLowerCase().includes(searchTerm.toLowerCase())
+    //         );
 
-            setAllListingData(filteredListings);
-            // setAllListingData(listings);
+    //         setAllListingData(filteredListings);
+    //         // setAllListingData(listings);
 
-        };
+    //     };
 
-        fetchListings();
-    }, [searchTerm]);
+    //     fetchListings();
+    // }, [searchTerm]);
     const formatDate = (timestamp) => {
         const date = timestamp.toDate(); // Convert Firestore timestamp to JavaScript Date
         const formattedDate = date.toLocaleDateString('en-GB', {
@@ -243,8 +243,8 @@ function Dashboard() {
                                             <div className="sor-heading">Sort By Category:</div>
                                             <div className="sor-date">
                                                 <select class="form-select" id="status-select" onChange={(e) => setSortField(e.target.value)} value={sortField}>
-                                                    <option value="name">Name</option>
                                                     <option value="dateOfPosting">Date of Posting</option>
+                                                    <option value="name">Name</option>
                                                     <option value="payment">Payment</option>
                                                     <option value="postStatus">Post Status</option>
                                                 </select>
@@ -270,7 +270,7 @@ function Dashboard() {
                                                 <div className="usdahe-text">Slot no.</div>
                                             </div>
                                             <div className="col-2">
-                                                <div className="usdahe-text">Name</div>
+                                                <div className="usdahe-text">Name/Phone</div>
                                             </div>
                                             <div className="col-1">
                                                 <div className="usdahe-text">Date to post </div>
