@@ -145,7 +145,6 @@ function SignIn() {
 
        const verifyOtp = () => {
               setOtpLoading(true)
-
               if (otp.length === 6) {
                      window.confirmationResult.confirm(otp).then((result) => {
                             // User signed in successfully.
@@ -258,7 +257,7 @@ function SignIn() {
                                                                              <PhoneInput
                                                                                     country={'in'}
                                                                                     value={phone}
-                                                                                    className="form-control"
+                                                                                    className="form-control overflow-hidden"
                                                                                     onChange={(phone) => setPhone(phone)}
                                                                              />
                                                                              {/* <input type="number" className="form-control" value={phone} placeholder="Enter Your number" onChange={(phone) => setPhone(phone.target.value)} /> */}
