@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import hiaLogo from '../assets/logo.png';
@@ -6,9 +5,11 @@ import { getAuth } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db } from "../firebase.config";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import {load} from '@cashfreepayments/cashfree-js'
 
 function Payment() {
-  const [responseId, setResponseId] = useState('');
+  // const [responseId, setResponseId] = useState('');
   const [listingData, setListingData] = useState({})
   const navigate = useNavigate()
   useEffect(() => {
@@ -23,7 +24,7 @@ function Payment() {
     }
     fetchCurrentListing()
   }, [])
-  const loadScript = (src) => {
+ /*  const loadScript = (src) => {
     return new Promise((resolve) => {
       if (document.querySelector(`script[src="${src}"]`)) {
         resolve(true); // Script is already loaded
@@ -96,9 +97,79 @@ function Payment() {
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
-  };
+  }; */
+
+  let cashfree;
+
+  let insitialzeSDK = async function () {
+
+    cashfree = await load({
+      mode: "sandbox",
+    })
+  }
+
+  insitialzeSDK()
+
+  const [orderId, setOrderId] = useState("")
 
 
+
+  const getSessionId = async () => {
+    try {
+      let res = await axios.get("http://localhost:5000/payment")
+      
+      if(res.data && res.data.payment_session_id){
+
+        console.log(res.data)
+        setOrderId(res.data.order_id)
+        return res.data.payment_session_id
+      }
+
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const verifyPayment = async () => {
+    try {
+      
+      let res = await axios.post("http://localhost:5000/verify", {
+        orderId: orderId
+      })
+
+      if(res && res.data){
+        alert("payment verified")
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleClick = async (e) => {
+    e.preventDefault()
+    try {
+
+      let sessionId = await getSessionId()
+      let checkoutOptions = {
+        paymentSessionId : sessionId,
+        redirectTarget:"_modal",
+      }
+
+      cashfree.checkout(checkoutOptions).then((res) => {
+        console.log("payment initialized")
+
+        verifyPayment(orderId)
+        updatePaymentStatus(orderId)
+      })
+
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   const updatePaymentStatus = async (resId) => {
     // toast.success(resId)
@@ -123,7 +194,7 @@ function Payment() {
         <div className="final-post">
         <img src={listingData?.imageUrl} className="w-100" alt="" />
         </div>
-        <button className="th-btn fill mt-5" onClick={() => createRazorpayOrder(1999)}>
+        <button className="th-btn fill mt-5" onClick={handleClick}>
           Proceed to pay Rs 1,999
         </button>
       </div>
