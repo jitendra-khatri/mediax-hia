@@ -14,7 +14,7 @@ function Thankyou() {
                         </div>
                         <div className="th-body mt-3 mt-md-5">
                             <h1>Thank You for Your Submission!</h1>
-                            <p className="mb-0 mt-3">Your details for the obituary registration have been successfully submitted.It will be posted on the date you specified.</p>
+                            <p className="mb-0 mt-3">Your details for the obituary registration have been successfully submitted. It will be posted on the date you specified.</p>
                         </div>
                         <div className="d-flex justify-content-center">
                         <Link to='/' className="th-button mt-3 mt-md-5">
