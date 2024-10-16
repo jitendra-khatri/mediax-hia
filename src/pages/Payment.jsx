@@ -175,7 +175,8 @@ function Payment() {
     let insitialzeSDK = async function () {
   
       cashfree = await load({
-        mode: "sandbox",
+        // mode: "sandbox",
+        mode: "prod",
       })
     }
   
