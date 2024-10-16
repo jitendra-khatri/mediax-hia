@@ -1,17 +1,20 @@
-const express = require('express')
-const cors = require('cors')
-const crypto = require('crypto')
-const {Cashfree} = require('cashfree-pg')
-require('dotenv').config(); // Ensure you have dotenv configured
+const express = require('express');
+const cors = require('cors');
+const crypto = require('crypto');
+const {
+    Cashfree
+} = require('cashfree-pg');
 
+
+require('dotenv').config();
 
 const app = express();
-const port = 5000;
-
-// app.use(bodyParser.json())
-app.use(cors())
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
+
 
 
 Cashfree.XClientId = process.env.CLIENT_ID;
@@ -41,7 +44,7 @@ app.get('/payment', async (req, res) => {
     try {
 
         let request = {
-            "order_amount": 1999,
+            "order_amount": 1999.00,
             "order_currency": "INR",
             "order_id": await generateOrderId(),
             "customer_details": {
@@ -89,55 +92,6 @@ app.post('/verify', async (req, res) => {
     }
 })
 
-app.listen(port, () => {
-    console.log(`server is running on ${port}`)
+app.listen(8000, () => {
+    console.log('Server is running on port 8000');
 })
-
-/* app.post('/orders', async (req, res) => {
-    const razorpay = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY_ID,
-        key_secret: process.env.RAZORPAY_KEY_SECRET,
-    })
-
-    const options = {
-        amount: req.body.amount,
-        currency: req.body.currency,
-        receipt: 'receipt#1',
-        payment_capture: 1
-    }
-
-    try {
-        const response = await razorpay.orders.create(options)
-        res.json({
-            order_id: response.id,
-            currency: response.currency,
-            amount: response.amount
-        })
-    } catch (error) {
-        res.status(500).send('Internal Server error')
-    }
-})
-
-app.get('/payment/:paymentId', async (req, res) => {
-    const { paymentId } = req.params;
-    const razorpay = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY_ID,
-        key_secret: process.env.RAZORPAY_KEY_SECRET,
-    })
-
-    try {
-        const payment = await razorpay.payments.fetch(paymentId)
-        if (!payment) {
-            return res.status(500).json('Error at razorpay loading')
-        }
-        res.json({
-            status: payment.status,
-            method: payment.method,
-            amount: payment.amount,
-            currency: payment.currency
-        })
-
-    } catch (error) {
-        res.status(500).json('failed to fetch')
-    }
-}) */

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import hiaLogo from '../assets/logo.png';
+// import hiaLogo from '../assets/logo.png';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db } from "../firebase.config";
@@ -51,7 +51,7 @@ function Payment() {
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:5000/orders',
+      url: 'http://localhost:8000/orders',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -110,13 +110,11 @@ function Payment() {
 
   insitialzeSDK()
 
-  const [orderId, setOrderId] = useState("")
-
-
+   const [orderId, setOrderId] = useState("")
 
   const getSessionId = async () => {
     try {
-      let res = await axios.get("http://localhost:5000/payment")
+      let res = await axios.get("http://localhost:8000/payment")
       
       if(res.data && res.data.payment_session_id){
 
@@ -134,7 +132,7 @@ function Payment() {
   const verifyPayment = async () => {
     try {
       
-      let res = await axios.post("http://localhost:5000/verify", {
+      let res = await axios.post("http://localhost:8000/verify", {
         orderId: orderId
       })
 
@@ -171,6 +169,8 @@ function Payment() {
 
   }
 
+
+   
   const updatePaymentStatus = async (resId) => {
     // toast.success(resId)
     try {
