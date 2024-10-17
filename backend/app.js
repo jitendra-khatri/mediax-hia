@@ -19,7 +19,10 @@ app.use(express.urlencoded({
 
 Cashfree.XClientId = process.env.CLIENT_ID;
 Cashfree.XClientSecret = process.env.CLIENT_SECRET;
-Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
+// for test mode 
+// Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
+// for PRODUCTION mode
+Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
 
 
 function generateOrderId() {
@@ -91,6 +94,7 @@ app.post('/verify', async (req, res) => {
         console.log(error);
     }
 })
+
 
 app.listen(8000, () => {
     console.log('Server is running on port 8000');
