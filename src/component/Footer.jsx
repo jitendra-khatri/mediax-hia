@@ -46,7 +46,7 @@ function Footer() {
               <h4>Connect</h4>
               <ul>
                 <li>
-                  <a className='d-flex gap-2 align-items-center' href='tel:+91 9027572020'>
+                  <a className='d-flex gap-2 align-items-center' href='tel:+91 9027572020' target='_blank'>
                     <div className="">
                       <i class="fas fa-phone-alt"></i>
                     </div>
@@ -61,7 +61,7 @@ function Footer() {
                     <div className="">happeninginagra.com</div>
                   </a>
                 </li>
-                <li><a className='d-flex gap-2 align-items-center' href=''>
+                <li><a className='d-flex gap-2 align-items-center' href='https://maps.app.goo.gl/Ps2SXdYNkQiH3pLB6' target='_blank'>
                   <div className="">
                     <i class="fas fa-map-marker-alt"></i>
                   </div>
