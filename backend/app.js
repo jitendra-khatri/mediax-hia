@@ -20,9 +20,9 @@ app.use(express.urlencoded({
 Cashfree.XClientId = process.env.CLIENT_ID;
 Cashfree.XClientSecret = process.env.CLIENT_SECRET;
 // for test mode 
-// Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
+Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
 // for PRODUCTION mode
-Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
+// Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
 
 
 function generateOrderId() {
