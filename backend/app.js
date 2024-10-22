@@ -65,8 +65,6 @@ app.get('/payment', async (req, res) => {
         }).catch(error => {
             console.error(error.response.data.message);
         })
-
-
     } catch (error) {
         console.log(error);
     }
