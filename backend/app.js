@@ -59,7 +59,7 @@ app.get('/payment', async (req, res) => {
         }
 
         Cashfree.PGCreateOrder("2023-08-01", request).then(response => {
-            console.log(response.data);
+            //console.log(response);
             res.json(response.data);
 
         }).catch(error => {
@@ -81,10 +81,10 @@ app.post('/verify', async (req, res) => {
         let {
             orderId
         } = req.body;
-
+        console.log(orderId)
         Cashfree.PGOrderFetchPayments("2023-08-01", orderId).then((response) => {
-
-            res.json(response.data);
+ console.log(response)
+            // res.json(response.data);
         }).catch(error => {
             console.error(error.response.data.message);
         })
@@ -96,6 +96,6 @@ app.post('/verify', async (req, res) => {
 })
 
 
-app.listen(8000, () => {
-    console.log('Server is running on port 8000');
+app.listen(5000, () => {
+    console.log('Server is running on port 5000');
 })
