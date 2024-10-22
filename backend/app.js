@@ -98,7 +98,7 @@ app.post('/verify', async (req, res) => {
         try {
     
             let request = {
-                "order_amount": 1.00,
+                "order_amount": 1999.00,
                 "order_currency": "INR",
                 "order_id": await generateOrderId(),
                 "customer_details": {
