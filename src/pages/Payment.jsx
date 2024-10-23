@@ -162,7 +162,7 @@ function Payment() {
         console.log("payment initialized")
 
         verifyPayment(orderId)
-        updatePaymentStatus()
+        updatePaymentStatus(orderId)
       })
 
 
