@@ -106,6 +106,7 @@ function Payment() {
 
     cashfree = await load({
       mode: "production",
+      // mode: "sandbox",
     })
   }
 

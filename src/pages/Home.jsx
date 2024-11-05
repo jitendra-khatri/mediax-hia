@@ -681,7 +681,7 @@ function Home() {
                                                         onChange={setDateOfService}
                                                         editFormat="DD MMM, YYYY" // User can input the date in this format
                                                         parse={str => new Date(str)} // Parse the input into a Date object
-                                                        placeholder="ate of service"
+                                                        placeholder="Date of service"
                                                     />
                                                     {/* <DatePickerWidgets
                                                         selected={dateOfService}

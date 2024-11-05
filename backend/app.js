@@ -20,6 +20,7 @@ app.use(express.urlencoded({
 Cashfree.XClientId = process.env.CLIENT_ID;
 Cashfree.XClientSecret = process.env.CLIENT_SECRET;
 Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
+// Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
 
 
 function generateOrderId() {
@@ -39,14 +40,14 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/payment', async (req, res) => {
+app.get('/payment', (req, res) => {
 
     try {
 
         let request = {
             "order_amount": 1999,
             "order_currency": "INR",
-            "order_id": await generateOrderId(),
+            "order_id": generateOrderId(),
             "customer_details": {
                 "customer_id": "webcodder01",
                 "customer_phone": "9999999999",
