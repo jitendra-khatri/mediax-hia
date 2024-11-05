@@ -67,8 +67,9 @@ function Footer() {
                   </div>
                   <div className="">
                     First Floor, 4 & 5, Block No: S-17,
-                    Sanjay Place, Agra, Uttar Pradesh:- 282002
+                    Sanjay Place, Agra, Uttar Pradesh:- 282002 
                   </div>
+                  V.1
                 </a>
                 </li>
               </ul>
