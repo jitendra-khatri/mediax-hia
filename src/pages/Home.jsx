@@ -568,7 +568,7 @@ function Home() {
                                                 <div class="mb-3">
                                                     <select class="form-select" id="service-select" value={memoService} onChange={(memo) => setMemoService(memo.target.value)}>
                                                         <option selected>Service</option>
-                                                        <option value="Memoriam">Memoriam</option>
+                                                        <option value="Memorial">Memorial</option>
                                                         <option value="Death Anniversary">Death Anniversary</option>
                                                         <option value="Funeral Announcement">Funeral Announcement</option>
                                                         <option value="Condolence Message">Condolence Message</option>
