@@ -118,7 +118,7 @@ function Payment() {
 
   const getSessionId = async () => {
     try {
-      let res = await axios.get("http://localhost:8000/payment")
+      let res = await axios.get("https://hia-backend-production.up.railway.app/payment")
 
       if (res.data && res.data.payment_session_id) {
 
@@ -151,7 +151,7 @@ function Payment() {
   const verifyPayment = async () => {
     try {
 
-      let res = await axios.post("http://localhost:8000/verify", {
+      let res = await axios.post("https://hia-backend-production.up.railway.app/verify", {
         orderId: orderId
       })
 
