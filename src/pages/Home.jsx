@@ -823,7 +823,7 @@ function Home() {
                                                                         const dataUrl = previewCanvasRef.current.toDataURL()
                                                                         setUploadImgSrcFinal(dataUrl)
                                                                         setUploadImgSrc('')
-                                                                        toast.success('Image uploaded successfully!')
+                                                                        // toast.success('Image uploaded successfully!')
                                                                     }}> Crop Image</div>
                                                                 </div>
                                                                 {crop && (

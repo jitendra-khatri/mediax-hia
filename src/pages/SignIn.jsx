@@ -130,7 +130,7 @@ function SignIn() {
                             .then((confirmationResult) => {
                                    window.confirmationResult = confirmationResult;
                                    setUser(confirmationResult);
-                                   toast.success("OTP has been sent!");
+                                   // toast.success("OTP has been sent!");
                                    setOtpSend(true)
                                    setOtpLoading(false)
 
@@ -142,8 +142,8 @@ function SignIn() {
               }
        }
 
-
-       const verifyOtp = () => {
+       // old code
+       /* const verifyOtp = () => {
               setOtpLoading(true)
               setLoading(true)
               if (otp.length === 6) {
@@ -151,7 +151,7 @@ function SignIn() {
                             // User signed in successfully.
                             const user = result.user;
                             console.log(user);
-                            toast.success("User is verified!");
+                            // toast.success("User is verified!");
                             if (user) {
                                    const blobUrl = localStorage.getItem('imageBlobUrl');
 
@@ -171,10 +171,6 @@ function SignIn() {
                                                  uploadBytes(imageRef, file).then(() => {
                                                         getDownloadURL(imageRef).then(async (url) => {
                                                                try {
-                                                                     /*  const auth = getAuth();
-                                                                      if (!auth.currentUser) {
-                                                                             throw new Error("User not authenticated");
-                                                                      } */
                                                                       const listingData = {
                                                                              listingCreated: true,
                                                                              userId: user.uid,
@@ -213,7 +209,57 @@ function SignIn() {
                             alert("Error verifying OTP: " + error.message);
                      });
               }
+       } */
+      // Optimized code
+      const verifyOtp = async () => {
+       try {
+         setOtpLoading(true);
+         setLoading(true);
+     
+         if (otp.length !== 6) {
+           throw new Error('OTP must be 6 digits long');
+         }
+     
+         const { user } = await window.confirmationResult.confirm(otp);
+         console.log(user);
+     
+         const blobUrl = localStorage.getItem('imageBlobUrl');
+         if (!blobUrl) {
+           throw new Error('No image found in localStorage');
+         }
+     
+         const blob = await fetch(blobUrl).then(res => res.blob());
+         const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
+     
+         const storage = getStorage();
+         const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
+         await uploadBytes(imageRef, file);
+         const imageUrl = await getDownloadURL(imageRef);
+     
+         const listingData = {
+           listingCreated: true,
+           userId: user.uid,
+           number: user.phoneNumber,
+           dateOfPosting: '',
+           postStatus: false,
+           slotNumber: 0,
+           payment: false,
+           imageUrl,
+           paymentResponseId: 'No Id Yet',
+         };
+     
+         const docRef = doc(db, "listings", user.uid);
+         await setDoc(docRef, listingData);
+         console.log("Document written with ID: ", user.uid);
+         navigate('/pick-date');
+       } catch (error) {
+         console.error(error);
+         toast.error(`Error: ${error.message}`);
+       } finally {
+         setOtpLoading(false);
+         setLoading(false);
        }
+     };
        return (
               <>
                      <Spinner clsName={loading ? 'd-flex' : 'd-none'} />
