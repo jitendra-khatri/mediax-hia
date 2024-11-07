@@ -211,7 +211,7 @@ function SignIn() {
               }
        } */
       // Optimized code
-      const verifyOtp = async () => {
+      /* const verifyOtp = async () => {
        try {
          setOtpLoading(true);
          setLoading(true);
@@ -229,6 +229,57 @@ function SignIn() {
          }
      
          const blob = await fetch(blobUrl).then(res => res.blob());
+         const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
+     
+         const storage = getStorage();
+         const imageRef = ref(storage, `images/${uuidv4()}.jpg`);
+         await uploadBytes(imageRef, file);
+         const imageUrl = await getDownloadURL(imageRef);
+     
+         const listingData = {
+           listingCreated: true,
+           userId: user.uid,
+           number: user.phoneNumber,
+           dateOfPosting: '',
+           postStatus: false,
+           slotNumber: 0,
+           payment: false,
+           imageUrl,
+           paymentResponseId: 'No Id Yet',
+         };
+     
+         const docRef = doc(db, "listings", user.uid);
+         await setDoc(docRef, listingData);
+         console.log("Document written with ID: ", user.uid);
+         navigate('/pick-date');
+       } catch (error) {
+         console.error(error);
+         toast.error(`Error: ${error.message}`);
+       } finally {
+         setOtpLoading(false);
+         setLoading(false);
+       }
+     }; */
+     // Optimized code v.2
+     const verifyOtp = async () => {
+       try {
+         setOtpLoading(true);
+         setLoading(true);
+     
+         if (otp.length !== 6) {
+           throw new Error('OTP must be 6 digits long');
+         }
+     
+         const { user } = await window.confirmationResult.confirm(otp);
+         console.log(user);
+     
+         const imageBlobUrl = localStorage.getItem('imageBlobUrl');
+         if (!imageBlobUrl) {
+           throw new Error('No image found in localStorage');
+         }
+     
+         const response = await fetch(imageBlobUrl);
+         const blob = await response.blob();
          const file = new File([blob], 'post.jpg', { type: 'image/jpeg' });
      
          const storage = getStorage();
