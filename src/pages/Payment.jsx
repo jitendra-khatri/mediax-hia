@@ -118,7 +118,7 @@ function Payment() {
 
   const getSessionId = async () => {
     try {
-      let res = await axios.get("https://hia-backend-production.up.railway.app/payment")
+      let res = await axios.get("https://mediax-hia.vercel.app/payment")
 
       if (res.data && res.data.payment_session_id) {
 
@@ -136,7 +136,7 @@ function Payment() {
   /*   const verifyPayment = async () => {
       try {
         
-        let res = await axios.post("http://localhost:8000/verify", {
+        let res = await axios.post("https://mediax-hia.vercel.app/verify", {
           orderId: orderId
         })
   
@@ -151,7 +151,7 @@ function Payment() {
   const verifyPayment = async () => {
     try {
 
-      let res = await axios.post("https://hia-backend-production.up.railway.app/verify", {
+      let res = await axios.post("https://mediax-hia.vercel.app/verify", {
         orderId: orderId
       })
 
