@@ -203,7 +203,8 @@ function Payment() {
         }
       })
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert(JSON.stringify(error));
     }
   }
 
