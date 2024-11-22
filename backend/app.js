@@ -53,23 +53,23 @@ app.get('/payment', (req, res) => {
     try {
 
         let request = {
-            "order_amount": 1999,
+            "order_amount": 1,
             "order_currency": "INR",
             "order_id": generateOrderId(),
             "customer_details": {
-                "customer_id": "webcodder01",
-                "customer_phone": "9999999999",
-                "customer_name": "Web Codder",
-                "customer_email": "webcodder@example.com"
+                "customer_id": "Jitendra_Khatri",
+                "customer_phone": "9929299955",
+                "customer_name": "Jitendra Khatri",
+                "customer_email": "jkhatri6@gmail.com"
             },
         }
 
         Cashfree.PGCreateOrder("2023-08-01", request).then(response => {
-            console.log(response.data);
+            console.log(response);
             res.json(response.data);
 
         }).catch(error => {
-            console.error(error.response.data.message);
+            console.error(error);
         })
 
 
